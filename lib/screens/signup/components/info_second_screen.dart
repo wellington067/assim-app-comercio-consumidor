@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
+import 'package:ecommerceassim/shared/core/models/estado_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/forms/custom_text_form_field.dart';
@@ -17,7 +18,25 @@ class InfoSecondScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        /*DropdownButtonFormField<CidadeModel>(
+        DropdownButtonFormField<EstadoModel>(
+          isExpanded: true,
+          decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.home_filled), border: InputBorder.none),
+          style: Theme.of(context).textTheme.titleLarge,
+          hint: const Text('Estado'),
+          value: null,
+          items: controller.estados.map((obj) {
+            return DropdownMenuItem<EstadoModel>(
+              value: obj,
+              child: Text(obj.nome.toString()),
+            );
+          }).toList(),
+          onChanged: (selectedObj) {
+            controller.estadoId = selectedObj!.id!.toInt();
+          },
+        ),
+        const VerticalSpacerBox(size: SpacerSize.small),
+        DropdownButtonFormField<CidadeModel>(
           isExpanded: true,
           decoration: const InputDecoration(
               prefixIcon: Icon(Icons.home), border: InputBorder.none),
@@ -33,13 +52,13 @@ class InfoSecondScreen extends StatelessWidget {
           onChanged: (selectedObj) {
             controller.cidadeId = selectedObj!.id!.toInt();
           },
-        ),*/
-        CustomTextFormField(
+        ),
+        /*CustomTextFormField(
           hintText: 'Cidade',
           icon: Icons.home,
           //maskFormatter: controller.cepFormatter,
           controller: controller.cidadeController,
-        ),
+        ),*/
         const VerticalSpacerBox(size: SpacerSize.small),
         DropdownButtonFormField<BairroModel>(
           isExpanded: true,
@@ -98,18 +117,20 @@ class InfoSecondScreen extends StatelessWidget {
           icon: Icons.home_filled,
           controller: controller.numeroController,
         ),
-        CustomTextFormField(
-          keyboardType: TextInputType.text,
-          hintText: 'Estado',
-          icon: Icons.home_filled,
-          controller: controller.estadoController,
-        ),
-        CustomTextFormField(
-          keyboardType: TextInputType.text,
-          hintText: 'País',
-          icon: Icons.home_filled,
-          controller: controller.paisController,
-        ),
+        const VerticalSpacerBox(size: SpacerSize.small),
+
+        //CustomTextFormField(
+        //keyboardType: TextInputType.text,
+        //hintText: 'Estado',
+        //icon: Icons.home_filled,
+        //controller: controller.estadoController,
+        // ),
+        //CustomTextFormField(
+        //  keyboardType: TextInputType.text,
+        // hintText: 'País',
+        // icon: Icons.home_filled,
+        // controller: controller.paisController,
+        //),
       ],
     );
   }

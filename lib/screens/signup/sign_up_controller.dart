@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:ecommerceassim/screens/signup/sign_up_repository.dart';
 import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
+import 'package:ecommerceassim/shared/core/models/estado_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -22,6 +23,7 @@ class SignUpController extends GetxController {
   int _infoIndex = 0;
   int bairroId = 0;
   int cidadeId = 0;
+  int estadoId = 0;
   bool? signupSuccess;
   RegExp numReg = RegExp(r".*[0-9].*");
   RegExp letterReg = RegExp(r".*[A-Z].*");
@@ -30,6 +32,7 @@ class SignUpController extends GetxController {
 
   List<BairroModel> bairros = [];
   List<CidadeModel> cidades = [];
+  List<EstadoModel> estados = [];
   ScreenState screenState = ScreenState.idle;
 
   SignUpRepository signUpRepository = SignUpRepository();
@@ -86,9 +89,13 @@ class SignUpController extends GetxController {
     bairros = await signUpRepository.getbairros();
   }
 
-  //void loadCidades() async {
-  //  cidades = await signUpRepository.getCidades();
-  //}
+  void loadCidades() async {
+    cidades = await signUpRepository.getCidades();
+  }
+
+  void loadEstados() async {
+    estados = await signUpRepository.getEstados();
+  }
 
   void next() {
     _infoIndex++;
@@ -133,9 +140,8 @@ class SignUpController extends GetxController {
         _ruaController.text,
         _numeroController.text,
         _cepController.text,
-        _cidadeController.text,
-        _paisController.text,
-        _estadoController.text,
+        estadoId,
+        cidadeId,
         bairroId,
         context);
     update();
@@ -152,10 +158,10 @@ class SignUpController extends GetxController {
         _foneController.text.isEmpty ||
         _cepController.text.isEmpty ||
         _ruaController.text.isEmpty ||
-        _cidadeController.text.isEmpty ||
         _numeroController.text.isEmpty ||
         _paisController.text.isEmpty ||
-        _estadoController.text.isEmpty ||
+        estadoId.toString().isEmpty ||
+        cidadeId.toString().isEmpty ||
         bairroId.toString().isEmpty) {
       log('Error, o user não preencheu todos os campos, retornando falso');
       return false;
@@ -185,7 +191,8 @@ class SignUpController extends GetxController {
   @override
   void onInit() {
     loadBairros();
-    // loadCidades();
+    loadCidades();
+    loadEstados();
     super.onInit();
   }
 }
