@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../../shared/components/dialogs/default_alert_dialog.dart';
 import '../../shared/constants/style_constants.dart';
 import '../../shared/core/models/bairro_model.dart';
+import '../../shared/core/models/estado_model.dart';
 import '../../shared/core/user_storage.dart';
 import '../screens_index.dart';
 import '../signin/sign_in_repository.dart';
@@ -17,6 +18,7 @@ class SignUpRepository {
   final Dio _dio = Dio();
   BairroModel bairroModel = BairroModel();
   CidadeModel cidadeModel = CidadeModel();
+  EstadoModel estadoModel = EstadoModel();
   UserStorage userStorage = UserStorage();
   SignInRepository signInRepository = SignInRepository();
   Future<bool> signUp(
@@ -29,9 +31,9 @@ class SignUpRepository {
       String rua,
       String numero,
       String cep,
-      String cidade,
-      String estado,
-      String pais,
+      int estado,
+      //String pais,
+      int cidade,
       int bairro,
       BuildContext context) async {
     try {
@@ -54,7 +56,7 @@ class SignUpRepository {
             "cep": cep,
             "cidade": cidade,
             "estado": estado,
-            "país": pais,
+            //"país": pais,
           });
       if (response.statusCode == 201) {
         //print(response.data);
@@ -150,7 +152,7 @@ class SignUpRepository {
     }
   }
 
-  /*Future<List<CidadeModel>> getCidades() async {
+  Future<List<CidadeModel>> getCidades() async {
     List<dynamic> all;
     List<CidadeModel> cidades = [];
 
@@ -175,5 +177,32 @@ class SignUpRepository {
       log(e.toString());
       return [];
     }
-  }*/
+  }
+
+  Future<List<EstadoModel>> getEstados() async {
+    List<dynamic> all;
+    List<EstadoModel> estados = [];
+
+    try {
+      Response response = await _dio.get('$kBaseURL/estados');
+      if (response.statusCode == 200) {
+        all = response.data['estados'];
+        if (all.isNotEmpty) {
+          for (int i = 0; i < all.length; i++) {
+            estadoModel = EstadoModel(id: all[i]['id'], nome: all[i]['nome']);
+            estados.add(estadoModel);
+          }
+          return estados;
+        } else {
+          return [];
+        }
+      } else {
+        print('erro');
+        return [];
+      }
+    } on DioError catch (e) {
+      log(e.toString());
+      return [];
+    }
+  }
 }
