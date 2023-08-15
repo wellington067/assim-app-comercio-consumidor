@@ -1,15 +1,16 @@
-import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/style_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_text_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/screens/signin/sign_in_controller.dart';
+import 'package:ecommerceassim/shared/components/style_bar.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../shared/constants/app_enums.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class SignInScreen extends StatelessWidget {
               appBar: const PreferredSize(
                   preferredSize: Size.fromHeight(360),
                   child: StyleBar(
-                      title: 'Bem vindo(a) a ASSIM', hasLeading: true)),
+                      title: 'Bem vindo(a) ao App bonito', hasLeading: true)),
               body: Container(
                 color: kOnSurfaceColor,
                 width: size.width,
@@ -76,6 +77,32 @@ class SignInScreen extends StatelessWidget {
                             color: kDetailColor,
                           ),
                     const VerticalSpacerBox(size: SpacerSize.large),
+                    SizedBox(
+                      width: size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          controller.errorMessage != null
+                              ? Text(controller.errorMessage!,
+                                  style: kCaption1.copyWith(color: kErrorColor))
+                              : const SizedBox(),
+                          const VerticalSpacerBox(size: SpacerSize.small),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Não possui conta?'),
+                              CustomTextButton(
+                                title: 'Crie aqui',
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, Screens.register);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -103,34 +130,6 @@ class SignInScreen extends StatelessWidget {
                                 color: kTextSign),
                             iconSize: 38)
                       ],
-                    ),
-                    SizedBox(
-                      width: size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          controller.errorMessage != null
-                              ? Text(
-                                  controller.errorMessage!,
-                                  style: kCaption1,
-                                )
-                              : const SizedBox(),
-                          const VerticalSpacerBox(size: SpacerSize.small),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('Não possui conta?'),
-                              CustomTextButton(
-                                title: 'Crie aqui',
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, Screens.register);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
