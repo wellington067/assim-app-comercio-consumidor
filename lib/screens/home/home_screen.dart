@@ -1,5 +1,5 @@
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/screens/home/components/bancas.dart';
 import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
@@ -19,7 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    //final whats = Uri.parse('https://api.whatsapp.com/send?phone=5581997128385');
+    final whats =
+        Uri.parse('https://api.whatsapp.com/send?phone=5581997128385');
     int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: ((context, controller, child) => Scaffold(
               appBar: AppBar(
                 title: const Text(
-                  'Ecommerce ASSIM',
+                  'Ecommerce Bonito',
                   style: TextStyle(color: kOnSurfaceColor),
                 ),
                 centerTitle: true,
@@ -327,228 +328,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Row(
                       children: [
                         Text(
-                          'Vendedores',
+                          'Bancas',
                           style: TextStyle(fontSize: 25),
                         ),
                       ],
                     ),
                     const VerticalSpacerBox(size: SpacerSize.large),
-                    InkWell(
-                      child: Container(
-                        width: 440,
-                        height: 125,
-                        decoration: BoxDecoration(
-                          color: kOnSurfaceColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: kTextButtonColor.withOpacity(0.5),
-                              spreadRadius: 0,
-                              blurRadius: 3,
-                              offset: const Offset(
-                                  0, 0), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Wrap(
-                            children: [
-                              Row(
-                                children: [
-                                  const HorizontalSpacerBox(
-                                      size: SpacerSize.large),
-                                  Container(
-                                    transformAlignment: Alignment.center,
-                                    alignment: Alignment.center,
-                                    width: 65.0,
-                                    height: 65.0,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://gentv.com.br/img/content/266-1"),
-                                      ),
-                                    ),
-                                  ),
-                                  const HorizontalSpacerBox(
-                                      size: SpacerSize.large),
-                                  const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'João Frutas',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          IconButton(
-                                              onPressed: null,
-                                              icon: Icon(
-                                                Icons.favorite,
-                                                color: kButtom,
-                                              )),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Frutas - Legumes - Tempeiros',
-                                            style: TextStyle(fontSize: 15),
-                                            textAlign: TextAlign.end,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Contato: (11) 99999-9999',
-                                          ),
-                                          IconButton(
-                                            onPressed: null,
-                                            icon: Icon(
-                                              Icons.phone,
-                                              color: Colors.green,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, Screens.menuSeller);
-                      },
-                    ),
-                    const VerticalSpacerBox(size: SpacerSize.small),
-                    InkWell(
-                      child: Container(
-                        width: 440,
-                        height: 125,
-                        decoration: BoxDecoration(
-                          color: kOnSurfaceColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: kTextButtonColor.withOpacity(0.5),
-                              spreadRadius: 0,
-                              blurRadius: 3,
-                              offset: const Offset(
-                                  0, 0), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Wrap(
-                            children: [
-                              Row(
-                                children: [
-                                  const HorizontalSpacerBox(
-                                      size: SpacerSize.large),
-                                  Container(
-                                    transformAlignment: Alignment.center,
-                                    alignment: Alignment.center,
-                                    width: 65.0,
-                                    height: 65.0,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://expomeat.com.br/img/site/1666/m/5413240.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                  const HorizontalSpacerBox(
-                                      size: SpacerSize.large),
-                                  const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Leandro Carnes',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          HorizontalSpacerBox(
-                                              size: SpacerSize.huge),
-                                          IconButton(
-                                              onPressed: null,
-                                              icon: Icon(
-                                                Icons.favorite,
-                                                color: kButtom,
-                                              )),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Frutas - Legumes - Tempeiros',
-                                            style: TextStyle(fontSize: 15),
-                                            textAlign: TextAlign.end,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Contato: (11) 99999-9999',
-                                          ),
-                                          IconButton(
-                                            onPressed: null,
-                                            icon: Icon(
-                                              Icons.phone,
-                                              color: Colors.green,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, Screens.menuSeller);
-                      },
-                    ),
-                    const VerticalSpacerBox(size: SpacerSize.small),
+                    const Bancas(),
                   ],
                 ),
               ),
