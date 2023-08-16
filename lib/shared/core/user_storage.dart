@@ -41,8 +41,7 @@ class UserStorage {
   }
 
   Future<String> getPapelId() async {
-    String papelId =
-        await storage.read(key: 'papelId') ?? '';
+    String papelId = await storage.read(key: 'papelId') ?? '';
     return papelId;
   }
 
