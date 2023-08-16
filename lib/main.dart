@@ -1,7 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:ecommerceassim/app.dart';
 import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/bairro_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart';
 import 'package:ecommerceassim/shared/core/selected_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
@@ -20,6 +22,16 @@ void main() {
         ChangeNotifierProvider(create: (_) => HomeScreenController()),
         ChangeNotifierProvider(create: (_) => SelectedItem()),
         ChangeNotifierProvider(create: (_) => BancaController()),
+        ChangeNotifierProvider(create: (_) => BairroController()),
+        ChangeNotifierProxyProvider2<BairroController, BancaController,
+            FeiraController>(
+          create: (context) =>
+              FeiraController(context.read<BairroController>()),
+          update: (_, bairroController, bancaController, feiraController) {
+            feiraController ??= FeiraController(bairroController);
+            return feiraController;
+          },
+        ),
       ],
       child: DevicePreview(
         enabled: true,
