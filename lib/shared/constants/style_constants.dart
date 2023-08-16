@@ -14,7 +14,7 @@ const Color kPrimaryColor = Color(0xFFFECA01);
 // const Color kBackgroundColor = Colors.white;
 const Color kBackgroundColor = Color.fromARGB(255, 225, 225, 225);
 const Color kSecondaryColor = Color(0xFF435969);
-const Color kDetailColor = Color.fromARGB(255, 60, 98, 41);
+const Color kDetailColor = Color(0xFF008000);
 const Color kOnBackgroundColor = Color(0xFF212931);
 const Color kTextColor = Color(0xFF435969);
 const Color kOnSurfaceColor = Colors.white;
@@ -44,7 +44,7 @@ const Color kAlertColor = Colors.orangeAccent;
 const TextStyle kTitle = TextStyle(
   fontSize: 28,
   fontWeight: FontWeight.w900,
-  color: kTextButtonColor,
+  color: kPrimaryDarkColor,
 );
 
 const TextStyle kTitle1 = TextStyle(

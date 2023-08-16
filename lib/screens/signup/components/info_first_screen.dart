@@ -48,15 +48,18 @@ class InfoFirstScreen extends StatelessWidget {
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
           hintText: 'Senha',
+          
           onChanged: (value) => controller
+          
               .checkPasswordStrength(controller.passwordController.text),
           isPassword: true,
           icon: Icons.lock,
           controller: controller.passwordController,
         ),
+        const VerticalSpacerBox(size: SpacerSize.small),
         LinearProgressIndicator(
           value: controller.strength,
-          backgroundColor: Colors.grey[300],
+          backgroundColor: Colors.grey.withOpacity(0.1),
           color: controller.strength <= 1 / 4
               ? Colors.red
               : controller.strength == 2 / 4
