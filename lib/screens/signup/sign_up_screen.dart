@@ -30,10 +30,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       init: SignUpController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          backgroundColor: kDetailColor,
+          backgroundColor: kOnSurfaceColor,
+          iconTheme: const IconThemeData(color: kDetailColor),
           elevation: 0,
         ),
-        backgroundColor: kDetailColor,
+        backgroundColor: kOnSurfaceColor,
         body: Stack(
           children: [
             Container(
@@ -41,7 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 margin: EdgeInsets.only(top: size.height * 0.15),
                 padding: const EdgeInsets.all(kDefaultPadding),
                 decoration: BoxDecoration(
-                    color: kBackgroundColor,
+                    color: kOnSurfaceColor,
                     borderRadius: BorderRadius.circular(30)),
                 child: Column(
                   children: [
@@ -53,6 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller.infoIndex == 0 ? 'Cadastro' : 'Endereço',
                         style: kTitle2.copyWith(
                             fontWeight: FontWeight.bold,
+                            fontSize: 28,
                             color: kSecondaryDarkColor),
                       ),
                     ),
@@ -135,11 +137,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     controller.infoIndex != 0
-                        ? Center(
-                            child: CustomTextButton(
-                                onPressed: () => controller.back(),
-                                title: 'Anterior'),
-                          )
+                        ? Column(
+                          children: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Já possui conta?'),
+                                  CustomTextButton(
+                                      title: 'Entre aqui',
+                                      onPressed: () {
+                                        navigatorKey.currentState!
+                                            .pushReplacementNamed(Screens.signin);
+                                      },
+                                    ),
+                                ],
+                              ),
+                            Center(
+                                child: CustomTextButton(
+                                    onPressed: () => controller.back(),
+                                    title: 'Anterior'),
+                              ),
+                              
+                          ],
+                        )
                         : const SizedBox(),
                     SizedBox(
                       width: size.width,
@@ -154,13 +174,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               : const SizedBox(),
                           const VerticalSpacerBox(size: SpacerSize.small),
                           controller.infoIndex == 0
-                              ? CustomTextButton(
-                                  title: 'Já tenho conta',
-                                  onPressed: () {
-                                    navigatorKey.currentState!
-                                        .pushReplacementNamed(Screens.signin);
-                                  },
-                                )
+                              ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Já possui conta?'),
+                                  CustomTextButton(
+                                      title: 'Entre aqui',
+                                      onPressed: () {
+                                       Navigator.pushReplacementNamed(context, Screens.signin);
+                       },
+                                    ),
+                                ],
+                              )
                               : const SizedBox(),
                         ],
                       ),
@@ -173,15 +198,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Bem vindo(a) a ASSIM',
-                    style: kTitle1.copyWith(color: kBackgroundColor),
-                  ),
-                ),
-                SizedBox(
+                  child: //Text(
+                    //textAlign: TextAlign.center,
+                    //'Bem vindo(a) a ASSIM',
+                   // style: kTitle1.copyWith(color: kBackgroundColor),
+                  //),
+                  SizedBox(
                   height: size.height * 0.75,
                 )
+                ),
+                
               ],
             ),
           ],

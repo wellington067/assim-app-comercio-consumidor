@@ -29,16 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: ((context, controller, child) => Scaffold(
               appBar: AppBar(
                 title: const Text(
-                  'Ecommerce Bonito',
-                  style: TextStyle(color: kOnSurfaceColor),
+
+                  'ECOMMERCE ASSIM',
+                  style: TextStyle(color: kDetailColor, fontWeight: FontWeight.bold,),
+                  
                 ),
                 centerTitle: true,
-                backgroundColor: kDetailColor,
+                iconTheme: const IconThemeData(color: kDetailColor),
+                backgroundColor: kOnSurfaceColor,
+                elevation: 0,
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(
                       Icons.menu,
-                      color: kOnSurfaceColor,
+                      color: kDetailColor,
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, Screens.profile);

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:ecommerceassim/shared/core/models/estado_model.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class InfoSecondScreen extends StatelessWidget {
         DropdownButtonFormField<EstadoModel>(
           isExpanded: true,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.home_filled), border: InputBorder.none),
+              prefixIcon: Icon(Icons.home_filled), border: InputBorder.none, filled: true,
+              fillColor: kBackgroundColor,),
           style: Theme.of(context).textTheme.titleLarge,
           hint: const Text('Estado'),
           value: null,
@@ -36,10 +38,12 @@ class InfoSecondScreen extends StatelessWidget {
           },
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
+
         DropdownButtonFormField<CidadeModel>(
           isExpanded: true,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.home), border: InputBorder.none),
+              prefixIcon: Icon(Icons.home), border: InputBorder.none, filled: true,
+              fillColor: kBackgroundColor,),
           style: Theme.of(context).textTheme.titleLarge,
           hint: const Text('Cidade'),
           value: null,
@@ -64,10 +68,14 @@ class InfoSecondScreen extends StatelessWidget {
           isExpanded: true,
           decoration: const InputDecoration(
               prefixIcon: Icon(Icons.location_city_sharp),
-              border: InputBorder.none),
+              border: InputBorder.none,
+              filled: true,
+              fillColor: kBackgroundColor,),
           style: Theme.of(context).textTheme.titleLarge,
           hint: const Text('Bairro'),
+          
           value: null,
+          
           items: controller.bairros.map((obj) {
             return DropdownMenuItem<BairroModel>(
               value: obj,

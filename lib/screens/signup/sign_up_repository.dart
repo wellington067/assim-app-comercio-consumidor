@@ -110,6 +110,7 @@ class SignUpRepository {
       }
     } catch (e) {
       log('Erro na chamada do cadastro do consumidor ${e.toString()}');
+      // ignore: use_build_context_synchronously
       showDialog(
           context: context,
           builder: (context) => DefaultAlertDialogOneButton(
