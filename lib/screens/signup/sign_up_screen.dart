@@ -12,7 +12,7 @@ import '../../shared/core/navigator.dart';
 import '../screens_index.dart';
 import 'components/info_first_screen.dart';
 
-import 'components/info_second_screen.dart';
+//import 'components/info_second_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -64,17 +64,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           // Essa lista de children é para o PageView,
                           //cada index do PageView tem um children diferente que é um componente de cadastro diferente,
                           // cada um com seus campos
-                          children: controller.infoIndex == 0
-                              ? [
+                          children: //controller.infoIndex == 0
+                            //  ? [
+                              [
                                   InfoFirstScreen(controller),
-                                ]
-                              : [
-                                  InfoSecondScreen(controller),
-                                ]),
+                              ]
+                              //  ]
+                            //  : [
+                            //      InfoSecondScreen(controller),
+                             //   ]
+                                ),
                     ),
                     const VerticalSpacerBox(size: SpacerSize.huge),
-                    controller.screenState == ScreenState.loading
-                        ? const CircularProgressIndicator()
+                  //  controller.screenState == ScreenState.loading
+                       /* ? const CircularProgressIndicator()
                         : controller.infoIndex != 1
                             ? PrimaryButton(
                                 text: 'Próximo',
@@ -87,7 +90,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 },
                                 color: kDetailColor,
                               )
-                            : PrimaryButton(
+                              */
+                            PrimaryButton(
                                 text: 'Concluir',
                                 onPressed: () {
                                   if (controller.validateEmptyFields() ==
@@ -116,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               onConfirm: () => Get.back(),
                                               buttonColor: kAlertColor,
                                             ));
-                                  } else if (controller.validateNumber() ==
+                                  } /*else if (controller.validateNumber() ==
                                       false) {
                                     showDialog(
                                         context: context,
@@ -129,7 +133,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               onConfirm: () => Get.back(),
                                               buttonColor: kAlertColor,
                                             ));
-                                  } else {
+                                  }*/ 
+                                  else {
                                     controller.signUp(context);
                                   }
                                 },

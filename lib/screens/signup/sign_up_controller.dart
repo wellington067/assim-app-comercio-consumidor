@@ -85,17 +85,17 @@ class SignUpController extends GetxController {
   int get infoIndex => _infoIndex;
   bool? get signupSucess => signupSuccess;
 
-  void loadBairros() async {
-    bairros = await signUpRepository.getbairros();
-  }
+  //void loadBairros() async {
+  //   bairros = await signUpRepository.getbairros();
+  //}
 
-  void loadCidades() async {
-    cidades = await signUpRepository.getCidades();
-  }
+  //void loadCidades() async {
+  //  cidades = await signUpRepository.getCidades();
+  //}
 
-  void loadEstados() async {
-    estados = await signUpRepository.getEstados();
-  }
+  //void loadEstados() async {
+  // estados = await signUpRepository.getEstados();
+  //}
 
   void next() {
     _infoIndex++;
@@ -136,14 +136,16 @@ class SignUpController extends GetxController {
         _passwordController.text,
         _apelidoController.text,
         _foneController.text,
-        _cpfController.text,
-        _ruaController.text,
-        _numeroController.text,
-        _cepController.text,
-        estadoId,
-        cidadeId,
-        bairroId,
+        _cpfController.text
+        // _ruaController.text,
+        // _numeroController.text,
+        // _cepController.text,
+        //  estadoId,
+        // cidadeId,
+        // bairroId,
+        ,
         context);
+
     update();
 
     //log("criaaaa ${signupSuccess.toString()}");
@@ -151,18 +153,20 @@ class SignUpController extends GetxController {
 
   bool validateEmptyFields() {
     if (_nameController.text.isEmpty ||
-        _apelidoController.text.isEmpty ||
-        _cpfController.text.isEmpty ||
-        _emailController.text.isEmpty ||
-        _passwordController.text.isEmpty ||
-        _foneController.text.isEmpty ||
-        _cepController.text.isEmpty ||
-        _ruaController.text.isEmpty ||
-        _numeroController.text.isEmpty ||
-        _paisController.text.isEmpty ||
-        estadoId.toString().isEmpty ||
-        cidadeId.toString().isEmpty ||
-        bairroId.toString().isEmpty) {
+            _apelidoController.text.isEmpty ||
+            _cpfController.text.isEmpty ||
+            _emailController.text.isEmpty ||
+            _foneController.text.isEmpty ||
+            _passwordController.text.isEmpty
+
+        // _cepController.text.isEmpty ||
+        // _ruaController.text.isEmpty ||
+        // _numeroController.text.isEmpty ||
+        // _paisController.text.isEmpty ||
+        //  estadoId.toString().isEmpty ||
+        // cidadeId.toString().isEmpty ||
+        // bairroId.toString().isEmpty) {
+        ) {
       log('Error, o user não preencheu todos os campos, retornando falso');
       return false;
     }
@@ -190,9 +194,9 @@ class SignUpController extends GetxController {
 
   @override
   void onInit() {
-    loadBairros();
-    loadCidades();
-    loadEstados();
+    //loadBairros();
+    //loadCidades();
+    //loadEstados();
     super.onInit();
   }
 }

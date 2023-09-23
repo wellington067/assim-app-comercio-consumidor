@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
@@ -60,12 +59,11 @@ class _BancasState extends State<Bancas> {
                             alignment: Alignment.center,
                             width: 65.0,
                             height: 65.0,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 fit: BoxFit.fill,
-                                image: NetworkImage(
-                                    "https://gentv.com.br/img/content/266-1"),
+                                image: AssetImage('assets/images/banaca.png'),
                               ),
                             ),
                           ),

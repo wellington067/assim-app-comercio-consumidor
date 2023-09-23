@@ -20,6 +20,7 @@ class SignUpRepository {
   CidadeModel cidadeModel = CidadeModel();
   EstadoModel estadoModel = EstadoModel();
   UserStorage userStorage = UserStorage();
+  int id = 0;
   SignInRepository signInRepository = SignInRepository();
   Future<bool> signUp(
       String name,
@@ -28,17 +29,17 @@ class SignUpRepository {
       String apelido,
       String telefone,
       String cpf,
-      String rua,
-      String numero,
-      String cep,
-      int estado,
+      //String rua,
+      ////String numero,
+      //String cep,
+      //int estado,
       //String pais,
-      int cidade,
-      int bairro,
+      // int cidade,
+      // int bairro,
       BuildContext context) async {
     try {
       //Efetua a chamada da API para o cadastro do produtor
-      Response response = await _dio.post('$kBaseURL/consumidores',
+      Response response = await _dio.post('$kBaseURL/users',
           options: Options(headers: {
             'Content-Type': 'application/json',
             // "Accept": "application/json",
@@ -50,40 +51,51 @@ class SignUpRepository {
             "apelido": apelido,
             "telefone": telefone,
             "cpf": cpf,
-            "rua": rua,
-            "bairro_id": bairro,
-            "numero": numero,
-            "cep": cep,
-            "cidade": cidade,
-            "estado": estado,
+            "roles": [5]
+            //"rua": rua, 
+            //"bairro_id": bairro,
+            //"numero": numero,
+            //"cep": cep,
+            //"cidade": cidade,
+            //"estado": estado,
             //"país": pais,
           });
+          print(response.data);
       if (response.statusCode == 201) {
-        //print(response.data);
+        print(response.data);
+        //int idTemp = response.data["user"]["id"];
+        //String emailTemp = response.data["user"]["email"];
+        //String deviceConsumidor = response.data["user"]["device_name"];
         //Caso o cadastro do consumidor dê certo, ele pega o email do produtor e faz o login para pegar o token,
         // depois ele faz o cadastro da banca
-        String emailConsumidor = response.data["usuário"]["email"];
+        //String emailConsumidor = response.data["user"]["email"];
         // ignore: unused_local_variable
-        int idConsumidor = response.data["usuário"]["papel_id"];
-        //log('idConsumidor: $idConsumidor');
+        // int idConsumidor = response.data["user"]["papel_id"];
+
+        //String deviceConsumidor = response.data["user"]["device_name"];
+        // log('idConsumidor: $emailConsumidor');
         try {
           Response login = await _dio.post(
-            '$kBaseURL/login',
+            '$kBaseURL/sanctum/token',
             data: {
-              'email': emailConsumidor,
+              'email': email,
               'password': password,
+              'device_name': 'PC',
             },
           );
 
           if (login.statusCode == 200) {
             String userToken = login.data['user']['token'].toString();
             userStorage.saveUserCredentials(
-                nome: login.data['user']['nome'],
-                email: login.data['user']['email'],
-                token: userToken,
-                id: login.data['user']['id'].toString(),
-                papel: login.data['user']['papel_id'].toString(),
-                papelId: login.data['user']['papel_id'].toString());
+              nome: name,
+              email: email,
+              //deviceName: login.data['user']['device_name'],
+              id: id.toString(),
+              token: userToken,
+              //deviceName: deviceConsumidor
+            );
+            //papel: login.data['user']['papel_id'].toString(),
+            //papelId: login.data['user']['papel_id'].toString());
             // ignore: use_build_context_synchronously
             showDialog(
                 context: context,
@@ -125,7 +137,7 @@ class SignUpRepository {
       return false;
     }
   }
-
+/*
   Future<List<BairroModel>> getbairros() async {
     List<dynamic> all;
     List<BairroModel> bairros = [];
@@ -205,5 +217,5 @@ class SignUpRepository {
       log(e.toString());
       return [];
     }
-  }
+  }*/
 }

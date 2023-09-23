@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final whats =
         Uri.parse('https://api.whatsapp.com/send?phone=5581997128385');
     int selectedIndex = 0;
