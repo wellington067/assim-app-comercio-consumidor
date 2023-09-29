@@ -2,15 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 
 import '../../constants/app_text_constants.dart';
-import '../models/banca_model.dart';
+import '../models/produto_model.dart';
 
-class BancaRepository {
+class ProdutoRepository {
   late String userToken;
   final Dio _dio;
 
-  BancaRepository(this._dio);
+  ProdutoRepository(this._dio);
 
-  Future<List<BancaModel>> getBancas() async {
+  Future<List<ProdutoModel>> getProdutos() async {
     UserStorage userStorage = UserStorage();
 
     userToken = await userStorage.getUserToken();
@@ -21,14 +21,14 @@ class BancaRepository {
             headers: {"Authorization": "Bearer $userToken"},
           ));
       if (response.statusCode == 200) {
-        final List<BancaModel> bancas = [];
+        final List<ProdutoModel> produtos = [];
         final Map<String, dynamic> jsonData = response.data;
-        final bancasJson = jsonData['bancas'];
-        for (var item in bancasJson) {
-          final BancaModel banca = BancaModel.fromJson(item);
-          bancas.add(banca);
+        final produtosJson = jsonData['produtos'];
+        for (var item in produtosJson) {
+          final ProdutoModel banca = ProdutoModel.fromJson(item);
+          produtos.add(banca);
         }
-        return bancas;
+        return produtos;
       } else {
         throw Exception('Não foi possível carregar as bancas.');
       }

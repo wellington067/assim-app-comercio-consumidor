@@ -4,8 +4,9 @@ class BancaModel {
   String descricao;
   String horarioAbertura;
   String horarioFechamento;
-  bool funcionamento;
-  String precoMinimo;
+  int feiraId;
+  int agricultorId;
+  int precoMinimo;
 
   BancaModel({
     required this.nome,
@@ -13,20 +14,21 @@ class BancaModel {
     required this.horarioAbertura,
     required this.horarioFechamento,
     required this.id,
-    required this.funcionamento,
+    required this.feiraId,
+    required this.agricultorId,
     required this.precoMinimo,
   });
 
   factory BancaModel.fromJson(Map<String, dynamic> json) {
     return BancaModel(
-      id: json['id'],
-      nome: json['nome'],
-      descricao: json['descricao'],
-      horarioAbertura: json['horario_abertura'],
-      horarioFechamento: json['horario_fechamento'],
-      funcionamento: json['funcionamento'],
-      precoMinimo: json['preco_minimo'],
-    );
+        id: json['id'],
+        nome: json['nome'],
+        descricao: json['descricao'],
+        horarioAbertura: json['horario_abertura'],
+        horarioFechamento: json['horario_fechamento'],
+        feiraId: json['feira_id'],
+        agricultorId: json['agricultor_id'],
+        precoMinimo: json['preco_minimo']);
   }
 
   Map<String, dynamic> toJson() {
@@ -36,7 +38,8 @@ class BancaModel {
     data['descricao'] = descricao;
     data['horario_abertura'] = horarioAbertura;
     data['horario_fechamento'] = horarioFechamento;
-    data['funcionamento'] = funcionamento;
+    data['feira_id'] = feiraId;
+    data['agricultor_id'] = agricultorId;
     data['preco_minimo'] = precoMinimo;
     return data;
   }

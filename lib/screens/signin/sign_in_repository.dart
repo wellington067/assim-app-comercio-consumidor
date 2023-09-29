@@ -1,47 +1,70 @@
 import 'dart:developer';
-import 'package:ecommerceassim/shared/core/user_storage.dart';
-import 'package:dio/dio.dart';
 
-import '../../shared/constants/app_text_constants.dart';
+import 'package:dio/dio.dart';
+import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
+import 'package:ecommerceassim/shared/core/user_storage.dart';
+
 
 class SignInRepository {
   final userStorage = UserStorage();
+  String userId = "0";
+  String userToken = "0";
+  
 
   final _dio = Dio();
-  Future signIn({
+  Future<int> signIn({
     required String email,
     required String password,
   }) async {
     try {
       final response = await _dio.post(
-        '$kBaseURL/login',
+        '$kBaseURL/sanctum/token',
         data: {
           'email': email,
           'password': password,
+          'device_name': "PC"
         },
       );
       if (response.statusCode == 200) {
-        if (response.data['user']['papel'].toString() == 'Consumidor') {
-          log('User é um Consumidor');
           if (await userStorage.userHasCredentials()) {
             await userStorage.clearUserCredentials();
           }
+          userId = response.data['user']['id'].toString();
+          userToken = response.data['token'].toString();
           await userStorage.saveUserCredentials(
-              id: response.data['user']['id'].toString(),
-              nome: response.data['user']['nome'].toString(),
-              token: response.data['user']['token'].toString(),
-              email: response.data['user']['email'].toString(),
-              papel: response.data['user']['papel'].toString(),
-              papelId: response.data['user']['papel_id'].toString());
-          return true;
-        } else {
-          return false;
-        }
+              id: userId,
+              nome:
+                  response.data['user']['name'].toString(),
+              token:
+                  userToken,
+              email:
+                  response.data['user']['email'].toString(),
+              );
+          try{
+            Response response = await _dio.get(
+          '$kBaseURL/users/$userId',
+          options: Options(headers: {
+            "Authorization": "Bearer $userToken"
+          }));
+      if (response.statusCode == 200) {
+        if(response.data["user"].isEmpty){
+          return 2;
+        }else{
+
+          return 1;}
+      }
+          }catch(e){
+
+            return 0;
+          }
+      return 1;
+        
       }
     } catch (e) {
-      log(e.toString());
-      return false;
+      //log(e.toString());
+      return 0;
     }
-    return false;
+    return 0;
   }
+
 }

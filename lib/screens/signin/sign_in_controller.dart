@@ -1,8 +1,10 @@
+
 import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/screens/signin/sign_in_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'sign_in_repository.dart';
+
 
 enum SignInStatus {
   done,
@@ -15,12 +17,16 @@ class SignInController with ChangeNotifier {
   final SignInRepository _repository = SignInRepository();
   String? email;
   String? password;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController();
+  final TextEditingController _passwordController =
+      TextEditingController();
   String? errorMessage;
 
-  TextEditingController get emailController => _emailController;
-  TextEditingController get passwordController => _passwordController;
+  TextEditingController get emailController =>
+      _emailController;
+  TextEditingController get passwordController =>
+      _passwordController;
   var status = SignInStatus.idle;
   void signIn(BuildContext context) async {
     try {
@@ -31,21 +37,32 @@ class SignInController with ChangeNotifier {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      if (succ == true) {
+      if (succ == 1) {
         status = SignInStatus.done;
+        
         notifyListeners();
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, Screens.home);
+        
+      
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacementNamed(
+            context, Screens.home);
+       
+        
       }
-      if (!succ) {
+      else{
+        
         status = SignInStatus.error;
-        setErrorMessage('Credenciais inválidas, verifique seus dados');
+        setErrorMessage(
+            'Credenciais inválidas, verifique seus dados');
         notifyListeners();
       }
       notifyListeners();
     } catch (e) {
+      
+     
       status = SignInStatus.error;
-      setErrorMessage('Credenciais inválidas verifique seus dados');
+      setErrorMessage(
+          'Credenciais inválidas verifique seus dados');
       notifyListeners();
     }
   }
