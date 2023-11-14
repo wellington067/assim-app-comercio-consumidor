@@ -19,18 +19,6 @@ class PurchasesScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.orange,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, Screens.profile);
-              },
-            ), //IconButton
-          ],
-          //IconButton
         ),
         body: Container(
             color: Colors.white,
