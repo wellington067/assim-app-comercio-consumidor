@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import '../../components/utils/vertical_spacer_box.dart';
@@ -12,25 +13,12 @@ class SelectCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Ecommerce ASSIM',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 60, 98, 41),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, Screens.profile);
-              },
-            ), //IconButton
-          ],
-          //IconButton
-        ),
+            title: const Text(
+              'Ecommerce ASSIM',
+              style: TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+            backgroundColor: kDetailColor),
         body: Container(
             color: Colors.white,
             width: size.width,

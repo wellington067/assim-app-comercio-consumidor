@@ -23,15 +23,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: kDetailColor,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: kOnSurfaceColor,
-              ),
-              onPressed: () {},
-            ), //IconButton
-          ],
+
           //IconButton
         ),
         // ignore: sized_box_for_whitespace

@@ -32,18 +32,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 ),
                 centerTitle: true,
                 backgroundColor: kDetailColor,
-                actions: <Widget>[
-                  IconButton(
-                    icon: const Icon(
-                      Icons.menu,
-                      color: kOnSurfaceColor,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Screens.profile);
-                    },
-                  ), //IconButton
-                ],
-                //IconButton
               ),
               bottomNavigationBar:
                   BottomNavigation(selectedIndex: selectedIndex),
