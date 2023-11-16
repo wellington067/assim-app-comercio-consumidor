@@ -281,11 +281,22 @@ class ProfileScreen extends StatelessWidget {
                 child: PrimaryButton(
                   text: 'Sair',
                   onPressed: () {
-                    SystemNavigator.pop();
+                    Navigator.pushReplacementNamed(
+                        context, '/first/start_screen');
                   },
                   color: kDetailColor,
                 ),
               ),
+              /* Container(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: PrimaryButton(
+                  text: 'Sair',
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  },
+                  color: kDetailColor,
+                ),
+              ), */
             ],
           ),
         ));
