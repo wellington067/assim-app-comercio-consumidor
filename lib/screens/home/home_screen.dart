@@ -30,10 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: ((context, controller, child) => Scaffold(
               appBar: AppBar(
                 title: const Text(
-
                   'ECOMMERCE ASSIM',
-                  style: TextStyle(color: kDetailColor, fontWeight: FontWeight.bold,),
-                  
+                  style: TextStyle(
+                    color: kDetailColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 centerTitle: true,
                 iconTheme: const IconThemeData(color: kDetailColor),
