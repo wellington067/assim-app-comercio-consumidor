@@ -32,7 +32,9 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               InkWell(
-                onTap: () async {},
+                onTap: () async {
+                  Navigator.pushNamed(context, Screens.home);
+                },
                 child: Row(
                   children: [
                     Container(
@@ -287,16 +289,6 @@ class ProfileScreen extends StatelessWidget {
                   color: kDetailColor,
                 ),
               ),
-              /* Container(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: PrimaryButton(
-                  text: 'Sair',
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                  color: kDetailColor,
-                ),
-              ), */
             ],
           ),
         ));
