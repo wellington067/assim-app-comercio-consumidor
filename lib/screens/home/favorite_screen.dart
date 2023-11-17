@@ -32,6 +32,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 ),
                 centerTitle: true,
                 backgroundColor: kDetailColor,
+
+                //IconButton
               ),
               bottomNavigationBar:
                   BottomNavigation(selectedIndex: selectedIndex),

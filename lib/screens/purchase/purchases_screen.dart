@@ -30,6 +30,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                   ),
                   centerTitle: true,
                   backgroundColor: kDetailColor,
+                  //IconButton
                 ),
                 body: Container(
                     color: kOnSurfaceColor,
