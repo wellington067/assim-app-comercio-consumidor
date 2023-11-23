@@ -11,6 +11,7 @@ class Assets {
   static const String folhosos = 'lib/assets/images/Spinach.png';
   static const String carnes = 'lib/assets/images/Meat.png';
   static const String leite = 'lib/assets/images/Milk Carton.png';
+  static const String leiteOvos = 'lib/assets/images/leite ovos.png';
   static const String ovos = 'lib/assets/images/Eggs.png';
   static const String limao = 'lib/assets/images/limão.png';
   static const String melancia = 'lib/assets/images/melancia.png';

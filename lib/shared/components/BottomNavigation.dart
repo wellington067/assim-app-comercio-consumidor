@@ -17,8 +17,8 @@ class BottomNavigation extends StatelessWidget {
             label: 'Início',
             backgroundColor: kOnSurfaceColor,
             icon: Icon(
-              Icons.home,
-              color: kOnSurfaceColor,
+              Icons.home_filled,
+              color: kDetailColor,
               size: 40,
             ),
           ),
@@ -26,8 +26,8 @@ class BottomNavigation extends StatelessWidget {
             label: 'Vendedores',
             backgroundColor: kOnSurfaceColor,
             icon: Icon(
-              Icons.storefront,
-              color: kOnSurfaceColor,
+              Icons.storefront_rounded,
+              color: kDetailColor,
               size: 40,
             ),
           ),
@@ -35,24 +35,24 @@ class BottomNavigation extends StatelessWidget {
             label: 'Pedidos',
             backgroundColor: kOnSurfaceColor,
             icon: Icon(
-              Icons.list_alt,
-              color: kOnSurfaceColor,
+              Icons.article_rounded,
+              color: kDetailColor,
               size: 40,
             ),
           ),
           BottomNavigationBarItem(
             label: 'Cesta',
             icon: Icon(
-              Icons.shopping_basket_outlined,
-              color: kOnSurfaceColor,
+              Icons.shopping_basket_rounded,
+              color: kDetailColor,
               size: 40,
             ),
           ),
         ],
         currentIndex: selectedIndex,
-        unselectedItemColor: kOnSurfaceColor,
-        selectedItemColor: kOnSurfaceColor,
-        backgroundColor: kDetailColor,
+        unselectedItemColor: kTextNavColor,
+        selectedItemColor: kDetailColor,
+        backgroundColor: kOnSurfaceColor,
         onTap: (index) {
           selectedIndex = index;
           if (selectedIndex == 0) {

@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     final whats =
-        Uri.parse('https://api.whatsapp.com/send?phone=5581997128385');
+        Uri.parse('https://api.whatsapp.com/send?phone=5581997128484');
     int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
@@ -101,10 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 80,
+                                  width: 84,
                                   height: 90,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: kDetailColor,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     boxShadow: [
@@ -126,11 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Assets.vegetais,
                                           fit: BoxFit.cover,
                                           height: 48,
+                                          color: Colors.white,
                                         )),
                                         Container(
                                           alignment: Alignment.bottomCenter,
                                           child: const Text(
                                             'Vegetais',
+                                            style: TextStyle(
+                                              color: Colors
+                                                  .white, // Set the text color to white
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -146,10 +151,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 80,
+                                  width: 84,
                                   height: 90,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: kDetailColor,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     boxShadow: [
@@ -170,12 +175,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Image.asset(
                                           Assets.frutas,
                                           fit: BoxFit.cover,
+                                          color: Colors.white,
                                           height: 48,
                                         )),
                                         Container(
                                           alignment: Alignment.bottomCenter,
                                           child: const Text(
                                             'Frutas',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -191,10 +200,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 80,
+                                  width: 84,
                                   height: 90,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: kDetailColor,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     boxShadow: [
@@ -216,11 +225,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Assets.folhosos,
                                           fit: BoxFit.cover,
                                           height: 48,
+                                          color: Colors.white,
                                         )),
                                         Container(
                                           alignment: Alignment.bottomCenter,
                                           child: const Text(
                                             'Folhosos',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -236,10 +249,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 80,
+                                  width: 84,
                                   height: 90,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: kDetailColor,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     boxShadow: [
@@ -260,12 +273,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Image.asset(
                                           Assets.carnes,
                                           fit: BoxFit.cover,
+                                          color: Colors.white,
                                           height: 48,
                                         )),
                                         Container(
                                           alignment: Alignment.bottomCenter,
                                           child: const Text(
                                             'Carnes',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -281,10 +298,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 80,
+                                  width: 84,
                                   height: 90,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: kDetailColor,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     boxShadow: [
@@ -301,25 +318,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Center(
                                     child: Wrap(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Center(
-                                                child: Image.asset(
-                                              Assets.ovos,
-                                              fit: BoxFit.cover,
-                                              height: 30,
-                                            )),
-                                            Image.asset(
-                                              Assets.leite,
-                                              fit: BoxFit.cover,
-                                              height: 50,
-                                            )
-                                          ],
+                                        Center(
+                                          child: Image.asset(
+                                            Assets.leiteOvos,
+                                            fit: BoxFit.cover,
+                                            height: 50,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                         Container(
                                           alignment: Alignment.bottomCenter,
                                           child: const Text(
                                             'Leite e Ovos',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ],
