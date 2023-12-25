@@ -1,4 +1,5 @@
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
@@ -14,26 +15,7 @@ class FinalizePurchaseScreen extends StatelessWidget {
     String? formaPag;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Ecommerce ASSIM',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.orange,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, Screens.profile);
-              },
-            ), //IconButton
-          ],
-          //IconButton
-        ),
+        appBar: const CustomAppBar(),
         body: Container(
             color: Colors.white,
             width: size.width,

@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/forms/auth_form_field.dart';
 import 'package:ecommerceassim/components/forms/auth_form_field3.dart';
@@ -22,26 +23,7 @@ class _AdressScreenState extends State<AdressScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Ecommerce ASSIM',
-          style: TextStyle(color: kOnSurfaceColor),
-        ),
-        centerTitle: true,
-        backgroundColor: kDetailColor,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: kOnSurfaceColor,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, Screens.profile);
-            },
-          ), //IconButton
-        ],
-        //IconButton
-      ),
+      appBar: const CustomAppBar(),
       body: Container(
           color: kOnSurfaceColor,
           width: size.width,

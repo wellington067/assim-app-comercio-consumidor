@@ -15,6 +15,7 @@ class Screens {
   static const String selectCard = '/profile/select_card_screen';
   static const String menu = '/menu/menu_screen';
   static const String menuSeller = '/menu/menu_seller_screen';
+  static const String menuProducts = '/menu/menu_products_screen';
   static const String cart = '/profile/cart_screen';
   static const String finalizePurchase = '/purchase/finalize_purchase_screen';
 }

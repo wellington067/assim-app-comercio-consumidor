@@ -35,8 +35,9 @@ const Color kDarkTextColor = Colors.white;
 //**DARK COLORS */
 
 //*GENERAL COLORS*//
+const Color kSuccessColorPurshase = Colors.green;
 const Color kSuccessColor = Colors.greenAccent;
-const Color kErrorColor = Colors.redAccent;
+const Color kErrorColor = Color.fromARGB(255, 189, 13, 0);
 const Color kAlertColor = Colors.orangeAccent;
 //*GENERAL COLORS*//
 
