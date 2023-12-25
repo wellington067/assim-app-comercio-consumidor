@@ -1,11 +1,11 @@
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
-import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/screens/profile/components/custom_ink.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../shared/constants/style_constants.dart';
 
@@ -16,16 +16,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Ecommerce ASSIM',
-            style: TextStyle(color: kOnSurfaceColor),
-          ),
-          centerTitle: true,
-          backgroundColor: kDetailColor,
-
-          //IconButton
-        ),
+        appBar: const CustomAppBar(),
         // ignore: sized_box_for_whitespace
         body: Container(
           color: kOnSurfaceColor,
@@ -37,19 +28,16 @@ class ProfileScreen extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 480,
                       height: 100,
-                      decoration: const BoxDecoration(
-                        color: kDetailColor,
-                      ),
                       child: Center(
                         child: Wrap(
                           children: [
                             Row(
                               children: [
                                 const HorizontalSpacerBox(
-                                    size: SpacerSize.large),
+                                    size: SpacerSize.tiny),
                                 const HorizontalSpacerBox(
                                     size: SpacerSize.small),
                                 Container(
@@ -69,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                                 const Text(
                                   'Maria Eduarda',
                                   style: TextStyle(
-                                      fontSize: 22, color: kOnSurfaceColor),
+                                      fontSize: 22, color: kTextButtonColor),
                                   textAlign: TextAlign.end,
                                 ),
                               ],
@@ -81,201 +69,33 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
+              CustomInkWell(
+                icon: Icons.list_alt,
+                text: 'Pedidos',
                 onTap: () {
                   Navigator.pushNamed(context, Screens.purchases);
                 },
-                child: Row(
-                  children: [
-                    Container(
-                      width: 480,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: kOnSurfaceColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: kTextButtonColor.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 5), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Wrap(
-                          children: [
-                            VerticalSpacerBox(size: SpacerSize.large),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HorizontalSpacerBox(size: SpacerSize.large),
-                                Icon(
-                                  Icons.list_alt,
-                                  size: 32,
-                                ),
-                                HorizontalSpacerBox(size: SpacerSize.medium),
-                                Text(
-                                  'Pedidos',
-                                  style: TextStyle(
-                                      fontSize: 21, color: kTextButtonColor),
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
-              InkWell(
+              CustomInkWell(
+                icon: Icons.pin_drop,
+                text: 'Endereços',
                 onTap: () {
                   Navigator.pushNamed(context, Screens.selectAdress);
                 },
-                child: Row(
-                  children: [
-                    Container(
-                      width: 480,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: kOnSurfaceColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: kTextButtonColor.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 5), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Wrap(
-                          children: [
-                            VerticalSpacerBox(size: SpacerSize.large),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HorizontalSpacerBox(size: SpacerSize.large),
-                                Icon(
-                                  Icons.pin_drop,
-                                  size: 32,
-                                ),
-                                HorizontalSpacerBox(size: SpacerSize.medium),
-                                Text(
-                                  'Endereços',
-                                  style: TextStyle(
-                                      fontSize: 21, color: kTextButtonColor),
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
-              InkWell(
+              CustomInkWell(
+                icon: Icons.credit_card,
+                text: 'Pagamentos',
                 onTap: () {
                   Navigator.pushNamed(context, Screens.selectCard);
                 },
-                child: Row(
-                  children: [
-                    Container(
-                      width: 480,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: kOnSurfaceColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: kTextButtonColor.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 5), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Wrap(
-                          children: [
-                            VerticalSpacerBox(size: SpacerSize.large),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HorizontalSpacerBox(size: SpacerSize.large),
-                                Icon(
-                                  Icons.credit_card,
-                                  size: 32,
-                                ),
-                                HorizontalSpacerBox(size: SpacerSize.medium),
-                                Text(
-                                  'Pagamentos',
-                                  style: TextStyle(
-                                      fontSize: 21, color: kTextButtonColor),
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
-              InkWell(
+              CustomInkWell(
+                icon: Icons.favorite,
+                text: 'Favoritos',
                 onTap: () {
                   Navigator.pushNamed(context, Screens.favorite);
                 },
-                child: Row(
-                  children: [
-                    Container(
-                      width: 480,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: kOnSurfaceColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: kTextButtonColor.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 5), // changes position of shadow
-                          )
-                        ],
-                      ),
-                      child: const Center(
-                        child: Wrap(
-                          children: [
-                            VerticalSpacerBox(size: SpacerSize.large),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HorizontalSpacerBox(size: SpacerSize.large),
-                                Icon(
-                                  Icons.favorite,
-                                  size: 32,
-                                ),
-                                HorizontalSpacerBox(size: SpacerSize.medium),
-                                Text(
-                                  'Favoritos',
-                                  style: TextStyle(
-                                      fontSize: 21, color: kTextButtonColor),
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
               const Spacer(),
               Container(

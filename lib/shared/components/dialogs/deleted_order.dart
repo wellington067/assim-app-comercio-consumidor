@@ -1,8 +1,8 @@
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 
-class FinishVisitDialog extends StatelessWidget {
-  const FinishVisitDialog({
+class DeletedOrderDialog extends StatelessWidget {
+  const DeletedOrderDialog({
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class FinishVisitDialog extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 30.0),
                 child: Text(
-                  'Você tem certeza que deseja excluir este endereço?',
+                  'Você tem certeza que deseja excluir este pedido?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: kText,

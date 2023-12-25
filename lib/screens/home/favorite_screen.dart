@@ -1,5 +1,6 @@
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
@@ -25,16 +26,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       create: (_) => HomeScreenController(),
       builder: (context, child) => Consumer<HomeScreenController>(
         builder: ((context, controller, child) => Scaffold(
-              appBar: AppBar(
-                title: const Text(
-                  'Ecommerce ASSIM',
-                  style: TextStyle(color: kOnSurfaceColor),
-                ),
-                centerTitle: true,
-                backgroundColor: kDetailColor,
-
-                //IconButton
-              ),
+              appBar: const CustomAppBar(),
               bottomNavigationBar:
                   BottomNavigation(selectedIndex: selectedIndex),
               body: Container(

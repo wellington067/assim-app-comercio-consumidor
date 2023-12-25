@@ -1,4 +1,5 @@
 import 'package:ecommerceassim/assets/index.dart';
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
@@ -25,26 +26,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
         create: (_) => HomeScreenController(),
         builder: (context, child) => Consumer<HomeScreenController>(
               builder: ((context, controller, child) => Scaffold(
-                  appBar: AppBar(
-                    title: const Text(
-                      'Ecommerce ASSIM',
-                      style: TextStyle(color: kOnSurfaceColor),
-                    ),
-                    centerTitle: true,
-                    backgroundColor: kDetailColor,
-                    actions: <Widget>[
-                      IconButton(
-                        icon: const Icon(
-                          Icons.menu,
-                          color: kOnSurfaceColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, Screens.profile);
-                        },
-                      ), //IconButton
-                    ],
-                    //IconButton
-                  ),
+                  appBar: const CustomAppBar(),
                   body: Container(
                       color: kOnSurfaceColor,
                       width: size.width,

@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
@@ -18,16 +19,7 @@ class SelectAdress extends StatelessWidget {
         create: (_) => ProfileController(),
         builder: (context, child) => Consumer<ProfileController>(
             builder: ((context, controller, child) => Scaffold(
-                appBar: AppBar(
-                  title: const Text(
-                    'Ecommerce ASSIM',
-                    style: TextStyle(color: kOnSurfaceColor),
-                  ),
-                  centerTitle: true,
-                  backgroundColor: kDetailColor,
-
-                  //IconButton
-                ),
+                appBar: const CustomAppBar(),
                 body: Container(
                     color: kOnSurfaceColor,
                     width: size.width,

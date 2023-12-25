@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:flutter/material.dart';
 import '../../components/utils/vertical_spacer_box.dart';
@@ -12,26 +13,7 @@ class PurchasesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Ecommerce ASSIM',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.orange,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, Screens.profile);
-              },
-            ), //IconButton
-          ],
-          //IconButton
-        ),
+        appBar: const CustomAppBar(),
         body: Container(
             color: Colors.white,
             width: size.width,

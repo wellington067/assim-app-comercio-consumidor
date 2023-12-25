@@ -93,7 +93,11 @@ class _BancasState extends State<Bancas> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, Screens.menuSeller);
+                      Navigator.pushNamed(
+                        context,
+                        Screens.menuProducts,
+                        arguments: banca.nome,
+                      );
                     },
                   ),
                   const VerticalSpacerBox(size: SpacerSize.large),
