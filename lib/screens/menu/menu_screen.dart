@@ -3,7 +3,6 @@ import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/home/components/category_menu.dart';
 import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -22,7 +21,7 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = 0;
+    int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
@@ -154,7 +153,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                             IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                Icons.add_box,
+                                                Icons.add_box_outlined,
                                                 color: kButtom,
                                                 size: 35,
                                               ),

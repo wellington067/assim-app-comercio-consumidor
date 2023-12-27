@@ -16,6 +16,8 @@ class Bancas extends StatefulWidget {
 }
 
 class _BancasState extends State<Bancas> {
+  Map<int, bool> favorites = {};
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,8 @@ class _BancasState extends State<Bancas> {
             itemCount: bancas.length,
             itemBuilder: (context, index) {
               BancaModel banca = bancas[index];
+              bool isFavorite = favorites[banca.id] ?? false;
+
               return Column(
                 children: [
                   InkWell(
@@ -82,9 +86,15 @@ class _BancasState extends State<Bancas> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.favorite,
+                              onPressed: () {
+                                setState(() {
+                                  favorites[banca.id] = !isFavorite;
+                                });
+                              },
+                              icon: Icon(
+                                isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline,
                                 color: kButtom,
                               ),
                             ),
@@ -96,7 +106,10 @@ class _BancasState extends State<Bancas> {
                       Navigator.pushNamed(
                         context,
                         Screens.menuProducts,
-                        arguments: banca.nome,
+                        arguments: {
+                          'id': banca.id,
+                          'nome': banca.nome,
+                        },
                       );
                     },
                   ),
