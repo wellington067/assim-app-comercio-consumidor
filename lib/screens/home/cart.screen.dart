@@ -20,12 +20,12 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  late int selectedIndex = 0;
+  int selectedIndex = 3;
   @override
   Widget build(BuildContext context) {
     //late int melancia = 0;
     //late int limao = 0;
-    late int selectedIndex = 0;
+    late int selectedIndex = 3;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),

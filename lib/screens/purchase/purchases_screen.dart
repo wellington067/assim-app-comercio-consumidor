@@ -1,6 +1,7 @@
 import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
 import 'package:ecommerceassim/screens/profile/profile_controller.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -18,6 +19,8 @@ class PurchasesScreen extends StatefulWidget {
 }
 
 class _PurchasesScreenState extends State<PurchasesScreen> {
+  int selectedIndex = 2;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -26,6 +29,8 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
         builder: (context, child) => Consumer<ProfileController>(
             builder: ((context, controller, child) => Scaffold(
                 appBar: const CustomAppBar(),
+                bottomNavigationBar:
+                    BottomNavigation(selectedIndex: selectedIndex),
                 body: Container(
                     color: kOnSurfaceColor,
                     width: size.width,

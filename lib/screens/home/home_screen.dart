@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30))),
-                            hintText: 'Buscar',
+                            hintText: 'Buscar por banca',
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 15),
                             isDense: true,
