@@ -49,7 +49,7 @@ class MenuProductsScreen extends StatelessWidget {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(30))),
-                    hintText: 'Buscar',
+                    hintText: 'Buscar por produto',
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                     isDense: true,
@@ -64,10 +64,16 @@ class MenuProductsScreen extends StatelessWidget {
                 future: produtoRepository.getProdutos(bancaId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(kDetailColor),
-                      ),
+                    return const Column(
+                      children: [
+                        VerticalSpacer(size: 250),
+                        Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(kDetailColor),
+                          ),
+                        ),
+                      ],
                     );
                   } else if (snapshot.hasError) {
                     return Padding(

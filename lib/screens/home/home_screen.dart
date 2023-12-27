@@ -1,15 +1,12 @@
-import 'package:ecommerceassim/screens/home/components/category_menu.dart';
 import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/home/components/bancas.dart';
 import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../assets/index.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -31,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, child) => Consumer<HomeScreenController>(
         builder: ((context, controller, child) => Scaffold(
               appBar: const CustomAppBar(),
+              endDrawer: buildCustomDrawer(context),
               bottomNavigationBar:
                   BottomNavigation(selectedIndex: selectedIndex),
               body: Container(
@@ -59,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )),
                     ),
-                    VerticalSpacerBox(size: SpacerSize.large),
-                    Row(
+                    VerticalSpacerBox(size: SpacerSize.medium),
+                    /*  Row(
                       children: [
                         Text(
                           'Bancas',
@@ -68,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
                       ],
-                    ),
-                    VerticalSpacerBox(size: SpacerSize.large),
+                    ), */
                     Bancas(),
                   ],
                 ),

@@ -6,6 +6,7 @@ import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
+import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../assets/index.dart';
@@ -13,7 +14,9 @@ import '../../components/buttons/primary_button.dart';
 import '../../shared/constants/app_number_constants.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  final ProdutoModel? selectedProduct;
+
+  const CartScreen({Key? key, this.selectedProduct}) : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -32,6 +35,7 @@ class _CartScreenState extends State<CartScreen> {
       builder: (context, child) => Consumer<HomeScreenController>(
           builder: ((context, controller, child) => Scaffold(
                 appBar: const CustomAppBar(),
+                endDrawer: buildCustomDrawer(context),
                 bottomNavigationBar:
                     BottomNavigation(selectedIndex: selectedIndex),
                 body: SingleChildScrollView(

@@ -15,6 +15,20 @@ class HomeScreenController with ChangeNotifier {
   String formaPag = '';
   String formEnt = '';
 
+  // Lista de bancas
+  List<String> bancas = [];
+
+  // Função para adicionar bancas à lista
+  void addBanca(String banca) {
+    bancas.add(banca);
+    notifyListeners();
+  }
+
+  // Função para verificar se a lista de bancas não está vazia
+  bool hasBancas() {
+    return bancas.isNotEmpty;
+  }
+
   void incrementCounter() {
     _counter++;
     notifyListeners();
@@ -45,7 +59,7 @@ class HomeScreenController with ChangeNotifier {
     notifyListeners();
   }
 
-   setFormEnt(String value) {
+  setFormEnt(String value) {
     formEnt = value;
     notifyListeners();
   }
