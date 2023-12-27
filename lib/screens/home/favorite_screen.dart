@@ -27,6 +27,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       builder: (context, child) => Consumer<HomeScreenController>(
         builder: ((context, controller, child) => Scaffold(
               appBar: const CustomAppBar(),
+              endDrawer: buildCustomDrawer(context),
               bottomNavigationBar:
                   BottomNavigation(selectedIndex: selectedIndex),
               body: Container(

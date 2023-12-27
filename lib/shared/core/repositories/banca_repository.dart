@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
+import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
-
-import '../../constants/app_text_constants.dart';
-import '../models/banca_model.dart';
 
 class BancaRepository {
   late String userToken;
@@ -12,7 +11,6 @@ class BancaRepository {
 
   Future<List<BancaModel>> getBancas() async {
     UserStorage userStorage = UserStorage();
-
     userToken = await userStorage.getUserToken();
 
     try {
@@ -24,6 +22,11 @@ class BancaRepository {
         final List<BancaModel> bancas = [];
         final Map<String, dynamic> jsonData = response.data;
         final bancasJson = jsonData['bancas'];
+
+        if (bancasJson.isEmpty) {
+          throw Exception('Nenhuma banca cadastrada.');
+        }
+
         for (var item in bancasJson) {
           final BancaModel banca = BancaModel.fromJson(item);
           bancas.add(banca);
