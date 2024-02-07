@@ -1,6 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:ecommerceassim/app.dart';
-import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/bairro_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart';

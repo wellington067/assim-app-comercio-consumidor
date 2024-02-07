@@ -5,14 +5,13 @@ import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../shared/components/dialogs/default_alert_dialog.dart';
-import '../../shared/constants/style_constants.dart';
-import '../../shared/core/models/bairro_model.dart';
-import '../../shared/core/models/estado_model.dart';
-import '../../shared/core/user_storage.dart';
-import '../screens_index.dart';
-import '../signin/sign_in_repository.dart';
+import '../../components/dialogs/default_alert_dialog.dart';
+import '../../constants/style_constants.dart';
+import '../models/bairro_model.dart';
+import '../models/estado_model.dart';
+import '../user_storage.dart';
+import '../../../screens/screens_index.dart';
+import 'sign_in_repository.dart';
 
 class SignUpRepository {
   final Dio _dio = Dio();
@@ -52,7 +51,7 @@ class SignUpRepository {
             "telefone": telefone,
             "cpf": cpf,
             "roles": [5]
-            //"rua": rua, 
+            //"rua": rua,
             //"bairro_id": bairro,
             //"numero": numero,
             //"cep": cep,
@@ -60,7 +59,7 @@ class SignUpRepository {
             //"estado": estado,
             //"país": pais,
           });
-          print(response.data);
+      print(response.data);
       if (response.statusCode == 201) {
         print(response.data);
         //int idTemp = response.data["user"]["id"];

@@ -1,4 +1,4 @@
-import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
+import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';

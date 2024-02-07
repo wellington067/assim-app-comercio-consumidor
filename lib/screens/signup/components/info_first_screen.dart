@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../components/forms/custom_text_form_field.dart';
 import '../../../components/utils/vertical_spacer_box.dart';
 import '../../../shared/constants/app_enums.dart';
-import '../sign_up_controller.dart';
+import '../../../shared/core/controllers/sign_up_controller.dart';
 
 // ignore: must_be_immutable
 class InfoFirstScreen extends StatelessWidget {
@@ -48,9 +48,7 @@ class InfoFirstScreen extends StatelessWidget {
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
           hintText: 'Senha',
-          
           onChanged: (value) => controller
-          
               .checkPasswordStrength(controller.passwordController.text),
           isPassword: true,
           icon: Icons.lock,

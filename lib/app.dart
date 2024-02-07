@@ -1,11 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:ecommerceassim/screens/first/first_screen.dart';
-import 'package:ecommerceassim/screens/home/cart.screen.dart';
-import 'package:ecommerceassim/screens/home/favorite_screen.dart';
-import 'package:ecommerceassim/screens/menu/menu_screen.dart';
-import 'package:ecommerceassim/screens/menu/menu_seller_screen.dart';
-import 'package:ecommerceassim/screens/menu/menu_products_screen.dart';
-import 'package:ecommerceassim/screens/purchase/finalize_purchase_screen.dart';
+import 'package:ecommerceassim/screens/cesta/cart.screen.dart';
+import 'package:ecommerceassim/screens/favorito/favorite_screen.dart';
+import 'package:ecommerceassim/screens/favorito/favorite_seller_screen.dart';
+import 'package:ecommerceassim/screens/produto/products_screen.dart';
+import 'package:ecommerceassim/screens/pedidos/finalize_purchase_screen.dart';
 import 'package:ecommerceassim/screens/home/home_screen.dart';
 import 'package:ecommerceassim/screens/profile/adress_screen.dart';
 import 'package:ecommerceassim/screens/profile/card_screen.dart';
@@ -16,7 +15,7 @@ import 'package:ecommerceassim/screens/signup/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'screens/purchase/purchases_screen.dart';
+import 'screens/pedidos/purchases_screen.dart';
 import 'screens/signin/sign_in_screen.dart';
 import 'screens/splash/splash_screen.dart';
 
@@ -26,6 +25,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // ignore: deprecated_member_use
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: (context, child) {
@@ -57,7 +57,6 @@ class App extends StatelessWidget {
         Screens.payment: (BuildContext context) => const CardScreen(),
         Screens.selectAdress: (BuildContext context) => const SelectAdress(),
         Screens.selectCard: (BuildContext context) => const SelectCard(),
-        Screens.menu: (BuildContext context) => const MenuScreen(),
         Screens.menuSeller: (BuildContext context) => const MenuSellerScreen(),
         Screens.menuProducts: (BuildContext context) =>
             const MenuProductsScreen(),

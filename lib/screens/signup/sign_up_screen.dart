@@ -1,4 +1,4 @@
-import 'package:ecommerceassim/screens/signup/sign_up_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/sign_up_controller.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,19 +65,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           //cada index do PageView tem um children diferente que é um componente de cadastro diferente,
                           // cada um com seus campos
                           children: //controller.infoIndex == 0
-                            //  ? [
+                              //  ? [
                               [
-                                  InfoFirstScreen(controller),
-                              ]
-                              //  ]
-                            //  : [
-                            //      InfoSecondScreen(controller),
-                             //   ]
-                                ),
+                            InfoFirstScreen(controller),
+                          ]
+                          //  ]
+                          //  : [
+                          //      InfoSecondScreen(controller),
+                          //   ]
+                          ),
                     ),
                     const VerticalSpacerBox(size: SpacerSize.huge),
-                  //  controller.screenState == ScreenState.loading
-                       /* ? const CircularProgressIndicator()
+                    //  controller.screenState == ScreenState.loading
+                    /* ? const CircularProgressIndicator()
                         : controller.infoIndex != 1
                             ? PrimaryButton(
                                 text: 'Próximo',
@@ -91,36 +91,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: kDetailColor,
                               )
                               */
-                            PrimaryButton(
-                                text: 'Concluir',
-                                onPressed: () {
-                                  if (controller.validateEmptyFields() ==
-                                      false) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            DefaultAlertDialog(
-                                              title: 'Erro',
-                                              body: 'Preencha todos os campos',
-                                              cancelText: 'Ok',
-                                              confirmText: 'Ok',
-                                              onConfirm: () => Get.back(),
-                                              cancelColor: kErrorColor,
-                                              confirmColor: kSuccessColor,
-                                            ));
-                                  } else if (controller.validateEmail() ==
-                                      false) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            DefaultAlertDialogOneButton(
-                                              title: 'Erro',
-                                              body: 'Digite um email válido',
-                                              confirmText: 'Ok',
-                                              onConfirm: () => Get.back(),
-                                              buttonColor: kAlertColor,
-                                            ));
-                                  } /*else if (controller.validateNumber() ==
+                    PrimaryButton(
+                      text: 'Concluir',
+                      onPressed: () {
+                        if (controller.validateEmptyFields() == false) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => DefaultAlertDialog(
+                                    title: 'Erro',
+                                    body: 'Preencha todos os campos',
+                                    cancelText: 'Ok',
+                                    confirmText: 'Ok',
+                                    onConfirm: () => Get.back(),
+                                    cancelColor: kErrorColor,
+                                    confirmColor: kSuccessColor,
+                                  ));
+                        } else if (controller.validateEmail() == false) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => DefaultAlertDialogOneButton(
+                                    title: 'Erro',
+                                    body: 'Digite um email válido',
+                                    confirmText: 'Ok',
+                                    onConfirm: () => Get.back(),
+                                    buttonColor: kAlertColor,
+                                  ));
+                        } /*else if (controller.validateNumber() ==
                                       false) {
                                     showDialog(
                                         context: context,
@@ -133,38 +129,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               onConfirm: () => Get.back(),
                                               buttonColor: kAlertColor,
                                             ));
-                                  }*/ 
-                                  else {
-                                    controller.signUp(context);
-                                  }
-                                },
-                                color: kDetailColor,
-                              ),
+                                  }*/
+                        else {
+                          controller.signUp(context);
+                        }
+                      },
+                      color: kDetailColor,
+                    ),
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     controller.infoIndex != 0
                         ? Column(
-                          children: [
-                            Row(
+                            children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text('Já possui conta?'),
                                   CustomTextButton(
-                                      title: 'Entre aqui',
-                                      onPressed: () {
-                                        navigatorKey.currentState!
-                                            .pushReplacementNamed(Screens.signin);
-                                      },
-                                    ),
+                                    title: 'Entre aqui',
+                                    onPressed: () {
+                                      navigatorKey.currentState!
+                                          .pushReplacementNamed(Screens.signin);
+                                    },
+                                  ),
                                 ],
                               ),
-                            Center(
+                              Center(
                                 child: CustomTextButton(
                                     onPressed: () => controller.back(),
                                     title: 'Anterior'),
                               ),
-                              
-                          ],
-                        )
+                            ],
+                          )
                         : const SizedBox(),
                     SizedBox(
                       width: size.width,
@@ -180,17 +175,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const VerticalSpacerBox(size: SpacerSize.small),
                           controller.infoIndex == 0
                               ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Já possui conta?'),
-                                  CustomTextButton(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text('Já possui conta?'),
+                                    CustomTextButton(
                                       title: 'Entre aqui',
                                       onPressed: () {
-                                       Navigator.pushReplacementNamed(context, Screens.signin);
-                       },
+                                        Navigator.pushReplacementNamed(
+                                            context, Screens.signin);
+                                      },
                                     ),
-                                ],
-                              )
+                                  ],
+                                )
                               : const SizedBox(),
                         ],
                       ),
@@ -202,17 +198,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Align(
-                  alignment: Alignment.bottomCenter,
-                  child: //Text(
-                    //textAlign: TextAlign.center,
-                    //'Bem vindo(a) a ASSIM',
-                   // style: kTitle1.copyWith(color: kBackgroundColor),
-                  //),
-                  SizedBox(
-                  height: size.height * 0.75,
-                )
-                ),
-                
+                    alignment: Alignment.bottomCenter,
+                    child: //Text(
+                        //textAlign: TextAlign.center,
+                        //'Bem vindo(a) a ASSIM',
+                        // style: kTitle1.copyWith(color: kBackgroundColor),
+                        //),
+                        SizedBox(
+                      height: size.height * 0.75,
+                    )),
               ],
             ),
           ],

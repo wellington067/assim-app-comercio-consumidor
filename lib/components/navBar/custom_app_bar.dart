@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
@@ -42,6 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 Drawer buildCustomDrawer(BuildContext context) {
+  UserStorage userStorage = UserStorage();
   return Drawer(
     child: Column(
       children: <Widget>[
@@ -99,6 +101,8 @@ Drawer buildCustomDrawer(BuildContext context) {
                   fontSize: 16),
             ),
             onTap: () {
+              userStorage.clearUserCredentials();
+
               Navigator.pushNamed(
                   context, Screens.first); // Implementar a função de deslogar
             },

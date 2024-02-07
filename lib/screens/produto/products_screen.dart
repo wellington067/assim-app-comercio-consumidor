@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:ecommerceassim/screens/home/components/verticalSpacer.dart';
+import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/produto_repository.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/home/components/category_menu.dart';
-import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
+import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 
@@ -201,9 +201,7 @@ class MenuProductsScreen extends StatelessWidget {
                   style: const TextStyle(fontSize: 18, color: kDetailColor),
                 ),
                 IconButton(
-                  onPressed: () {
-                    // Add your onTap functionality here.
-                  },
+                  onPressed: () {},
                   icon: const Icon(
                     Icons.add_circle_outline,
                     color: kDetailColor,
