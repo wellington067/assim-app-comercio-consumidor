@@ -1,43 +1,143 @@
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
+import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
-import 'package:ecommerceassim/screens/home/components/category_menu.dart';
-import 'package:ecommerceassim/screens/home/components/custom_app_bar.dart';
-import 'package:ecommerceassim/screens/home/home_screen_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
+import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../components/utils/horizontal_spacer_box.dart';
 
-import '../../assets/index.dart';
+class MenuSellerScreen extends StatelessWidget {
+  const MenuSellerScreen({Key? key}) : super(key: key);
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({Key? key}) : super(key: key);
-
-  @override
-  State<MenuScreen> createState() => _MenuScreenState();
-}
-
-class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = 1;
+    // ignore: no_leading_underscores_for_local_identifiers
+    int _selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
       builder: (context, child) => Consumer<HomeScreenController>(
         builder: ((context, controller, child) => Scaffold(
-              appBar: const CustomAppBar(),
+              appBar: AppBar(
+                title: const Text(
+                  'Ecommerce ASSIM',
+                  style: TextStyle(color: Colors.white),
+                ),
+                centerTitle: true,
+                backgroundColor: kDetailColor,
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, Screens.profile);
+                    },
+                  ), //IconButton
+                ],
+                //IconButton
+              ),
               bottomNavigationBar:
-                  BottomNavigation(selectedIndex: selectedIndex),
+                  BottomNavigation(selectedIndex: _selectedIndex),
               body: SingleChildScrollView(
                 child: Container(
-                  color: kOnSurfaceColor,
+                  color: Colors.white,
                   width: size.width,
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
+                      InkWell(
+                        child: Container(
+                          width: 440,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(15)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                    0, 0), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Wrap(
+                              children: [
+                                Row(
+                                  children: [
+                                    const HorizontalSpacerBox(
+                                        size: SpacerSize.large),
+                                    Container(
+                                      transformAlignment: Alignment.center,
+                                      alignment: Alignment.center,
+                                      width: 65.0,
+                                      height: 65.0,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(
+                                              "https://gentv.com.br/img/content/266-1"),
+                                        ),
+                                      ),
+                                    ),
+                                    const HorizontalSpacerBox(
+                                        size: SpacerSize.large),
+                                    const Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        VerticalSpacerBox(
+                                            size: SpacerSize.medium),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'João Frutas',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Contato: (11) 99999-9999',
+                                            ),
+                                            IconButton(
+                                              onPressed: null,
+                                              icon: Icon(
+                                                Icons.phone,
+                                                color: Colors.green,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, Screens.menuSeller);
+                        },
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.medium),
                       const Padding(
                         padding: EdgeInsets.all(5.0),
                         child: TextField(
@@ -52,14 +152,12 @@ class _MenuScreenState extends State<MenuScreen> {
                               isDense: true,
                               prefixIcon: Icon(
                                 Icons.search,
-                                color: kDetailColor,
+                                color: kButtom,
                                 size: 25,
                               ),
                             )),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.medium),
-                      const CategoryMenuList(),
-                      const VerticalSpacerBox(size: SpacerSize.large),
                       SingleChildScrollView(
                         child: Center(
                           child: Row(
@@ -70,17 +168,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   width: 210,
                                   height: 300,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: Colors.white,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(15)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            kTextButtonColor.withOpacity(0.5),
-                                        spreadRadius: 0,
-                                        blurRadius: 3,
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
                                         offset: const Offset(
-                                            0, 0), // chages position of shadow
+                                            0, 5), // changes position of shadow
                                       ),
                                     ],
                                   ),
@@ -147,14 +244,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Text(
                                               'Maria',
                                               style: TextStyle(
-                                                  fontSize: 16, color: kButtom),
+                                                  fontSize: 16,
+                                                  color: Colors.green),
                                             ),
                                             Spacer(),
                                             IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                Icons.add_box_outlined,
-                                                color: kButtom,
+                                                Icons.add_box,
+                                                color: Colors.green,
                                                 size: 35,
                                               ),
                                             ),
@@ -172,17 +270,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   width: 210,
                                   height: 300,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: Colors.white,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(15)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            kTextButtonColor.withOpacity(0.5),
-                                        spreadRadius: 0,
-                                        blurRadius: 3,
-                                        offset: const Offset(0,
-                                            0), //// changes position of shadow
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(
+                                            0, 5), // changes position of shadow
                                       ),
                                     ],
                                   ),
@@ -249,14 +346,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Text(
                                               'João',
                                               style: TextStyle(
-                                                  fontSize: 16, color: kButtom),
+                                                  fontSize: 16,
+                                                  color: Colors.green),
                                             ),
                                             Spacer(),
                                             IconButton(
                                               onPressed: null,
                                               icon: Icon(
                                                 Icons.add_box,
-                                                color: kButtom,
+                                                color: Colors.green,
                                                 size: 35,
                                               ),
                                             ),
@@ -283,17 +381,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   width: 210,
                                   height: 300,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: Colors.white,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(15)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            kTextButtonColor.withOpacity(0.5),
-                                        spreadRadius: 0,
-                                        blurRadius: 3,
-                                        offset: const Offset(0,
-                                            0), // cha/ changes position of shadow
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(
+                                            0, 5), // changes position of shadow
                                       ),
                                     ],
                                   ),
@@ -360,14 +457,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Text(
                                               'Maria',
                                               style: TextStyle(
-                                                  fontSize: 16, color: kButtom),
+                                                  fontSize: 16,
+                                                  color: Colors.green),
                                             ),
                                             Spacer(),
                                             IconButton(
                                               onPressed: null,
                                               icon: Icon(
                                                 Icons.add_box,
-                                                color: kButtom,
+                                                color: Colors.green,
                                                 size: 35,
                                               ),
                                             ),
@@ -385,17 +483,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   width: 210,
                                   height: 300,
                                   decoration: BoxDecoration(
-                                    color: kOnSurfaceColor,
+                                    color: Colors.white,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(15)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            kTextButtonColor.withOpacity(0.5),
-                                        spreadRadius: 0,
-                                        blurRadius: 3,
-                                        offset: const Offset(0,
-                                            0), //// changes position of shadow
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(
+                                            0, 5), // changes position of shadow
                                       ),
                                     ],
                                   ),
@@ -462,14 +559,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Text(
                                               'João',
                                               style: TextStyle(
-                                                  fontSize: 16, color: kButtom),
+                                                  fontSize: 16,
+                                                  color: Colors.green),
                                             ),
                                             Spacer(),
                                             IconButton(
                                               onPressed: null,
                                               icon: Icon(
                                                 Icons.add_box,
-                                                color: kButtom,
+                                                color: Colors.green,
                                                 size: 35,
                                               ),
                                             ),

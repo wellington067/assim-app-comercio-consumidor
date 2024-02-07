@@ -9,7 +9,7 @@ import '../../../components/forms/custom_text_form_field.dart';
 import '../../../components/utils/vertical_spacer_box.dart';
 import '../../../shared/constants/app_enums.dart';
 import '../../../shared/core/models/bairro_model.dart';
-import '../sign_up_controller.dart';
+import '../../../shared/core/controllers/sign_up_controller.dart';
 
 class InfoSecondScreen extends StatelessWidget {
   late SignUpController controller;
@@ -22,8 +22,11 @@ class InfoSecondScreen extends StatelessWidget {
         DropdownButtonFormField<EstadoModel>(
           isExpanded: true,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.home_filled), border: InputBorder.none, filled: true,
-              fillColor: kBackgroundColor,),
+            prefixIcon: Icon(Icons.home_filled),
+            border: InputBorder.none,
+            filled: true,
+            fillColor: kBackgroundColor,
+          ),
           style: Theme.of(context).textTheme.titleLarge,
           hint: const Text('Estado'),
           value: null,
@@ -42,8 +45,11 @@ class InfoSecondScreen extends StatelessWidget {
         DropdownButtonFormField<CidadeModel>(
           isExpanded: true,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.home), border: InputBorder.none, filled: true,
-              fillColor: kBackgroundColor,),
+            prefixIcon: Icon(Icons.home),
+            border: InputBorder.none,
+            filled: true,
+            fillColor: kBackgroundColor,
+          ),
           style: Theme.of(context).textTheme.titleLarge,
           hint: const Text('Cidade'),
           value: null,
@@ -67,15 +73,14 @@ class InfoSecondScreen extends StatelessWidget {
         DropdownButtonFormField<BairroModel>(
           isExpanded: true,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.location_city_sharp),
-              border: InputBorder.none,
-              filled: true,
-              fillColor: kBackgroundColor,),
+            prefixIcon: Icon(Icons.location_city_sharp),
+            border: InputBorder.none,
+            filled: true,
+            fillColor: kBackgroundColor,
+          ),
           style: Theme.of(context).textTheme.titleLarge,
           hint: const Text('Bairro'),
-          
           value: null,
-          
           items: controller.bairros.map((obj) {
             return DropdownMenuItem<BairroModel>(
               value: obj,

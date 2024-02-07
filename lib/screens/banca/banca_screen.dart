@@ -1,4 +1,4 @@
-import 'package:ecommerceassim/screens/home/components/verticalSpacer.dart';
+import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +10,7 @@ import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 
 class Bancas extends StatefulWidget {
-  const Bancas({Key? key});
+  const Bancas({super.key});
 
   @override
   State<Bancas> createState() => _BancasState();

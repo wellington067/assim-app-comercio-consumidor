@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:ecommerceassim/screens/signup/sign_up_repository.dart';
+import 'package:ecommerceassim/shared/core/repositories/sign_up_repository.dart';
 import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:ecommerceassim/shared/core/models/estado_model.dart';
@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../shared/constants/app_enums.dart';
+import '../../constants/app_enums.dart';
 
 enum SignUpStatus {
   done,
