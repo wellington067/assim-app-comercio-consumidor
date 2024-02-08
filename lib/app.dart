@@ -1,4 +1,6 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:ecommerceassim/screens/banca/banca_screen.dart';
+import 'package:ecommerceassim/screens/feiras/feiras_screen.dart';
 import 'package:ecommerceassim/screens/first/first_screen.dart';
 import 'package:ecommerceassim/screens/cesta/cart.screen.dart';
 import 'package:ecommerceassim/screens/favorito/favorite_screen.dart';
@@ -61,6 +63,8 @@ class App extends StatelessWidget {
         Screens.menuProducts: (BuildContext context) =>
             const MenuProductsScreen(),
         Screens.cart: (BuildContext context) => const CartScreen(),
+        Screens.feiras: (BuildContext context) => FeirasScreen(),
+        Screens.bancas: (BuildContext context) => const Bancas(),
         Screens.finalizePurchase: (BuildContext context) =>
             const FinalizePurchaseScreen(),
       },

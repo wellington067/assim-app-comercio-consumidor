@@ -18,4 +18,6 @@ class Screens {
   static const String menuProducts = '/menu/menu_products_screen';
   static const String cart = '/profile/cart_screen';
   static const String finalizePurchase = '/purchase/finalize_purchase_screen';
+  static const String feiras = '/feiras/feiras_screen';
+  static const String bancas = '/banca/banca_screen';
 }
