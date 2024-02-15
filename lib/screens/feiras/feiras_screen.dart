@@ -1,40 +1,42 @@
-import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import 'package:ecommerceassim/shared/core/controllers/bairro_controller.dart';
-import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
+import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart'; // Certifique-se de ter um controller para as feiras
+import 'package:ecommerceassim/shared/core/models/feira_model.dart'; // Modelo de feira
 
 class FeirasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bairroController = Provider.of<BairroController>(context);
+    final feiraController = Provider.of<FeiraController>(context);
 
-    if (bairroController.bairros.isEmpty) {
-      bairroController.loadBairros();
+    // Chamada para carregar as feiras, se necessário
+    if (feiraController.feiras.isEmpty) {
+      feiraController.loadFeiras();
     }
 
     return Scaffold(
-      body: Consumer<BairroController>(
-        builder: (context, bairroController, child) {
-          List<BairroModel> bairros = bairroController.bairros;
+      body: Consumer<FeiraController>(
+        builder: (context, feiraController, child) {
+          List<FeiraModel> feiras = feiraController.feiras;
 
-          if (bairros.isEmpty) {
+          if (feiras.isEmpty) {
             return Center(
               child: CircularProgressIndicator(color: kDetailColor),
             );
           }
 
           return ListView.builder(
-            itemCount: bairros.length,
+            itemCount: feiras.length,
             itemBuilder: (context, index) {
-              BairroModel bairro = bairros[index];
+              FeiraModel feira = feiras[index];
 
               return Material(
-                // Wrap the InkWell in a Material widget
-                color: Colors
-                    .transparent, // Optional: Set the color to transparent or any other color
+                color: Colors.transparent, // Configuração opcional de cor
                 child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Screens.bancas);
+                  },
                   child: Container(
                     padding: EdgeInsets.all(16.0),
                     margin:
@@ -56,23 +58,25 @@ class FeirasScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 30.0,
                           backgroundImage: NetworkImage(
-                            "https://gentv.com.br/img/content/266-1",
+                            // Substitua por uma imagem relevante da feira, se disponível
+                            "https://example.com/feira_image.png",
                           ),
                         ),
                         SizedBox(width: 16.0),
-                        Text(
-                          bairro.nome ?? 'Bairro Desconhecido',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: kDarkTextColor,
+                        Expanded(
+                          // Para evitar overflow de texto
+                          child: Text(
+                            feira
+                                .nome, // Presumindo que FeiraModel tem um campo nome
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: kDarkTextColor,
+                            ),
                           ),
                         ),
-                        Spacer(),
                         IconButton(
-                          onPressed: () {
-                            // Ação ao pressionar o botão de favorito
-                          },
+                          onPressed: () {},
                           icon: Icon(
                             Icons.favorite,
                             color: kButtom,
@@ -81,9 +85,6 @@ class FeirasScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, Screens.bancas);
-                  },
                 ),
               );
             },

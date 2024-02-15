@@ -1,25 +1,28 @@
 class FeiraModel {
   int id;
-  List<String> funcionamento;
-  String horarioAbertura;
-  String horarioFechamento;
+  String nome;
+  String? descricao; // Pode ser nulo
+  List<String> horariosFuncionamento;
   int bairroId;
+  int associacaoId;
 
   FeiraModel({
     required this.id,
-    required this.funcionamento,
-    required this.horarioAbertura,
-    required this.horarioFechamento,
+    required this.nome,
+    this.descricao,
+    required this.horariosFuncionamento,
     required this.bairroId,
+    required this.associacaoId,
   });
 
   factory FeiraModel.fromJson(Map<String, dynamic> json) {
     return FeiraModel(
       id: json['id'],
-      funcionamento: List<String>.from(json['funcionamento']),
-      horarioAbertura: json['horario_abertura'],
-      horarioFechamento: json['horario_fechamento'],
+      nome: json['nome'],
+      descricao: json['descricao'], // Pode ser nulo
+      horariosFuncionamento: List<String>.from(json['horarios_funcionamento']),
       bairroId: json['bairro_id'],
+      associacaoId: json['associacao_id'],
     );
   }
 }
