@@ -6,6 +6,8 @@ import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart'; /
 import 'package:ecommerceassim/shared/core/models/feira_model.dart'; // Modelo de feira
 
 class FeirasScreen extends StatelessWidget {
+  const FeirasScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final feiraController = Provider.of<FeiraController>(context);

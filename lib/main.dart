@@ -10,6 +10,8 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
+import 'shared/core/controllers/sign_in_controller.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
@@ -23,6 +25,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => SelectedItem()),
         ChangeNotifierProvider(create: (_) => BancaController()),
         ChangeNotifierProvider(create: (_) => BairroController()),
+        ChangeNotifierProvider(create: (_) => SignInController()),
         ChangeNotifierProxyProvider2<BairroController, BancaController,
             FeiraController>(
           create: (context) =>
