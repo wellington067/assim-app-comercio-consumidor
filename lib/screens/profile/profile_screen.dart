@@ -6,18 +6,18 @@ import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../shared/constants/style_constants.dart';
+import '../../shared/core/controllers/sign_in_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: const CustomAppBar(),
-        // ignore: sized_box_for_whitespace
         body: Container(
           color: kOnSurfaceColor,
           child: Column(
@@ -103,8 +103,8 @@ class ProfileScreen extends StatelessWidget {
                 child: PrimaryButton(
                   text: 'Sair',
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, '/first/start_screen');
+                    Provider.of<SignInController>(context, listen: false)
+                        .logout(context);
                   },
                   color: kDetailColor,
                 ),

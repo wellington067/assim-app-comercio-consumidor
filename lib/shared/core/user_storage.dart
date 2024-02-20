@@ -14,16 +14,16 @@ class UserStorage {
     //required String deviceName,
   }) async {
     await storage.write(key: 'id', value: id);
-    await storage.write(key: 'nome', value: nome);
+    await storage.write(key: 'name', value: nome);
     await storage.write(key: 'token', value: token);
     await storage.write(key: 'email', value: email);
-   // await storage.write(key: 'device_name', value: deviceName);
+    // await storage.write(key: 'device_name', value: deviceName);
     //await storage.write(key: 'papel', value: papel);
     //await storage.write(key: 'papelId', value: papelId);
   }
 
   Future<String> getUserName() async {
-    String? nome = await storage.read(key: 'nome');
+    String? nome = await storage.read(key: 'name');
     return nome ?? '';
   }
 
@@ -41,7 +41,6 @@ class UserStorage {
     String? email = await storage.read(key: 'email');
     return email ?? '';
   }
-
 
   Future<bool> userHasCredentials() async {
     log('Checking if user has credentials');
