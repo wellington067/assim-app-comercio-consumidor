@@ -20,4 +20,5 @@ class Assets {
   static const String qr = 'lib/assets/images/qrcode.jpg';
   static const String pix = 'lib/assets/images/pix.png';
   static const String feedback = 'lib/assets/images/feedback.jpg';
+  static const String document = 'lib/assets/images/ufape-edu-br.pem';
 }
