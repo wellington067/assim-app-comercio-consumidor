@@ -15,7 +15,7 @@ import 'package:ecommerceassim/screens/profile/select_adress_screen.dart';
 import 'package:ecommerceassim/screens/profile/select_card_screen.dart';
 import 'package:ecommerceassim/screens/signup/sign_up_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'screens/pedidos/purchases_screen.dart';
 import 'screens/signin/sign_in_screen.dart';
@@ -32,16 +32,17 @@ class App extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: (context, child) {
         return DevicePreview.appBuilder(
-            context,
-            ResponsiveWrapper.builder(child,
-                minWidth: 640,
-                maxWidth: 1980,
-                defaultScale: true,
-                breakpoints: const [
-                  ResponsiveBreakpoint.resize(480, name: MOBILE),
-                  ResponsiveBreakpoint.resize(768, name: TABLET),
-                  ResponsiveBreakpoint.resize(1024, name: DESKTOP),
-                ]));
+          context,
+          ResponsiveBreakpoints.builder(
+            child: child!,
+            breakpoints: [
+              const Breakpoint(start: 0, end: 450, name: MOBILE),
+              const Breakpoint(start: 451, end: 800, name: TABLET),
+              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+            ],
+          ),
+        );
       },
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),

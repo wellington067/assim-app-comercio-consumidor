@@ -1,11 +1,11 @@
 import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
-import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
 
 class Bancas extends StatefulWidget {
   const Bancas({Key? key}) : super(key: key);
@@ -78,6 +78,7 @@ class _BancasState extends State<Bancas> {
   Widget build(BuildContext context) {
     return Consumer<BancaController>(
       builder: (context, bancaController, child) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: const CustomAppBar(),
         endDrawer: buildCustomDrawer(context),
         bottomNavigationBar: BottomNavigation(selectedIndex: 0),
@@ -90,13 +91,16 @@ class _BancasState extends State<Bancas> {
                 : Column(
                     children: [
                       const SizedBox(height: 15),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Bancas',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Bancas',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
