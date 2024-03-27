@@ -19,6 +19,7 @@ const Color kOnBackgroundColor = Color(0xFF212931);
 const Color kTextColor = Color(0xFF435969);
 const Color kTextNavColor = Colors.black;
 const Color kOnSurfaceColor = Colors.white;
+const Color kTextColorBlack = Color.fromARGB(255, 0, 0, 0);
 const Color kTextButtonColor = Colors.grey;
 const Color kTextSign = Colors.blue;
 const Color kButtom = Colors.green;
