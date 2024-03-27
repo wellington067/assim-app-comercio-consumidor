@@ -1,11 +1,12 @@
 class ProdutoModel {
   int id;
   String descricao;
+  String titulo;
   String tipoUnidade;
+  int estoque;
   String preco;
   String custo;
-  int estoque;
-  int disponivel;
+  bool disponivel;
   int bancaId;
   int produtoTabeladoId;
   DateTime createdAt;
@@ -15,6 +16,7 @@ class ProdutoModel {
   ProdutoModel({
     required this.id,
     required this.descricao,
+    required this.titulo,
     required this.tipoUnidade,
     required this.estoque,
     required this.preco,
@@ -31,8 +33,9 @@ class ProdutoModel {
     return ProdutoModel(
       id: json['id'],
       descricao: json['descricao'],
-      tipoUnidade: json['tipo_unidade'],
-      estoque: json['estoque'],
+      titulo: json['titulo'],
+      tipoUnidade: json['tipo_medida'],
+      estoque: int.parse(json['estoque']),
       preco: json['preco'],
       custo: json['custo'],
       disponivel: json['disponivel'],
@@ -50,8 +53,9 @@ class ProdutoModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['descricao'] = descricao;
-    data['tipo_unidade'] = tipoUnidade;
-    data['estoque'] = estoque;
+    data['titulo'] = titulo;
+    data['tipo_medida'] = tipoUnidade;
+    data['estoque'] = estoque.toString();
     data['preco'] = preco;
     data['custo'] = custo;
     data['disponivel'] = disponivel;

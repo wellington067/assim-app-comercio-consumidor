@@ -86,7 +86,7 @@ class FirstScreen extends StatelessWidget {
                     const SizedBox(),
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     CustomTextButton(
-                      title: 'Continuar como $displayName',
+                      title: 'Continuar como convidado',
                       onPressed: () {
                         Navigator.pushNamed(context, Screens.home);
                       },

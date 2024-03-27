@@ -5,6 +5,7 @@ import 'package:ecommerceassim/screens/profile/components/custom_ink.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
+import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserStorage userStorage = UserStorage();
+
     return Scaffold(
         appBar: const CustomAppBar(),
         body: Container(
@@ -54,8 +57,8 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 const HorizontalSpacerBox(
                                     size: SpacerSize.medium),
-                                const Text(
-                                  'Maria Eduarda',
+                                Text(
+                                  "$userStorage.getUserName",
                                   style: TextStyle(
                                       fontSize: 22, color: kTextButtonColor),
                                   textAlign: TextAlign.end,

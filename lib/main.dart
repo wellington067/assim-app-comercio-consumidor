@@ -18,11 +18,9 @@ import 'shared/core/controllers/sign_in_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   ByteData data =
-  await PlatformAssetBundle().load(Assets.document);
+  ByteData data = await PlatformAssetBundle().load(Assets.document);
   SecurityContext.defaultContext
-      .setTrustedCertificatesBytes(
-      data.buffer.asUint8List());
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   tz.initializeTimeZones();
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {});
