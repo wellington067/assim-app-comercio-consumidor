@@ -7,7 +7,7 @@ import '../../shared/constants/app_enums.dart';
 import '../screens_index.dart';
 
 class PurchasesScreen extends StatelessWidget {
-  const PurchasesScreen({Key? key}) : super(key: key);
+  const PurchasesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

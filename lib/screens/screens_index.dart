@@ -5,7 +5,7 @@ class Screens {
   static const String carrousel = '/carrousel';
   static const String register = '/register/sign_up_screen';
   static const String registerAdress = '/register/register_adress';
-  static const String first = '/first/start_screen';
+  static const String first = '/first/first_screen';
   static const String profile = '/home/profile_screen';
   static const String favorite = '/home/favorite_screen';
   static const String purchases = '/purchase/purchases_screen';

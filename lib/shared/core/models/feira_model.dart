@@ -1,8 +1,8 @@
 class FeiraModel {
   int id;
   String nome;
-  String? descricao; // Pode ser nulo
-  List<String> horariosFuncionamento;
+  String? descricao;
+  dynamic horariosFuncionamento;
   int bairroId;
   int associacaoId;
 
@@ -16,11 +16,26 @@ class FeiraModel {
   });
 
   factory FeiraModel.fromJson(Map<String, dynamic> json) {
+    var horarios = json['horarios_funcionamento'];
+    var horariosParsed;
+
+    if (horarios != null) {
+      if (horarios is List) {
+        horariosParsed = List<String>.from(horarios);
+      } else if (horarios is Map) {
+        horariosParsed = Map.from(horarios).map((key, value) {
+          return MapEntry(key, List<String>.from(value));
+        });
+      } else {
+        throw Exception('Unexpected type for horarios_funcionamento');
+      }
+    }
+
     return FeiraModel(
       id: json['id'],
       nome: json['nome'],
-      descricao: json['descricao'], // Pode ser nulo
-      horariosFuncionamento: List<String>.from(json['horarios_funcionamento']),
+      descricao: json['descricao'],
+      horariosFuncionamento: horariosParsed,
       bairroId: json['bairro_id'],
       associacaoId: json['associacao_id'],
     );

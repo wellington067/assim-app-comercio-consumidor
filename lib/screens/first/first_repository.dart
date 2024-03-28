@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import '../../shared/core/models/banca_model.dart';
 import '../../shared/constants/app_text_constants.dart';
 
-class StartRepository {
+class FirstRepository {
   final Dio _dio = Dio();
   int vazia = 5;
 
@@ -12,8 +12,7 @@ class StartRepository {
     print('chegou aqui');
 
     try {
-      Response response = await _dio.get(
-          '$kBaseURL/bancas/users/$userId',
+      Response response = await _dio.get('$kBaseURL/bancas/users/$userId',
           options: Options(headers: {"Authorization": "Bearer $userToken"}));
       if (response.statusCode == 200) {
         if (response.data["bancas"].isEmpty) {

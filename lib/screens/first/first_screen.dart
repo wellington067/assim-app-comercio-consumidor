@@ -14,9 +14,8 @@ import './first_controller.dart';
 
 class FirstScreen extends StatelessWidget {
   final String? displayName;
-  final StartController? controller;
-  const FirstScreen({Key? key, this.displayName, this.controller})
-      : super(key: key);
+  final FirstController? controller;
+  const FirstScreen({super.key, this.displayName, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,8 @@ class FirstScreen extends StatelessWidget {
         ? 'Continuar como $displayName'
         : 'Continuar como convidado';
 
-    return GetBuilder<StartController>(
-      init: StartController(),
+    return GetBuilder<FirstController>(
+      init: FirstController(),
       builder: (controller) => Scaffold(
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(320),
@@ -60,7 +59,7 @@ class FirstScreen extends StatelessWidget {
               //controller.status == SignInStatus.loading
               //? const CircularProgressIndicator()
               PrimaryButton(
-                text: buttonText,
+                text: "Continuar como ${controller.userName}",
                 onPressed: () {},
                 color: kDetailColor,
               ),
@@ -86,7 +85,7 @@ class FirstScreen extends StatelessWidget {
                     const SizedBox(),
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     CustomTextButton(
-                      title: 'Continuar como $displayName',
+                      title: 'Continuar como convidado',
                       onPressed: () {
                         Navigator.pushNamed(context, Screens.home);
                       },

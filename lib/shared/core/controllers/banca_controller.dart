@@ -11,11 +11,12 @@ class BancaController with ChangeNotifier {
 
   List<BancaModel> get bancas => _bancas;
 
-  Future<void> loadBancas() async {
+  Future<void> loadBancas(int feiraId) async {
     try {
-      _bancas = await _bancaRepository.getBancas();
+      _bancas = await _bancaRepository.getBancas(feiraId);
       notifyListeners();
     } catch (error) {
+      print(feiraId);
       print('Erro ao carregar as bancas: $error');
     }
   }

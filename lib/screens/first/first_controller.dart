@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 import '../../shared/core/navigator.dart';
 import '../screens_index.dart';
 
-class StartController extends GetxController {
+class FirstController extends GetxController {
   UserStorage userStorage = UserStorage();
-  StartRepository startRepository = StartRepository();
+  FirstRepository firstRepository = FirstRepository();
   String? userToken;
   String? userId;
   String userName = 'teste';
 
   Future StartVeri(BuildContext context) async {
-    var succ = await startRepository.Start(
+    var succ = await firstRepository.Start(
       userToken = await userStorage.getUserToken(),
       userId = await userStorage.getUserId(),
     );

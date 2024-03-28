@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:ecommerceassim/app.dart';
 import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
@@ -13,16 +12,13 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
-
 import 'shared/core/controllers/sign_in_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   ByteData data =
-  await PlatformAssetBundle().load(Assets.document);
+  ByteData data = await PlatformAssetBundle().load(Assets.document);
   SecurityContext.defaultContext
-      .setTrustedCertificatesBytes(
-      data.buffer.asUint8List());
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   tz.initializeTimeZones();
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {});

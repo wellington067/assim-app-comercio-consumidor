@@ -23,10 +23,9 @@ class BottomNavigation extends StatelessWidget {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Vendedores',
-            backgroundColor: kOnSurfaceColor,
+            label: 'Cesta',
             icon: Icon(
-              Icons.storefront_rounded,
+              Icons.shopping_basket_rounded,
               color: kDetailColor,
               size: 40,
             ),
@@ -41,9 +40,10 @@ class BottomNavigation extends StatelessWidget {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Cesta',
+            label: 'Perfil',
+            backgroundColor: kOnSurfaceColor,
             icon: Icon(
-              Icons.shopping_basket_rounded,
+              Icons.person,
               color: kDetailColor,
               size: 40,
             ),
@@ -58,11 +58,11 @@ class BottomNavigation extends StatelessWidget {
           if (selectedIndex == 0) {
             Navigator.pushNamed(context, Screens.home);
           } else if (selectedIndex == 1) {
-            Navigator.pushNamed(context, Screens.favorite);
+            Navigator.pushNamed(context, Screens.cart);
           } else if (selectedIndex == 2) {
             Navigator.pushNamed(context, Screens.purchases);
           } else if (selectedIndex == 3) {
-            Navigator.pushNamed(context, Screens.cart);
+            Navigator.pushNamed(context, Screens.profile);
           }
         });
   }

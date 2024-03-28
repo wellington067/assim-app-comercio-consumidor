@@ -10,7 +10,7 @@ import '../../shared/constants/app_enums.dart';
 import '../screens_index.dart';
 
 class SelectAdress extends StatelessWidget {
-  const SelectAdress({Key? key}) : super(key: key);
+  const SelectAdress({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 
@@ -12,7 +14,6 @@ class FeiraRepository {
 
   Future<List<FeiraModel>> getFeiras() async {
     UserStorage userStorage = UserStorage();
-
     userToken = await userStorage.getUserToken();
 
     try {
@@ -25,20 +26,26 @@ class FeiraRepository {
               "Authorization": "Bearer $userToken"
             },
           ));
+
       if (response.statusCode == 200) {
-        final List<FeiraModel> feiras = [];
-        final Map<String, dynamic> jsonData = response.data;
-        final feirasJson = jsonData['feiras'];
-        for (var item in feirasJson) {
-          final FeiraModel feira = FeiraModel.fromJson(item);
-          feiras.add(feira);
-        }
+        /* log('Response data: ${response.data}'); */
+
+        final jsonData = Map<String, dynamic>.from(response.data);
+        final feirasJson = List.from(jsonData['feiras'])
+            .map((item) => Map<String, dynamic>.from(item))
+            .toList();
+
+        List<FeiraModel> feiras = feirasJson.map((itemMap) {
+          return FeiraModel.fromJson(itemMap);
+        }).toList();
+
         return feiras;
       } else {
-        throw Exception('Não foi possível carregar as feiras.');
+        throw Exception('Failed to load feiras');
       }
     } catch (error) {
-      throw Exception('Erro ao fazer a requisição: $error');
+      log('Error making the request: $error');
+      rethrow;
     }
   }
 }

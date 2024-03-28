@@ -29,7 +29,6 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
         builder: (context, child) => Consumer<ProfileController>(
             builder: ((context, controller, child) => Scaffold(
                 appBar: const CustomAppBar(),
-                endDrawer: buildCustomDrawer(context),
                 bottomNavigationBar:
                     BottomNavigation(selectedIndex: selectedIndex),
                 body: Container(
