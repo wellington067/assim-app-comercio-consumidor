@@ -1,8 +1,8 @@
 class FeiraModel {
   int id;
   String nome;
-  String? descricao; // Pode ser nulo
-  dynamic horariosFuncionamento; // Can be a List or a Map
+  String? descricao;
+  dynamic horariosFuncionamento;
   int bairroId;
   int associacaoId;
 

@@ -1,17 +1,19 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
+import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/produto_repository.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
-import 'package:ecommerceassim/screens/home/components/category_menu.dart';
+import 'package:ecommerceassim/components/buttons/category_menu.dart';
 import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 
 class MenuProductsScreen extends StatelessWidget {
-  const MenuProductsScreen({Key? key}) : super(key: key);
+  const MenuProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,21 +43,11 @@ class MenuProductsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              const VerticalSpacerBox(size: SpacerSize.medium),
-              const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    hintText: 'Buscar por produto',
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    isDense: true,
-                    prefixIcon: Icon(Icons.search, color: kButtom, size: 25),
-                  ),
-                ),
+              const CustomSearchField(
+                fillColor: kOnBackgroundColorText,
+                iconColor: kDetailColor,
+                hintText: 'Buscar',
+                padding: EdgeInsets.all(0),
               ),
               const VerticalSpacerBox(size: SpacerSize.medium),
               const CategoryMenuList(),
@@ -64,61 +56,62 @@ class MenuProductsScreen extends StatelessWidget {
                 future: produtoRepository.getProdutos(bancaId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Column(
-                      children: [
-                        VerticalSpacer(size: 250),
-                        Center(
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(kDetailColor),
-                          ),
-                        ),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 50.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const VerticalSpacer(size: 140),
-                          const Icon(
-                            Icons.error_outline,
-                            color: kButtom,
-                            size: 40,
-                          ),
-                          const VerticalSpacerBox(size: SpacerSize.medium),
-                          const Text(
-                            'Oops! Nenhum Produto foi encontrado.',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: kButtom,
-                            ),
-                          ),
-                          const VerticalSpacerBox(size: SpacerSize.small),
-                          Text(
-                            'Parece que não tem produtos nesta banca. Tente outra banca ou volte mais tarde.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ],
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(kDetailColor),
                       ),
                     );
-                  } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 50.0),
-                      child: Text(
-                        'Nenhum produto encontrado. Tente selecionar outra categoria.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey[800],
+                  } else if (snapshot.hasError ||
+                      (snapshot.hasData && snapshot.data!.isEmpty)) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 50.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const VerticalSpacer(
+                              size: 100,
+                            ),
+                            const Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.error_outline,
+                                    color: kButtom,
+                                    size: 35,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Oops!',
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: kButtom,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Text(
+                              'Nenhum Produto foi encontrado.',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: kButtom,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Parece que não tem produtos nesta banca. Tente outra banca ou volte mais tarde.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
@@ -131,7 +124,7 @@ class MenuProductsScreen extends StatelessWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 0.8,
+                        childAspectRatio: 0.6,
                       ),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
@@ -157,11 +150,12 @@ class MenuProductsScreen extends StatelessWidget {
   }
 
   Widget _buildProductCard(ProdutoModel produto) {
-    return Card(
+    return Material(
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      elevation: 5,
+      elevation: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -175,15 +169,14 @@ class MenuProductsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                produto.descricao,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF858080),
-                ),
+            Text(
+              produto.titulo,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF858080),
               ),
             ),
             Text(

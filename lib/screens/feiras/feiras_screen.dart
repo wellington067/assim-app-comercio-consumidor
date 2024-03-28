@@ -1,4 +1,6 @@
+import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -18,73 +20,102 @@ class FeirasScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Consumer<FeiraController>(
-        builder: (context, feiraController, child) {
-          List<FeiraModel> feiras = feiraController.feiras;
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Feiras em Garanhuns',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const CustomSearchField(
+            fillColor: kOnBackgroundColorText,
+            iconColor: kDetailColor,
+            hintText: 'Buscar por feiras',
+            padding: EdgeInsets.all(5),
+          ),
+          Expanded(
+            child: Consumer<FeiraController>(
+              builder: (context, feiraController, child) {
+                List<FeiraModel> feiras = feiraController.feiras;
 
-          if (feiras.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(color: kDetailColor),
-            );
-          }
+                if (feiras.isEmpty) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: kDetailColor),
+                  );
+                }
 
-          return ListView.builder(
-            itemCount: feiras.length,
-            itemBuilder: (context, index) {
-              FeiraModel feira = feiras[index];
+                return ListView.builder(
+                  itemCount: feiras.length,
+                  itemBuilder: (context, index) {
+                    FeiraModel feira = feiras[index];
 
-              return Container(
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, Screens.bancas);
-                    },
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage: AssetImage(
-                              "lib/assets/images/banca-fruta.jpg",
-                            ),
-                          ),
-                          const SizedBox(width: 16.0),
-                          Expanded(
-                            child: Text(
-                              feira.nome,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: kTextColorBlack,
-                              ),
-                            ),
+                    return Container(
+                      margin: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        },
+                      child: Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, Screens.bancas,
+                                arguments: {
+                                  'id': feira.id,
+                                  'nome': feira.nome,
+                                  'bairro': feira.bairroId,
+                                  'horarios': feira.horariosFuncionamento,
+                                });
+                          },
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                const CircleAvatar(
+                                  radius: 25.0,
+                                  backgroundImage: AssetImage(
+                                    "lib/assets/images/banca-fruta.jpg",
+                                  ),
+                                ),
+                                const SizedBox(width: 16.0),
+                                Expanded(
+                                  child: Text(
+                                    feira.nome,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: kTextColorBlack,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

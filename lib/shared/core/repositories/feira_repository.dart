@@ -28,11 +28,9 @@ class FeiraRepository {
           ));
 
       if (response.statusCode == 200) {
-        log('Response data: ${response.data}');
+        /* log('Response data: ${response.data}'); */
 
-        // Cast the response data to a Map<String, dynamic>
         final jsonData = Map<String, dynamic>.from(response.data);
-        // Extract the feiras list and cast each item to a Map<String, dynamic>
         final feirasJson = List.from(jsonData['feiras'])
             .map((item) => Map<String, dynamic>.from(item))
             .toList();

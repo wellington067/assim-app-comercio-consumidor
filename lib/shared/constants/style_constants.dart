@@ -13,6 +13,7 @@ final kDescriptionFontFamily = GoogleFonts.firaSans().fontFamily;
 const Color kPrimaryColor = Color(0xFFFECA01);
 // const Color kBackgroundColor = Colors.white;
 const Color kBackgroundColor = Color.fromARGB(255, 225, 225, 225);
+const Color kOnBackgroundColorText = Color.fromRGBO(238, 238, 238, 1);
 const Color kSecondaryColor = Color(0xFF435969);
 const Color kDetailColor = Color(0xFF008000);
 const Color kOnBackgroundColor = Color(0xFF212931);

@@ -7,7 +7,7 @@ class BancaModel {
   int feiraId;
   int agricultorId;
   int precoMinimo;
-  bool entrega; // Added this field to match the JSON structure
+  bool entrega;
 
   BancaModel({
     required this.id,
@@ -18,7 +18,7 @@ class BancaModel {
     required this.feiraId,
     required this.agricultorId,
     required this.precoMinimo,
-    required this.entrega, // Don't forget to require this in the constructor if it's a non-nullable field
+    required this.entrega,
   });
 
   factory BancaModel.fromJson(Map<String, dynamic> json) {
@@ -31,8 +31,7 @@ class BancaModel {
       feiraId: json['feira_id'],
       agricultorId: json['agricultor_id'],
       precoMinimo: int.parse(json['preco_minimo']),
-      entrega: json['entrega'] ??
-          false, // Assumes 'entrega' is optional and defaults to false if not present
+      entrega: json['entrega'] ?? false,
     );
   }
 
@@ -45,9 +44,8 @@ class BancaModel {
     data['horario_fechamento'] = horarioFechamento;
     data['feira_id'] = feiraId;
     data['agricultor_id'] = agricultorId;
-    data['preco_minimo'] = precoMinimo
-        .toString(); // Ensuring this is a string as in the JSON structure
-    data['entrega'] = entrega; // Add 'entrega' to the JSON map
+    data['preco_minimo'] = precoMinimo.toString();
+    data['entrega'] = entrega;
     return data;
   }
 }
