@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
@@ -57,11 +59,37 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 const HorizontalSpacerBox(
                                     size: SpacerSize.medium),
-                                Text(
-                                  "$userStorage.getUserName",
-                                  style: TextStyle(
-                                      fontSize: 22, color: kTextButtonColor),
-                                  textAlign: TextAlign.end,
+                                FutureBuilder<String>(
+                                  future: userStorage
+                                      .getUserName(), // call the method here
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text(
+                                        'Loading...',
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: kTextButtonColor),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: kTextButtonColor),
+                                      );
+                                    } else {
+                                      // Here we can safely access the snapshot data
+                                      return Text(
+                                        snapshot.data ?? 'Usuário',
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: kTextButtonColor),
+                                        textAlign: TextAlign.end,
+                                      );
+                                    }
+                                  },
                                 ),
                               ],
                             ),

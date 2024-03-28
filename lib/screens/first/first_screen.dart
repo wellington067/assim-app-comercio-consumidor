@@ -59,7 +59,7 @@ class FirstScreen extends StatelessWidget {
               //controller.status == SignInStatus.loading
               //? const CircularProgressIndicator()
               PrimaryButton(
-                text: buttonText,
+                text: "Continuar como ${controller.userName}",
                 onPressed: () {},
                 color: kDetailColor,
               ),
