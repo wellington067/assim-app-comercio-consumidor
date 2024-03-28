@@ -27,7 +27,6 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
         builder: (context, child) => Consumer<HomeScreenController>(
               builder: ((context, controller, child) => Scaffold(
                   appBar: const CustomAppBar(),
-                  endDrawer: buildCustomDrawer(context),
                   body: Container(
                       color: kOnSurfaceColor,
                       width: size.width,

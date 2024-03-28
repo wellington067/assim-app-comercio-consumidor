@@ -1,6 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:ecommerceassim/screens/home/home_screen.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/core/repositories/sign_in_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum SignInStatus {
@@ -36,14 +38,12 @@ class SignInController with ChangeNotifier {
         _userName = _emailController.text.split('@').first;
         notifyListeners();
 
-        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, Screens.home);
       } else {
         status = SignInStatus.error;
         setErrorMessage('Credenciais inválidas, verifique seus dados');
         notifyListeners();
       }
-      notifyListeners();
     } catch (e) {
       status = SignInStatus.error;
       setErrorMessage('Credenciais inválidas verifique seus dados');
@@ -68,10 +68,9 @@ class SignInController with ChangeNotifier {
     notifyListeners();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('You have been logged out.'),
+        content: Text('Você foi desconectado.'),
       ),
     );
-    // Pass the displayName to the route
     Navigator.pushReplacementNamed(context, Screens.first,
         arguments: displayName);
   }

@@ -6,6 +6,7 @@ import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/screens/profile/components/custom_ink.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
@@ -21,9 +22,11 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserStorage userStorage = UserStorage();
+    int selectedIndex = 3;
 
     return Scaffold(
         appBar: const CustomAppBar(),
+        bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
         body: Container(
           color: kOnSurfaceColor,
           child: Column(
@@ -116,7 +119,7 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.pushNamed(context, Screens.selectAdress);
                 },
               ),
-              CustomInkWell(
+              /*  CustomInkWell(
                 icon: Icons.credit_card,
                 text: 'Pagamentos',
                 onTap: () {
@@ -129,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(context, Screens.favorite);
                 },
-              ),
+              ), */
               const Spacer(),
               Container(
                 padding: const EdgeInsets.all(kDefaultPadding),

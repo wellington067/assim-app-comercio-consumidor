@@ -1,15 +1,17 @@
-import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
-import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/shared/core/user_storage.dart';
+import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserStorage userStorage = UserStorage();
+
     return AppBar(
+      automaticallyImplyLeading: false, // caso remova, volta a seta da app bar
       title: const Text(
         'APP-ASSIM',
         style: TextStyle(
@@ -22,16 +24,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: kOnSurfaceColor,
       elevation: 0,
       actions: <Widget>[
-        Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: kDetailColor,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
+        IconButton(
+          icon: const Icon(
+            Icons.exit_to_app,
+            color: kDetailColor,
+          ),
+          onPressed: () async {
+            await userStorage.clearUserCredentials();
+            // This will push the SignInScreen and remove all other routes
+            // so there's no back button available on the SignInScreen.
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const SignInScreen()),
+              (Route<dynamic> route) => false,
             );
           },
         ),
@@ -43,8 +48,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-Drawer buildCustomDrawer(BuildContext context) {
+
+/* Drawer buildCustomDrawer(BuildContext context) {
   UserStorage userStorage = UserStorage();
+
   return Drawer(
     child: Column(
       children: <Widget>[
@@ -116,3 +123,4 @@ Drawer buildCustomDrawer(BuildContext context) {
     ),
   );
 }
+ */

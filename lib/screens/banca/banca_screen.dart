@@ -22,7 +22,6 @@ class Bancas extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const CustomAppBar(),
-      endDrawer: buildCustomDrawer(context),
       bottomNavigationBar: BottomNavigation(selectedIndex: 0),
       body: FutureBuilder(
         future: Provider.of<BancaController>(context, listen: false)

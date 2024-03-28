@@ -28,14 +28,13 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     //late int melancia = 0;
     //late int limao = 0;
-    late int selectedIndex = 3;
+    late int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
       builder: (context, child) => Consumer<HomeScreenController>(
           builder: ((context, controller, child) => Scaffold(
                 appBar: const CustomAppBar(),
-                endDrawer: buildCustomDrawer(context),
                 bottomNavigationBar:
                     BottomNavigation(selectedIndex: selectedIndex),
                 body: SingleChildScrollView(
