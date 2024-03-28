@@ -7,7 +7,7 @@ import '../../shared/constants/app_enums.dart';
 import '../screens_index.dart';
 
 class SelectCard extends StatelessWidget {
-  const SelectCard({Key? key}) : super(key: key);
+  const SelectCard({super.key});
 
   @override
   Widget build(BuildContext context) {

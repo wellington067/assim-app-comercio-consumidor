@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -103,8 +104,11 @@ Drawer buildCustomDrawer(BuildContext context) {
             onTap: () {
               userStorage.clearUserCredentials();
 
-              Navigator.pushNamed(
-                  context, Screens.first); // Implementar a função de deslogar
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SignInScreen()),
+                (Route<dynamic> route) => false,
+              );
             },
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/screens/profile/components/custom_ink.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
@@ -15,7 +16,7 @@ import '../../shared/constants/style_constants.dart';
 import '../../shared/core/controllers/sign_in_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,30 +61,31 @@ class ProfileScreen extends StatelessWidget {
                                 const HorizontalSpacerBox(
                                     size: SpacerSize.medium),
                                 FutureBuilder<String>(
-                                  future: userStorage
-                                      .getUserName(), // call the method here
+                                  future: userStorage.getUserName(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot<String> snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return Text(
-                                        'Loading...',
+                                      return const Text(
+                                        'Carregando...',
                                         style: TextStyle(
                                             fontSize: 22,
                                             color: kTextButtonColor),
                                       );
-                                    } else if (snapshot.hasError) {
-                                      return Text(
-                                        'Error: ${snapshot.error}',
+                                    } else if (snapshot.hasError ||
+                                        snapshot.data == '') {
+                                      return const Text(
+                                        'Convidado',
                                         style: TextStyle(
                                             fontSize: 22,
                                             color: kTextButtonColor),
+                                        textAlign: TextAlign.end,
                                       );
                                     } else {
                                       // Here we can safely access the snapshot data
                                       return Text(
                                         snapshot.data ?? 'Usuário',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 22,
                                             color: kTextButtonColor),
                                         textAlign: TextAlign.end,
@@ -134,8 +136,14 @@ class ProfileScreen extends StatelessWidget {
                 child: PrimaryButton(
                   text: 'Sair',
                   onPressed: () {
-                    Provider.of<SignInController>(context, listen: false)
-                        .logout(context);
+                    userStorage.clearUserCredentials();
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignInScreen()),
+                      (Route<dynamic> route) => false,
+                    );
                   },
                   color: kDetailColor,
                 ),
