@@ -21,4 +21,5 @@ class Screens {
   static const String feiras = '/feiras/feiras_screen';
   static const String bancas = '/banca/banca_screen';
   static const String produtoDetalhe = '/produto/products_details_screen';
+  static const String perfilEditar = '/profile/profile_edit_screen';
 }

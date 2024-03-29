@@ -8,7 +8,7 @@ import 'package:ecommerceassim/shared/core/repositories/produto_repository.dart'
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/components/buttons/category_menu.dart';
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 

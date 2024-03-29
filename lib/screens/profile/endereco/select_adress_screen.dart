@@ -1,13 +1,13 @@
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
-import 'package:ecommerceassim/screens/profile/profile_controller.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:provider/provider.dart';
-import '../../components/utils/vertical_spacer_box.dart';
-import '../../shared/components/dialogs/finish_dialog.dart';
-import '../../shared/constants/app_enums.dart';
-import '../screens_index.dart';
+import '../../../components/utils/vertical_spacer_box.dart';
+import '../../../shared/components/dialogs/finish_dialog.dart';
+import '../../../shared/constants/app_enums.dart';
+import '../../screens_index.dart';
 
 class SelectAdress extends StatelessWidget {
   const SelectAdress({super.key});
