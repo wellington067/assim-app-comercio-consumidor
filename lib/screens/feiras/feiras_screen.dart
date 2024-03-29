@@ -1,7 +1,7 @@
-import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart';
@@ -24,7 +24,7 @@ class FeirasScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(7.0, 16.0, 16.0, 8.0),
+            padding: EdgeInsets.all(16.0),
             child: Text(
               'Feiras em Garanhuns',
               style: TextStyle(
@@ -33,16 +33,12 @@ class FeirasScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.0),
-            child: CustomSearchField(
-              fillColor: kOnBackgroundColorText,
-              iconColor: kDetailColor,
-              hintText: 'Buscar por feiras',
-              padding: EdgeInsets.all(5),
-            ),
+          const CustomSearchField(
+            fillColor: kOnBackgroundColorText,
+            iconColor: kDetailColor,
+            hintText: 'Buscar por feiras',
+            padding: EdgeInsets.all(5),
           ),
-          const VerticalSpacer(size: 20),
           Expanded(
             child: Consumer<FeiraController>(
               builder: (context, feiraController, child) {
@@ -55,23 +51,21 @@ class FeirasScreen extends StatelessWidget {
                 }
 
                 return ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 6.0), // Match the horizontal padding
                   itemCount: feiras.length,
                   itemBuilder: (context, index) {
                     FeiraModel feira = feiras[index];
 
                     return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4.0),
+                      margin: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15.0),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
+                            spreadRadius: 2,
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -80,16 +74,13 @@ class FeirasScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              Screens.bancas,
-                              arguments: {
-                                'id': feira.id,
-                                'nome': feira.nome,
-                                'bairro': feira.bairroId,
-                                'horarios': feira.horariosFuncionamento,
-                              },
-                            );
+                            Navigator.pushNamed(context, Screens.bancas,
+                                arguments: {
+                                  'id': feira.id,
+                                  'nome': feira.nome,
+                                  'bairro': feira.bairroId,
+                                  'horarios': feira.horariosFuncionamento,
+                                });
                           },
                           borderRadius: BorderRadius.circular(15.0),
                           child: Padding(

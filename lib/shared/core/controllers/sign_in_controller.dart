@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:ecommerceassim/screens/home/home_screen.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/core/repositories/sign_in_repository.dart';
 import 'package:flutter/material.dart';
@@ -52,10 +51,8 @@ class SignInController with ChangeNotifier {
   }
 
   void logout(BuildContext context) {
-    // Save the display name before clearing other information
     String? displayName = _userName ?? email?.split('@').first;
 
-    // Clear all user data
     email = null;
     password = null;
     _userName = null;
@@ -63,7 +60,6 @@ class SignInController with ChangeNotifier {
     _passwordController.clear();
     errorMessage = null;
 
-    // Update UI
     status = SignInStatus.idle;
     notifyListeners();
     ScaffoldMessenger.of(context).showSnackBar(

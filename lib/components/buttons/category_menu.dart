@@ -1,10 +1,6 @@
 import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/dialogs/finish_dialog.dart';
-import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
-import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
 class CategoryMenu extends StatelessWidget {
@@ -12,10 +8,10 @@ class CategoryMenu extends StatelessWidget {
   final String assetPath;
 
   const CategoryMenu({
-    Key? key,
+    super.key,
     required this.categoryName,
     required this.assetPath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +35,11 @@ class CategoryMenu extends StatelessWidget {
           ],
         ),
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Isso alinha os itens para o topo
-          crossAxisAlignment: CrossAxisAlignment
-              .center, // Isso centraliza os itens horizontalmente
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 8), // Ajuste o padding conforme necessário
+              padding: const EdgeInsets.only(top: 8),
               child: Image.asset(
                 assetPath,
                 fit: BoxFit.cover,
@@ -83,8 +76,7 @@ class CategoryMenuList extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 22.0), // Padding lateral para o GridView
+      padding: const EdgeInsets.symmetric(horizontal: 22.0),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -92,7 +84,6 @@ class CategoryMenuList extends StatelessWidget {
           crossAxisCount: 5,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          // A proporção foi ajustada de acordo com a nova largura do card de 64
           childAspectRatio: (64 / 70),
         ),
         itemCount: categories.length,

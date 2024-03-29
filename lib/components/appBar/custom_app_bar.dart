@@ -31,8 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           onPressed: () async {
             await userStorage.clearUserCredentials();
-            // This will push the SignInScreen and remove all other routes
-            // so there's no back button available on the SignInScreen.
+
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const SignInScreen()),

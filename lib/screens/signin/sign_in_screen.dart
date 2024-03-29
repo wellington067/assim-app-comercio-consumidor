@@ -69,7 +69,7 @@ class SignInScreen extends StatelessWidget {
                       color: kDetailColor,
                     ),
                   const VerticalSpacerBox(size: SpacerSize.medium),
-                  Row(
+                  const Row(
                     children: <Widget>[
                       Expanded(
                         child: Divider(
@@ -78,7 +78,7 @@ class SignInScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           'ou',
                           style: TextStyle(
