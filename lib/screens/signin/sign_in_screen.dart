@@ -61,7 +61,9 @@ class SignInScreen extends StatelessWidget {
                   ),
                   const VerticalSpacerBox(size: SpacerSize.medium),
                   if (controller.status == SignInStatus.loading)
-                    const CircularProgressIndicator()
+                    const Center(
+                      child: CircularProgressIndicator(color: kDetailColor),
+                    )
                   else
                     PrimaryButton(
                       text: 'Entrar',
