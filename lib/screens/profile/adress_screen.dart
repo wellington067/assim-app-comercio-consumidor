@@ -1,4 +1,4 @@
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/forms/auth_form_field.dart';
 import 'package:ecommerceassim/components/forms/auth_form_field3.dart';

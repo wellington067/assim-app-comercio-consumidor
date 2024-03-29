@@ -1,4 +1,4 @@
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
 import 'package:ecommerceassim/screens/profile/profile_controller.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';

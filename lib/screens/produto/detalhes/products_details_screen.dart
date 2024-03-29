@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/constants/style_constants.dart';
+import '../../../shared/constants/style_constants.dart';
 
 class ProdutoDetalheScreen extends StatefulWidget {
   const ProdutoDetalheScreen({super.key});

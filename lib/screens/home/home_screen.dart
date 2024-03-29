@@ -1,4 +1,4 @@
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/banca/banca_screen.dart';
 import 'package:ecommerceassim/screens/feiras/feiras_screen.dart';

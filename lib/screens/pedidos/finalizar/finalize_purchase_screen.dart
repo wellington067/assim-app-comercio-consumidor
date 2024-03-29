@@ -1,5 +1,5 @@
 import 'package:ecommerceassim/assets/index.dart';
-import 'package:ecommerceassim/components/navBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
@@ -9,7 +9,7 @@ import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:rating_dialog/rating_dialog.dart';
-import '../../components/buttons/primary_button.dart';
+import '../../../components/buttons/primary_button.dart';
 
 class FinalizePurchaseScreen extends StatefulWidget {
   const FinalizePurchaseScreen({Key? key}) : super(key: key);

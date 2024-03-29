@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ecommerceassim/components/buttons/custom_text_button.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
@@ -6,6 +8,7 @@ import 'package:ecommerceassim/shared/core/controllers/sign_in_controller.dart';
 import 'package:ecommerceassim/shared/components/style_bar.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
+import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +22,7 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /**Declare this variable to get the Media Query of the screen in the current context */
+    UserStorage userStorage = UserStorage();
     Size size = MediaQuery.of(context).size;
     final String? displayName =
         ModalRoute.of(context)?.settings.arguments as String?;
@@ -60,7 +63,9 @@ class FirstScreen extends StatelessWidget {
               //? const CircularProgressIndicator()
               PrimaryButton(
                 text: "Continuar como ${controller.userName}",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Screens.home);
+                },
                 color: kDetailColor,
               ),
 
@@ -86,7 +91,9 @@ class FirstScreen extends StatelessWidget {
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     CustomTextButton(
                       title: 'Continuar como convidado',
-                      onPressed: () {
+                      onPressed: () async {
+                        await userStorage.clearUserCredentials();
+
                         Navigator.pushNamed(context, Screens.home);
                       },
                     ),

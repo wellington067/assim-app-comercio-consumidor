@@ -30,6 +30,7 @@ class SignInRepository {
           nome: response.data['user']['name'].toString(),
           token: userToken,
           email: response.data['user']['email'].toString(),
+          telefone: response.data['contato']['telefone'].toString(),
         );
         try {
           Response response = await _dio.get('$kBaseURL/users/$userId',
