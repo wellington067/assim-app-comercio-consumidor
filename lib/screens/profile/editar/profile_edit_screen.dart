@@ -92,6 +92,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       );
 
       if (response.statusCode == 200) {
+        userStorage.saveUserCredentials(
+            id: userId, token: token, nome: newName);
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -109,6 +111,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 'Perfil atualizado com sucesso!',
                 textAlign: TextAlign.center,
               ),
+              actionsAlignment: MainAxisAlignment.center,
               actions: <Widget>[
                 TextButton(
                   style: TextButton.styleFrom(
@@ -158,6 +161,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             message,
             textAlign: TextAlign.center,
           ),
+          actionsAlignment: MainAxisAlignment.center,
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -218,9 +222,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       controller: nameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
+                        /* focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: kDetailColor),
-                        ),
+                        ), */
                       ),
                       enabled: isEditing,
                     ),
@@ -232,9 +236,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       controller: phoneController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
+                        /* focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: kDetailColor),
-                        ),
+                        ), */
                       ),
                       keyboardType: TextInputType.phone,
                       maskFormatter: phoneFormatter,

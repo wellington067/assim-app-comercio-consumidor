@@ -10,7 +10,7 @@ class UserStorage {
     required String id,
     required String nome,
     required String token,
-    required String email,
+    String? email,
     //required String papel,
     //required String papelId,
     //required String deviceName,
