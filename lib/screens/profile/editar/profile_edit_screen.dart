@@ -41,15 +41,42 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   }
 
   void loadUserDetails() async {
-    originalName = await userStorage.getUserName();
-    originalPhone = await userStorage.getTelefone();
-    nameController.text = originalName;
-    phoneController.text = originalPhone;
+    try {
+      final String userId = await userStorage.getUserId();
+      final String token = await userStorage.getUserToken();
+      final Uri url = Uri.parse('$kBaseURL/users/$userId');
+
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final user = data['user'];
+        final contact = user['contato'];
+
+        setState(() {
+          originalName = user['name'];
+          originalPhone = contact['telefone'];
+          nameController.text = originalName;
+          phoneController.text = originalPhone;
+        });
+      } else {
+        print(
+            'Failed to load user details. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching user details: $e');
+    }
   }
 
   Future<void> saveUserProfile(String newName, String newPhone) async {
-    final String oldName = nameController.text; // Armazena o nome antigo
-    final String oldPhone = phoneController.text; // Armazena o telefone antigo
+    final String oldName = nameController.text;
+    final String oldPhone = phoneController.text;
 
     try {
       final String userId = await userStorage.getUserId();
@@ -155,8 +182,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   void revertChanges(String oldName, String oldPhone) {
     setState(() {
-      nameController.text = oldName; // Restaura o nome antigo
-      phoneController.text = oldPhone; // Restaura o telefone antigo
+      nameController.text = oldName;
+      phoneController.text = oldPhone;
     });
   }
 
@@ -191,6 +218,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       controller: nameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: kDetailColor),
+                        ),
                       ),
                       enabled: isEditing,
                     ),
@@ -202,6 +232,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       controller: phoneController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: kDetailColor),
+                        ),
                       ),
                       keyboardType: TextInputType.phone,
                       maskFormatter: phoneFormatter,

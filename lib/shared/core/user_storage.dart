@@ -1,3 +1,5 @@
+import 'dart:convert'; // Adicione esta linha para importar a biblioteca json
+
 import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -30,8 +32,13 @@ class UserStorage {
   }
 
   Future<String> getTelefone() async {
-    String? telefone = await storage.read(key: 'telefone');
-    return telefone ?? '';
+    String? userDataString = await storage.read(key: 'user');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = json.decode(userDataString);
+      String? telefone = userData['contato']['telefone'];
+      return telefone ?? '';
+    }
+    return '';
   }
 
   Future<String> getUserToken() async {

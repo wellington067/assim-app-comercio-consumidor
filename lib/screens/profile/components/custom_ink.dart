@@ -26,7 +26,6 @@ class CustomInkWell extends StatelessWidget {
               height: 55,
               decoration: const BoxDecoration(
                 color: kOnSurfaceColor,
-                // Removed boxShadow from BoxDecoration
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -43,7 +42,7 @@ class CustomInkWell extends StatelessWidget {
                     Text(
                       text,
                       style: const TextStyle(
-                          fontSize: 21,
+                          fontSize: 19,
                           fontWeight: FontWeight.w500,
                           color: kTextColorBlack),
                     ),

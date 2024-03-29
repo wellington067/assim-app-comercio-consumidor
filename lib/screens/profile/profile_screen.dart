@@ -47,17 +47,19 @@ class ProfileScreen extends StatelessWidget {
                           return const Text('Convidado',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w500));
                         } else {
+                          String nameToShow =
+                              snapshot.data!.split(' ').take(3).join(' ');
                           return Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(snapshot.data!,
+                                Text(nameToShow,
                                     style: const TextStyle(
                                         color: Colors.white,
-                                        fontSize: 22,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500)),
                                 IconButton(
                                   icon: const Icon(
