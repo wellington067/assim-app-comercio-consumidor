@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -90,12 +92,11 @@ class SignUpRepository {
               email: email,
               //deviceName: login.data['user']['device_name'],
               id: id.toString(),
-              token: userToken, telefone: '',
+              token: userToken, telefone: telefone,
               //deviceName: deviceConsumidor
             );
             //papel: login.data['user']['papel_id'].toString(),
             //papelId: login.data['user']['papel_id'].toString());
-            // ignore: use_build_context_synchronously
             showDialog(
                 context: context,
                 builder: (context) => DefaultAlertDialog(
@@ -121,7 +122,6 @@ class SignUpRepository {
       }
     } catch (e) {
       log('Erro na chamada do cadastro do consumidor ${e.toString()}');
-      // ignore: use_build_context_synchronously
       showDialog(
           context: context,
           builder: (context) => DefaultAlertDialogOneButton(

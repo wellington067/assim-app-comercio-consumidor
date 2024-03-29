@@ -1,6 +1,6 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
-import 'package:ecommerceassim/screens/profile/profile_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';

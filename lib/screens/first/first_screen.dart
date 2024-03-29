@@ -92,8 +92,6 @@ class FirstScreen extends StatelessWidget {
                     CustomTextButton(
                       title: 'Continuar como convidado',
                       onPressed: () async {
-                        await userStorage.clearUserCredentials();
-
                         Navigator.pushNamed(context, Screens.home);
                       },
                     ),

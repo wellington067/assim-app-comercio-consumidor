@@ -4,7 +4,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
-    Key? key,
+    super.key,
     this.onChanged,
     this.label,
     this.maskFormatter,
@@ -14,7 +14,9 @@ class CustomTextFormField extends StatefulWidget {
     this.isPassword,
     this.icon,
     this.isBordered,
-  }) : super(key: key);
+    this.decoration,
+    this.enabled,
+  });
 
   final String? label;
   final String? hintText;
@@ -25,6 +27,8 @@ class CustomTextFormField extends StatefulWidget {
   final IconData? icon;
   final MaskTextInputFormatter? maskFormatter;
   final bool? isBordered;
+  final bool? enabled;
+  final InputDecoration? decoration;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -53,23 +57,29 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       child: Container(
         decoration: BoxDecoration(
           color: kBackgroundColor,
-          borderRadius: BorderRadius.circular(8.0), // Define o raio das bordas
+          borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: TextFormField(
           onChanged: widget.onChanged,
-          inputFormatters: widget.maskFormatter == null ? null : [widget.maskFormatter!],
+          inputFormatters:
+              widget.maskFormatter == null ? null : [widget.maskFormatter!],
           obscureText: _obscureText,
           controller: widget.controller,
-          decoration: InputDecoration(
-            prefixIcon: widget.icon == null ? null : Icon(widget.icon as IconData?),
+          enabled: widget.enabled ?? true,
+          style: widget.enabled == false
+              ? TextStyle(color: Colors.grey.withOpacity(0.6))
+              : null,
+          decoration: (widget.decoration ?? const InputDecoration()).copyWith(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            prefixIcon: widget.icon == null ? null : Icon(widget.icon),
             border: InputBorder.none,
             labelText: widget.label,
             hintText: widget.hintText,

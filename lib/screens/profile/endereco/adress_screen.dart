@@ -5,11 +5,11 @@ import 'package:ecommerceassim/components/forms/auth_form_field3.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 
-import '../../components/buttons/primary_button.dart';
-import '../../components/forms/auth_form_field2.dart';
-import '../../components/utils/vertical_spacer_box.dart';
-import '../../shared/constants/app_enums.dart';
-import '../../shared/constants/style_constants.dart';
+import '../../../components/buttons/primary_button.dart';
+import '../../../components/forms/auth_form_field2.dart';
+import '../../../components/utils/vertical_spacer_box.dart';
+import '../../../shared/constants/app_enums.dart';
+import '../../../shared/constants/style_constants.dart';
 
 class AdressScreen extends StatefulWidget {
   const AdressScreen({Key? key}) : super(key: key);
