@@ -1,7 +1,7 @@
-import 'package:ecommerceassim/shared/core/controllers/sign_up_controller.dart';
-import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ecommerceassim/shared/core/controllers/sign_up_controller.dart';
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import '../../components/buttons/custom_text_button.dart';
 import '../../components/buttons/primary_button.dart';
 import '../../components/utils/vertical_spacer_box.dart';
@@ -11,21 +11,23 @@ import '../../shared/constants/app_number_constants.dart';
 import '../../shared/core/navigator.dart';
 import '../screens_index.dart';
 import 'components/info_first_screen.dart';
-
-//import 'components/info_second_screen.dart';
+// import 'components/info_second_screen.dart'; // Descomente para usar
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); // Chave global para o Form
+
   @override
   Widget build(BuildContext context) {
-    /**Declare this variable to get the Media Query of the screen in the current context */
-    Size size = MediaQuery.of(context).size;
+    Size size =
+        MediaQuery.of(context).size; // Tamanho da tela para design responsivo
     return GetBuilder<SignUpController>(
       init: SignUpController(),
       builder: (controller) => Scaffold(
@@ -35,22 +37,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
           elevation: 0,
         ),
         backgroundColor: kOnSurfaceColor,
-        body: Stack(
-          children: [
-            Container(
-                width: size.width,
-                margin: EdgeInsets.only(top: size.height * 0.15),
-                padding: const EdgeInsets.all(kDefaultPadding),
-                decoration: BoxDecoration(
-                    color: kOnSurfaceColor,
-                    borderRadius: BorderRadius.circular(30)),
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              width: size.width,
+              padding: const EdgeInsets.all(kDefaultPadding),
+              child: Form(
+                key: _formKey, // Associar a chave global do Form
                 child: Column(
                   children: [
-                    const VerticalSpacerBox(size: SpacerSize.huge),
                     Center(
                       child: Text(
-                        //Esse infoIndex é o index do PageView que está no controller,
-                        // ao clicar no botão próximo ele vai para o próximo index e a partr disso muda o texto
                         controller.infoIndex == 0 ? 'Cadastro' : 'Endereço',
                         style: kTitle2.copyWith(
                             fontWeight: FontWeight.bold,
@@ -58,158 +58,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: kSecondaryDarkColor),
                       ),
                     ),
-                    const VerticalSpacerBox(size: SpacerSize.huge),
-                    Form(
-                      child: Column(
-                          // Essa lista de children é para o PageView,
-                          //cada index do PageView tem um children diferente que é um componente de cadastro diferente,
-                          // cada um com seus campos
-                          children: //controller.infoIndex == 0
-                              //  ? [
-                              [
-                            InfoFirstScreen(controller),
-                          ]
-                          //  ]
-                          //  : [
-                          //      InfoSecondScreen(controller),
-                          //   ]
-                          ),
-                    ),
-                    const VerticalSpacerBox(size: SpacerSize.huge),
-                    //  controller.screenState == ScreenState.loading
-                    /* ? const CircularProgressIndicator()
-                        : controller.infoIndex != 1
-                            ? PrimaryButton(
-                                text: 'Próximo',
-                                onPressed: () {
-                                  //Ele verifca a força da senha, se for menor que 1/2 ele não deixa ir para o próximo index
-                                  //Importante adicionar depois uma lógica que deixe o botão cinza quando a senha for menor que 1/2
-                                  controller.strength < 1 / 2
-                                      ? () => null
-                                      : controller.next();
-                                },
-                                color: kDetailColor,
-                              )
-                              */
+                    // A estrutura condicional para exibir diferentes telas baseadas no índice
+                    if (controller.infoIndex == 0) InfoFirstScreen(controller),
+                    // Descomente e implemente suas condições e telas adicionais conforme necessário
+                    // if (controller.infoIndex == 1) InfoSecondScreen(controller),
+                    // Adicione mais condições para outras telas de cadastro aqui
                     PrimaryButton(
                       text: 'Concluir',
                       onPressed: () {
-                        if (controller.validateEmptyFields() == false) {
-                          showDialog(
-                              context: context,
-                              builder: (context) => DefaultAlertDialog(
-                                    title: 'Erro',
-                                    body: 'Preencha todos os campos',
-                                    cancelText: 'Ok',
-                                    confirmText: 'Ok',
-                                    onConfirm: () => Get.back(),
-                                    cancelColor: kErrorColor,
-                                    confirmColor: kSuccessColor,
-                                  ));
-                        } else if (controller.validateEmail() == false) {
-                          showDialog(
-                              context: context,
-                              builder: (context) => DefaultAlertDialogOneButton(
-                                    title: 'Erro',
-                                    body: 'Digite um email válido',
-                                    confirmText: 'Ok',
-                                    onConfirm: () => Get.back(),
-                                    buttonColor: kAlertColor,
-                                  ));
-                        } /*else if (controller.validateNumber() ==
-                                      false) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            DefaultAlertDialogOneButton(
-                                              title: 'Erro',
-                                              body:
-                                                  'Número de telefone inválido',
-                                              confirmText: 'Ok',
-                                              onConfirm: () => Get.back(),
-                                              buttonColor: kAlertColor,
-                                            ));
-                                  }*/
-                        else {
+                        // Verificar se o form é válido antes de prosseguir
+                        if (_formKey.currentState!.validate()) {
                           controller.signUp(context);
                         }
                       },
                       color: kDetailColor,
                     ),
-                    const VerticalSpacerBox(size: SpacerSize.medium),
-                    controller.infoIndex != 0
-                        ? Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Já possui conta?'),
-                                  CustomTextButton(
-                                    title: 'Entre aqui',
-                                    onPressed: () {
-                                      navigatorKey.currentState!
-                                          .pushReplacementNamed(Screens.signin);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Center(
-                                child: CustomTextButton(
-                                    onPressed: () => controller.back(),
-                                    title: 'Anterior'),
-                              ),
-                            ],
-                          )
-                        : const SizedBox(),
-                    SizedBox(
-                      width: size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          controller.errorMessage != null
-                              ? Text(
-                                  controller.errorMessage!,
-                                  style: kCaption1,
-                                )
-                              : const SizedBox(),
-                          const VerticalSpacerBox(size: SpacerSize.small),
-                          controller.infoIndex == 0
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text('Já possui conta?'),
-                                    CustomTextButton(
-                                      title: 'Entre aqui',
-                                      onPressed: () {
-                                        Navigator.pushReplacementNamed(
-                                            context, Screens.signin);
-                                      },
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox(),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
+                    // Outros widgets e lógica podem ser adicionados aqui conforme necessário
                   ],
-                )),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: //Text(
-                        //textAlign: TextAlign.center,
-                        //'Bem vindo(a) a ASSIM',
-                        // style: kTitle1.copyWith(color: kBackgroundColor),
-                        //),
-                        SizedBox(
-                      height: size.height * 0.75,
-                    )),
-              ],
+                ),
+              ),
             ),
-          ],
+          ),
         ),
       ),
     );

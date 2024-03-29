@@ -14,7 +14,7 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.06,
+      height: MediaQuery.of(context).size.height * 0.07,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(backgroundColor: color),
         onPressed: () => onPressed(),
