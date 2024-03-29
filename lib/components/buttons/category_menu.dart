@@ -1,10 +1,6 @@
 import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/dialogs/finish_dialog.dart';
-import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
-import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
 class CategoryMenu extends StatelessWidget {
@@ -12,10 +8,10 @@ class CategoryMenu extends StatelessWidget {
   final String assetPath;
 
   const CategoryMenu({
-    Key? key,
+    super.key,
     required this.categoryName,
     required this.assetPath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +20,8 @@ class CategoryMenu extends StatelessWidget {
         Navigator.pushNamed(context, Screens.menu);
       },
       child: Container(
-        width: 84,
-        height: 90,
+        width: 64,
+        height: 70,
         decoration: BoxDecoration(
           color: kDetailColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -38,28 +34,28 @@ class CategoryMenu extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Wrap(
-            children: [
-              Center(
-                child: Image.asset(
-                  assetPath,
-                  fit: BoxFit.cover,
-                  height: 48,
-                  color: Colors.white,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Image.asset(
+                assetPath,
+                fit: BoxFit.cover,
+                height: 25,
+                color: Colors.white,
               ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  categoryName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+            ),
+            Text(
+              categoryName,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -71,30 +67,33 @@ class CategoryMenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CategoryMenu(
-          categoryName: 'Vegetais',
-          assetPath: Assets.vegetais,
+    final List<Map<String, String>> categories = [
+      {"categoryName": "Vegetais", "assetPath": Assets.vegetais},
+      {"categoryName": "Frutas", "assetPath": Assets.frutas},
+      {"categoryName": "Folhosos", "assetPath": Assets.folhosos},
+      {"categoryName": "Carnes", "assetPath": Assets.carnes},
+      {"categoryName": "Leite e Ovos", "assetPath": Assets.leiteOvos},
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: (64 / 70),
         ),
-        CategoryMenu(
-          categoryName: 'Frutas',
-          assetPath: Assets.frutas,
-        ),
-        CategoryMenu(
-          categoryName: 'Folhosos',
-          assetPath: Assets.folhosos,
-        ),
-        CategoryMenu(
-          categoryName: 'Carnes',
-          assetPath: Assets.carnes,
-        ),
-        CategoryMenu(
-          categoryName: 'Leite e Ovos',
-          assetPath: Assets.leiteOvos,
-        ),
-      ],
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return CategoryMenu(
+            categoryName: categories[index]["categoryName"]!,
+            assetPath: categories[index]["assetPath"]!,
+          );
+        },
+      ),
     );
   }
 }

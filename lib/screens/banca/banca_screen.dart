@@ -48,7 +48,7 @@ class Bancas extends StatelessWidget {
             children: [
               const SizedBox(height: 15),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 22.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -64,17 +64,17 @@ class Bancas extends StatelessWidget {
                 fillColor: kOnBackgroundColorText,
                 iconColor: kDetailColor,
                 hintText: 'Buscar',
-                padding: EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(21.0),
               ),
               const CategoryMenuList(),
-              const SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
                   itemCount: bancaController.bancas.length,
                   itemBuilder: (context, index) {
                     BancaModel banca = bancaController.bancas[index];
                     return Container(
-                      margin: const EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 22.0, vertical: 8.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15.0),

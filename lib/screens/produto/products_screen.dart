@@ -30,26 +30,29 @@ class MenuProductsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Column(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  bancaNome,
-                  style: const TextStyle(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 24.0),
+                  child: Text(
+                    'Loja Sem Produtos',
+                    style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
               const CustomSearchField(
                 fillColor: kOnBackgroundColorText,
                 iconColor: kDetailColor,
                 hintText: 'Buscar',
-                padding: EdgeInsets.all(0),
+                padding: EdgeInsets.all(22),
               ),
-              const VerticalSpacerBox(size: SpacerSize.medium),
               const CategoryMenuList(),
               const VerticalSpacerBox(size: SpacerSize.medium),
               FutureBuilder<List<ProdutoModel>>(
@@ -118,6 +121,7 @@ class MenuProductsScreen extends StatelessWidget {
                   } else if (snapshot.hasData) {
                     return GridView.builder(
                       shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
