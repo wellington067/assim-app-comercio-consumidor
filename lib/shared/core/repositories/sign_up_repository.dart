@@ -92,7 +92,7 @@ class SignUpRepository {
               email: email,
               //deviceName: login.data['user']['device_name'],
               id: id.toString(),
-              token: userToken, telefone: telefone,
+              token: userToken,
               //deviceName: deviceConsumidor
             );
             //papel: login.data['user']['papel_id'].toString(),

@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
@@ -12,7 +12,7 @@ import 'dart:convert';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({Key? key}) : super(key: key);
+  const ProfileEditScreen({super.key});
 
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();

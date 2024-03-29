@@ -31,6 +31,12 @@ class FirstScreen extends StatelessWidget {
         ? 'Continuar como $displayName'
         : 'Continuar como convidado';
 
+    String firstThreeWords(String? fullName) {
+      if (fullName == null || fullName.isEmpty) return '';
+      List<String> words = fullName.split(' ');
+      return words.take(3).join(' ');
+    }
+
     return GetBuilder<FirstController>(
       init: FirstController(),
       builder: (controller) => Scaffold(
@@ -62,7 +68,7 @@ class FirstScreen extends StatelessWidget {
               //controller.status == SignInStatus.loading
               //? const CircularProgressIndicator()
               PrimaryButton(
-                text: "Continuar como ${controller.userName}",
+                text: "Continuar como ${firstThreeWords(controller.userName)}",
                 onPressed: () {
                   Navigator.pushNamed(context, Screens.home);
                 },
@@ -71,7 +77,7 @@ class FirstScreen extends StatelessWidget {
 
               const VerticalSpacerBox(size: SpacerSize.large),
               PrimaryButton(
-                text: 'Não sou ${controller.userName}',
+                text: 'Não sou ${firstThreeWords(controller.userName)}',
                 onPressed: () {
                   Navigator.pushNamed(context, Screens.signin);
                 },

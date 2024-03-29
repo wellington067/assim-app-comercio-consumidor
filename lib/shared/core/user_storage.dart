@@ -11,7 +11,6 @@ class UserStorage {
     required String nome,
     required String token,
     required String email,
-    required String telefone,
     //required String papel,
     //required String papelId,
     //required String deviceName,
@@ -20,7 +19,6 @@ class UserStorage {
     await storage.write(key: 'name', value: nome);
     await storage.write(key: 'token', value: token);
     await storage.write(key: 'email', value: email);
-    await storage.write(key: 'telefone', value: telefone);
     // await storage.write(key: 'device_name', value: deviceName);
     //await storage.write(key: 'papel', value: papel);
     //await storage.write(key: 'papelId', value: papelId);
@@ -29,16 +27,6 @@ class UserStorage {
   Future<String> getUserName() async {
     String? nome = await storage.read(key: 'name');
     return nome ?? '';
-  }
-
-  Future<String> getTelefone() async {
-    String? userDataString = await storage.read(key: 'user');
-    if (userDataString != null) {
-      Map<String, dynamic> userData = json.decode(userDataString);
-      String? telefone = userData['contato']['telefone'];
-      return telefone ?? '';
-    }
-    return '';
   }
 
   Future<String> getUserToken() async {
