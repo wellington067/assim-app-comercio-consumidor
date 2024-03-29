@@ -24,8 +24,8 @@ class CategoryMenu extends StatelessWidget {
         Navigator.pushNamed(context, Screens.menu);
       },
       child: Container(
-        width: 84,
-        height: 90,
+        width: 64,
+        height: 70,
         decoration: BoxDecoration(
           color: kDetailColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -38,28 +38,31 @@ class CategoryMenu extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Wrap(
-            children: [
-              Center(
-                child: Image.asset(
-                  assetPath,
-                  fit: BoxFit.cover,
-                  height: 48,
-                  color: Colors.white,
-                ),
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.start, // Isso alinha os itens para o topo
+          crossAxisAlignment: CrossAxisAlignment
+              .center, // Isso centraliza os itens horizontalmente
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 8), // Ajuste o padding conforme necessário
+              child: Image.asset(
+                assetPath,
+                fit: BoxFit.cover,
+                height: 25,
+                color: Colors.white,
               ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  categoryName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+            ),
+            Text(
+              categoryName,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -71,30 +74,35 @@ class CategoryMenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CategoryMenu(
-          categoryName: 'Vegetais',
-          assetPath: Assets.vegetais,
+    final List<Map<String, String>> categories = [
+      {"categoryName": "Vegetais", "assetPath": Assets.vegetais},
+      {"categoryName": "Frutas", "assetPath": Assets.frutas},
+      {"categoryName": "Folhosos", "assetPath": Assets.folhosos},
+      {"categoryName": "Carnes", "assetPath": Assets.carnes},
+      {"categoryName": "Leite e Ovos", "assetPath": Assets.leiteOvos},
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: 22.0), // Padding lateral para o GridView
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          // A proporção foi ajustada de acordo com a nova largura do card de 64
+          childAspectRatio: (64 / 70),
         ),
-        CategoryMenu(
-          categoryName: 'Frutas',
-          assetPath: Assets.frutas,
-        ),
-        CategoryMenu(
-          categoryName: 'Folhosos',
-          assetPath: Assets.folhosos,
-        ),
-        CategoryMenu(
-          categoryName: 'Carnes',
-          assetPath: Assets.carnes,
-        ),
-        CategoryMenu(
-          categoryName: 'Leite e Ovos',
-          assetPath: Assets.leiteOvos,
-        ),
-      ],
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return CategoryMenu(
+            categoryName: categories[index]["categoryName"]!,
+            assetPath: categories[index]["assetPath"]!,
+          );
+        },
+      ),
     );
   }
 }
