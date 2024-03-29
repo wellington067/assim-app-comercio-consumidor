@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
+import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/produto_repository.dart';
@@ -127,8 +127,9 @@ class MenuProductsScreen extends StatelessWidget {
                         childAspectRatio: 0.6,
                       ),
                       itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return _buildProductCard(snapshot.data![index]);
+                      itemBuilder: (BuildContext context, int index) {
+                        return _buildProductCard(
+                            context, snapshot.data![index]);
                       },
                     );
                   } else {
@@ -149,61 +150,78 @@ class MenuProductsScreen extends StatelessWidget {
     return text[0].toUpperCase() + text.substring(1);
   }
 
-  Widget _buildProductCard(ProdutoModel produto) {
-    return Material(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 10,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Center(
-                child: Image.asset(
-                  'lib/assets/images/maça.png', // foto fixa para correção
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Text(
-              produto.titulo,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF858080),
-              ),
-            ),
-            Text(
-              'R\$ ${double.parse(produto.preco).toStringAsFixed(2).replaceAll('.', ',')}',
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  capitalize(produto.tipoUnidade),
-                  style: const TextStyle(fontSize: 18, color: kDetailColor),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.add_circle_outline,
-                    color: kDetailColor,
-                    size: 40,
+  Widget _buildProductCard(BuildContext context, ProdutoModel produto) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          Screens.produtoDetalhe,
+          arguments: {
+            'id': produto.id,
+            'titulo': produto.titulo,
+            'descricao': produto.descricao,
+            'tipoUnidade': produto.tipoUnidade,
+            'preco': produto.preco,
+            'estoque': produto.estoque,
+          },
+        );
+        print('Produto ${produto.titulo} foi tocado!');
+      },
+      child: Material(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    'lib/assets/images/maça.png', // foto fixa para correção
+                    fit: BoxFit.contain,
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              Text(
+                produto.titulo,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF858080),
+                ),
+              ),
+              Text(
+                'R\$ ${double.parse(produto.preco).toStringAsFixed(2).replaceAll('.', ',')}',
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    capitalize(produto.tipoUnidade),
+                    style: const TextStyle(fontSize: 18, color: kDetailColor),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.add_circle_outline,
+                      color: kDetailColor,
+                      size: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

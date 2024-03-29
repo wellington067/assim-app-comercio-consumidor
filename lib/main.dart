@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:ecommerceassim/app.dart';
 import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
