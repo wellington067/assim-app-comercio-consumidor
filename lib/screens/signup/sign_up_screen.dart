@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerceassim/shared/core/controllers/sign_up_controller.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import '../../components/buttons/primary_button.dart';
-import '../../shared/constants/app_number_constants.dart';
 import 'components/info_first_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -18,7 +16,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GetBuilder<SignUpController>(
       init: SignUpController(),
       builder: (controller) => Scaffold(
@@ -34,30 +31,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
-              width: size.width,
-              padding: const EdgeInsets.all(kDefaultPadding),
+              padding: const EdgeInsets.all(20),
               child: Form(
                 key: _formKey,
                 child: Column(
                   children: [
                     Center(
                       child: Text(
-                        controller.infoIndex == 0 ? 'Cadastro' : 'Endereço',
+                        'Cadastro',
                         style: kTitle2.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                            color: kSecondaryDarkColor),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          color: kSecondaryDarkColor,
+                        ),
                       ),
                     ),
-                    if (controller.infoIndex == 0) InfoFirstScreen(controller),
-                    PrimaryButton(
-                      text: 'Concluir',
+                    InfoFirstScreen(controller),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           controller.signUp(context);
                         }
                       },
-                      color: kDetailColor,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kDetailColor,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Concluir',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ],
                 ),

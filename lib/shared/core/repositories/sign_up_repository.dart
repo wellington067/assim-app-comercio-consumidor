@@ -1,220 +1,169 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
-import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../components/dialogs/default_alert_dialog.dart';
 import '../../constants/style_constants.dart';
-import '../models/bairro_model.dart';
-import '../models/estado_model.dart';
 import '../user_storage.dart';
 import '../../../screens/screens_index.dart';
-import 'sign_in_repository.dart';
 
 class SignUpRepository {
   final Dio _dio = Dio();
-  BairroModel bairroModel = BairroModel();
-  CidadeModel cidadeModel = CidadeModel();
-  EstadoModel estadoModel = EstadoModel();
   UserStorage userStorage = UserStorage();
-  int id = 0;
-  SignInRepository signInRepository = SignInRepository();
-  Future<bool> signUp(
-      String name,
-      String email,
-      String password,
-      String apelido,
-      String telefone,
-      String cpf,
-      //String rua,
-      ////String numero,
-      //String cep,
-      //int estado,
-      //String pais,
-      // int cidade,
-      // int bairro,
-      BuildContext context) async {
+
+  Future<bool> signUp(String name, String email, String password,
+      String telefone, String cpf, BuildContext context) async {
     try {
-      //Efetua a chamada da API para o cadastro do produtor
-      Response response = await _dio.post('$kBaseURL/users',
-          options: Options(headers: {
+      Response response = await _dio.post(
+        '$kBaseURL/users',
+        options: Options(
+          headers: {
             'Content-Type': 'application/json',
-            // "Accept": "application/json",
-          }),
-          data: {
-            "name": name,
-            "email": email,
-            "password": password,
-            "apelido": apelido,
-            "telefone": telefone,
-            "cpf": cpf,
-            "roles": [5]
-            //"rua": rua,
-            //"bairro_id": bairro,
-            //"numero": numero,
-            //"cep": cep,
-            //"cidade": cidade,
-            //"estado": estado,
-            //"país": pais,
-          });
-      print(response.data);
+          },
+          validateStatus: (status) => status! < 500,
+        ),
+        data: {
+          "name": name,
+          "email": email,
+          "password": password,
+          "telefone": telefone,
+          "cpf": cpf,
+          "roles": [5],
+
+          // Termos abaixo estão como obrigatório no banco, não deveria
+          /*   "rua": "São José das Flores",
+          "cep": "54758-948",
+          "numero": "423",
+          "bairro_id": "1" */
+        },
+      );
+
       if (response.statusCode == 201) {
-        print(response.data);
-        //int idTemp = response.data["user"]["id"];
-        //String emailTemp = response.data["user"]["email"];
-        //String deviceConsumidor = response.data["user"]["device_name"];
-        //Caso o cadastro do consumidor dê certo, ele pega o email do produtor e faz o login para pegar o token,
-        // depois ele faz o cadastro da banca
-        //String emailConsumidor = response.data["user"]["email"];
-        // ignore: unused_local_variable
-        // int idConsumidor = response.data["user"]["papel_id"];
+        String userToken = response.data['token'].toString();
+        await userStorage.saveUserCredentials(
+          nome: name,
+          email: email,
+          id: response.data['user']['id'].toString(),
+          token: userToken,
+        );
 
-        //String deviceConsumidor = response.data["user"]["device_name"];
-        // log('idConsumidor: $emailConsumidor');
-        try {
-          Response login = await _dio.post(
-            '$kBaseURL/sanctum/token',
-            data: {
-              'email': email,
-              'password': password,
-              'device_name': 'PC',
-            },
-          );
-
-          if (login.statusCode == 200) {
-            String userToken = login.data['user']['token'].toString();
-            userStorage.saveUserCredentials(
-              nome: name,
-              email: email,
-              //deviceName: login.data['user']['device_name'],
-              id: id.toString(),
-              token: userToken,
-              //deviceName: deviceConsumidor
-            );
-            //papel: login.data['user']['papel_id'].toString(),
-            //papelId: login.data['user']['papel_id'].toString());
-            showDialog(
-                context: context,
-                builder: (context) => DefaultAlertDialog(
-                      title: 'Sucesso',
-                      body: 'Cadastro realizado com sucesso',
-                      cancelText: 'Ok',
-                      confirmText: 'Ok',
-                      onConfirm: () =>
-                          Navigator.pushReplacementNamed(context, Screens.home),
-                      confirmColor: kSuccessColor,
-                      cancelColor: kErrorColor,
-                    ));
-            return true;
-          }
-        } catch (e) {
-          log('Erro no login ${e.toString()}');
-          return false;
-        }
+        showSignUpSuccessDialog(context, 'Cadastro realizado com sucesso!');
+        return true;
+      } else if (response.statusCode == 422) {
+        log('Erro 422: ${response.data}');
+        showSignUpErrorDialog(
+            context, 'Dados inválidos. Verifique os campos e tente novamente');
         return false;
       } else {
-        log('error dentro do request do cadastro do consumidor ${response.statusMessage}');
+        showSignUpErrorDialog(
+            context, 'Ocorreu um erro desconhecido. Tente novamente');
         return false;
       }
     } catch (e) {
-      log('Erro na chamada do cadastro do consumidor ${e.toString()}');
-      showDialog(
-          context: context,
-          builder: (context) => DefaultAlertDialogOneButton(
-                title: 'Erro',
-                body: 'Ocorreu um erro, verifique os campos e tente novamente',
-                onConfirm: () {
-                  //navigator
-                },
-                confirmText: 'Ok',
-                buttonColor: kErrorColor,
-              ));
+      log('Erro no cadastro do consumidor: ${e.toString()}');
+      showSignUpErrorDialog(
+          context, 'Ocorreu um erro, verifique os campos e tente novamente');
       return false;
     }
   }
-/*
-  Future<List<BairroModel>> getbairros() async {
-    List<dynamic> all;
-    List<BairroModel> bairros = [];
 
-    try {
-      Response response = await _dio.get('$kBaseURL/bairros');
-      if (response.statusCode == 200) {
-        all = response.data['bairros'];
-        if (all.isNotEmpty) {
-          for (int i = 0; i < all.length; i++) {
-            bairroModel = BairroModel(id: all[i]['id'], nome: all[i]['nome']);
-            bairros.add(bairroModel);
-          }
-          return bairros;
-        } else {
-          return [];
-        }
-      } else {
-        print('erro');
-        return [];
-      }
-    } on DioError catch (e) {
-      log(e.toString());
-      return [];
-    }
+  void showSignUpSuccessDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text(
+            'Sucesso!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: kDetailColor,
+            ),
+          ),
+          content: Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            Container(
+              width: double.infinity,
+              height: 50,
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kDetailColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, Screens.home);
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Future<List<CidadeModel>> getCidades() async {
-    List<dynamic> all;
-    List<CidadeModel> cidades = [];
-
-    try {
-      Response response = await _dio.get('$kBaseURL/cidades');
-      if (response.statusCode == 200) {
-        all = response.data['cidades'];
-        if (all.isNotEmpty) {
-          for (int i = 0; i < all.length; i++) {
-            cidadeModel = CidadeModel(id: all[i]['id'], nome: all[i]['nome']);
-            cidades.add(cidadeModel);
-          }
-          return cidades;
-        } else {
-          return [];
-        }
-      } else {
-        print('erro');
-        return [];
-      }
-    } on DioError catch (e) {
-      log(e.toString());
-      return [];
-    }
+  void showSignUpErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text(
+            'Erro',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: kErrorColor,
+            ),
+          ),
+          content: Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            Container(
+              width: double.infinity,
+              height: 50,
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kErrorColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
-
-  Future<List<EstadoModel>> getEstados() async {
-    List<dynamic> all;
-    List<EstadoModel> estados = [];
-
-    try {
-      Response response = await _dio.get('$kBaseURL/estados');
-      if (response.statusCode == 200) {
-        all = response.data['estados'];
-        if (all.isNotEmpty) {
-          for (int i = 0; i < all.length; i++) {
-            estadoModel = EstadoModel(id: all[i]['id'], nome: all[i]['nome']);
-            estados.add(estadoModel);
-          }
-          return estados;
-        } else {
-          return [];
-        }
-      } else {
-        print('erro');
-        return [];
-      }
-    } on DioError catch (e) {
-      log(e.toString());
-      return [];
-    }
-  }*/
 }

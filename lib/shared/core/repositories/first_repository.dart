@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import '../../shared/core/models/banca_model.dart';
-import '../../shared/constants/app_text_constants.dart';
+import '../models/banca_model.dart';
+import '../../constants/app_text_constants.dart';
 
 class FirstRepository {
   final Dio _dio = Dio();
