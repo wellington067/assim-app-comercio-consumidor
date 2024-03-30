@@ -52,8 +52,7 @@ class SelectAdress extends StatelessWidget {
                                     color: kTextButtonColor.withOpacity(0.5),
                                     spreadRadius: 0,
                                     blurRadius: 3,
-                                    offset: const Offset(
-                                        0, 0), // changes position of shadow
+                                    offset: const Offset(0, 0),
                                   ),
                                 ],
                               ),
