@@ -1,9 +1,9 @@
-import 'package:ecommerceassim/screens/first/first_repository.dart';
+import 'package:ecommerceassim/shared/core/repositories/first_repository.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../../shared/core/navigator.dart';
-import '../screens_index.dart';
+import '../navigator.dart';
+import '../../../screens/screens_index.dart';
 
 class FirstController extends GetxController {
   UserStorage userStorage = UserStorage();

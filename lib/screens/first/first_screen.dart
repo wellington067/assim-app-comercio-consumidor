@@ -4,16 +4,13 @@ import 'package:ecommerceassim/components/buttons/custom_text_button.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/core/controllers/sign_in_controller.dart';
 import 'package:ecommerceassim/shared/components/style_bar.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
-import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:provider/provider.dart';
 import '../../shared/constants/style_constants.dart';
-import './first_controller.dart';
+import '../../shared/core/controllers/first_controller.dart';
 
 class FirstScreen extends StatelessWidget {
   final String? displayName;
@@ -22,14 +19,7 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserStorage userStorage = UserStorage();
     Size size = MediaQuery.of(context).size;
-    final String? displayName =
-        ModalRoute.of(context)?.settings.arguments as String?;
-
-    final String buttonText = displayName != null
-        ? 'Continuar como $displayName'
-        : 'Continuar como convidado';
 
     String firstThreeWords(String? fullName) {
       if (fullName == null || fullName.isEmpty) return '';
@@ -65,8 +55,6 @@ class FirstScreen extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              //controller.status == SignInStatus.loading
-              //? const CircularProgressIndicator()
               PrimaryButton(
                 text: "Continuar como ${firstThreeWords(controller.userName)}",
                 onPressed: () {
@@ -74,7 +62,6 @@ class FirstScreen extends StatelessWidget {
                 },
                 color: kDetailColor,
               ),
-
               const VerticalSpacerBox(size: SpacerSize.large),
               PrimaryButton(
                 text: 'Não sou ${firstThreeWords(controller.userName)}',
@@ -88,11 +75,6 @@ class FirstScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    /*controller.errorMessage != null
-                              ? Text(
-                                  controller.errorMessage!,
-                                  style: kCaption1,
-                                )*/
                     const SizedBox(),
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     CustomTextButton(

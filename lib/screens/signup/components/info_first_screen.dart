@@ -21,12 +21,6 @@ class InfoFirstScreen extends StatelessWidget {
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
-          hintText: 'Apelido',
-          icon: Icons.man,
-          controller: controller.apelidoController,
-        ),
-        const VerticalSpacerBox(size: SpacerSize.small),
-        CustomTextFormField(
           hintText: 'CPF',
           icon: Icons.description,
           maskFormatter: controller.cpfFormatter,

@@ -54,7 +54,6 @@ class SignUpController extends GetxController {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _cpfController = TextEditingController();
-  final TextEditingController _apelidoController = TextEditingController();
   final TextEditingController _foneController = TextEditingController();
   final TextEditingController _ruaController = TextEditingController();
   final TextEditingController _cepController = TextEditingController();
@@ -70,7 +69,6 @@ class SignUpController extends GetxController {
   TextEditingController get nameController => _nameController;
   TextEditingController get bairroController => _bairroController;
   TextEditingController get cpfController => _cpfController;
-  TextEditingController get apelidoController => _apelidoController;
   TextEditingController get foneController => _foneController;
   TextEditingController get ruaController => _ruaController;
   TextEditingController get cepController => _cepController;
@@ -134,26 +132,15 @@ class SignUpController extends GetxController {
         _nameController.text,
         _emailController.text,
         _passwordController.text,
-        _apelidoController.text,
         _foneController.text,
-        _cpfController.text
-        // _ruaController.text,
-        // _numeroController.text,
-        // _cepController.text,
-        //  estadoId,
-        // cidadeId,
-        // bairroId,
-        ,
+        _cpfController.text,
         context);
 
     update();
-
-    //log("criaaaa ${signupSuccess.toString()}");
   }
 
   bool validateEmptyFields() {
     if (_nameController.text.isEmpty ||
-            _apelidoController.text.isEmpty ||
             _cpfController.text.isEmpty ||
             _emailController.text.isEmpty ||
             _foneController.text.isEmpty ||

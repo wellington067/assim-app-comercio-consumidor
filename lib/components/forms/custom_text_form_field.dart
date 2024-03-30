@@ -1,6 +1,6 @@
-import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
@@ -39,10 +39,23 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   void initState() {
+    super.initState();
     if (widget.isPassword != null) {
       _obscureText = widget.isPassword!;
     }
-    super.initState();
+    widget.controller?.addListener(() {
+      if ((widget.controller?.text.isNotEmpty == true ||
+              widget.controller?.text.isEmpty == true) &&
+          widget.isPassword == true) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller?.removeListener(() {});
+    super.dispose();
   }
 
   void _toggleVisibility() {
@@ -83,9 +96,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             border: InputBorder.none,
             labelText: widget.label,
             hintText: widget.hintText,
-            suffixIcon: widget.isPassword == true
+            suffixIcon: widget.isPassword == true &&
+                    widget.controller?.text.isNotEmpty == true
                 ? InkWell(
-                    onTap: () => _toggleVisibility(),
+                    onTap: _toggleVisibility,
                     child: Icon(
                       _obscureText ? Icons.visibility : Icons.visibility_off,
                     ),
