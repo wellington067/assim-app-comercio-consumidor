@@ -58,7 +58,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                         date: '08/10/2022',
                         status: 'Entregue',
                         onTap: () {
-                          // Ação ao tocar no cardy
+                          // Ação ao tocar no card
                         },
                       ),
                       const VerticalSpacerBox(size: SpacerSize.medium),

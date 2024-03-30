@@ -1,5 +1,4 @@
 import 'package:ecommerceassim/shared/components/dialogs/deleted_order.dart';
-import 'package:ecommerceassim/shared/components/dialogs/finish_dialog.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
@@ -16,7 +15,7 @@ class OrderCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const OrderCard({
-    Key? key,
+    super.key,
     required this.orderNumber,
     required this.sellerName,
     required this.itemsTotal,
@@ -24,7 +23,7 @@ class OrderCard extends StatelessWidget {
     required this.date,
     required this.status,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   String formatPrice(double price) {
     return price.toStringAsFixed(2).replaceAll('.', ',');
@@ -32,26 +31,38 @@ class OrderCard extends StatelessWidget {
 
   String get formattedItemsTotal => formatPrice(itemsTotal);
   String get formattedShippingHandling => formatPrice(shippingHandling);
-  String get formattedOrderTotal => formatPrice(orderTotal);
+  String get formattedOrderTotal => formatPrice(itemsTotal + shippingHandling);
 
-  double get orderTotal => itemsTotal + shippingHandling;
-
-  Color _getStatusColor(String status) {
+  Map<String, dynamic> _getStatusAttributes(String status) {
     switch (status) {
       case 'Em andamento':
-        return kAlertColor;
+        return {
+          'color': kAlertColor,
+          'icon': Icons.hourglass_bottom,
+        };
       case 'Entregue':
-        return kSuccessColorPurshase;
+        return {
+          'color': kSuccessColorPurshase,
+          'icon': Icons.check_circle,
+        };
       case 'Cancelado':
-        return kErrorColor;
+        return {
+          'color': kErrorColor,
+          'icon': Icons.cancel,
+        };
       default:
-        return Colors.grey;
+        return {
+          'color': Colors.grey,
+          'icon': Icons.help_outline,
+        };
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Color statusColor = _getStatusColor(status);
+    final statusAttributes = _getStatusAttributes(status);
+    final statusColor = statusAttributes['color'] as Color;
+    final statusIcon = statusAttributes['icon'] as IconData;
 
     return Column(
       children: [
@@ -183,31 +194,35 @@ class OrderCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const HorizontalSpacerBox(size: SpacerSize.large),
                       Text(
                         date,
                         style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold),
                       ),
-                      const Spacer(),
-                      ElevatedButton(
-                        onPressed: null, // ou alguma outra ação
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(statusColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  20.0), // Ajuste o raio conforme necessário
-                            ),
-                          ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: statusColor,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Text(
-                          status,
-                          style: const TextStyle(
-                              fontSize: 17, color: kOnSurfaceColor),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 4,
+                          children: [
+                            Text(
+                              status,
+                              style: const TextStyle(
+                                  fontSize: 17, color: Colors.white),
+                            ),
+                            Icon(
+                              statusIcon,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ],
                         ),
                       ),
                     ],
