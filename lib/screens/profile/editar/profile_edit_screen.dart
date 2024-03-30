@@ -113,18 +113,24 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               ),
               actionsAlignment: MainAxisAlignment.center,
               actions: <Widget>[
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: kDetailColor,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    'Ok',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: kDetailColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'Ok',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -143,7 +149,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     }
   }
 
-  void showErrorDialog(BuildContext context, String message) {
+  showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -163,18 +169,24 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           ),
           actionsAlignment: MainAxisAlignment.center,
           actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Ok',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -257,13 +269,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: kDetailColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     side: const BorderSide(color: kDetailColor),
-                    fixedSize: const Size.fromHeight(50),
+                    minimumSize: const Size(double.infinity, 50), // Adicionado
                   ),
                   child: const Text('Editar Perfil',
                       style: TextStyle(fontSize: 18)),
@@ -279,13 +290,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: kDetailColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     side: const BorderSide(color: kDetailColor),
-                    fixedSize: const Size.fromHeight(50),
+                    minimumSize: const Size(double.infinity, 50), // Adicionado
                   ),
                   child: const Text('Salvar', style: TextStyle(fontSize: 18)),
                 ),
