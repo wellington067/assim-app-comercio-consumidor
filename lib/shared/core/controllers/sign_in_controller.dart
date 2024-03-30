@@ -28,21 +28,16 @@ class SignInController with ChangeNotifier {
       status = SignInStatus.loading;
       notifyListeners();
 
-      var succ = await _repository.signIn(
+      var userToken = await _repository.signIn(
         email: _emailController.text,
         password: _passwordController.text,
       );
-      if (succ == 1) {
-        status = SignInStatus.done;
-        _userName = _emailController.text.split('@').first;
-        notifyListeners();
 
-        Navigator.pushReplacementNamed(context, Screens.home);
-      } else {
-        status = SignInStatus.error;
-        setErrorMessage('Credenciais inválidas, verifique seus dados');
-        notifyListeners();
-      }
+      status = SignInStatus.done;
+      notifyListeners();
+
+      Navigator.pushReplacementNamed(context, Screens.home,
+          arguments: userToken);
     } catch (e) {
       status = SignInStatus.error;
       setErrorMessage('Credenciais inválidas verifique seus dados');

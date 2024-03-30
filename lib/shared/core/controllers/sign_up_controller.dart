@@ -23,7 +23,6 @@ class SignUpController extends GetxController {
   int _infoIndex = 0;
   int bairroId = 0;
   int cidadeId = 0;
-  int estadoId = 0;
   bool? signupSuccess;
   RegExp numReg = RegExp(r".*[0-9].*");
   RegExp letterReg = RegExp(r".*[A-Z].*");
@@ -32,7 +31,6 @@ class SignUpController extends GetxController {
 
   List<BairroModel> bairros = [];
   List<CidadeModel> cidades = [];
-  List<EstadoModel> estados = [];
   ScreenState screenState = ScreenState.idle;
 
   SignUpRepository signUpRepository = SignUpRepository();
@@ -63,9 +61,6 @@ class SignUpController extends GetxController {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final TextEditingController _estadoController = TextEditingController();
-  final TextEditingController _paisController = TextEditingController();
-
   TextEditingController get nameController => _nameController;
   TextEditingController get bairroController => _bairroController;
   TextEditingController get cpfController => _cpfController;
@@ -77,23 +72,18 @@ class SignUpController extends GetxController {
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
 
-  TextEditingController get estadoController => _estadoController;
-  TextEditingController get paisController => _paisController;
-
   int get infoIndex => _infoIndex;
   bool? get signupSucess => signupSuccess;
 
-  //void loadBairros() async {
-  //   bairros = await signUpRepository.getbairros();
-  //}
+  void loadBairros() async {
+    bairros = await signUpRepository.getBairros();
+    update();
+  }
 
-  //void loadCidades() async {
-  //  cidades = await signUpRepository.getCidades();
-  //}
-
-  //void loadEstados() async {
-  // estados = await signUpRepository.getEstados();
-  //}
+  void loadCidades() async {
+    cidades = await signUpRepository.getCidades();
+    update();
+  }
 
   void next() {
     _infoIndex++;
@@ -103,6 +93,13 @@ class SignUpController extends GetxController {
   void back() {
     _infoIndex--;
     update();
+  }
+
+  @override
+  void onInit() {
+    loadBairros();
+    loadCidades();
+    super.onInit();
   }
 
   checkPasswordStrength(String password) {
@@ -134,26 +131,29 @@ class SignUpController extends GetxController {
         _passwordController.text,
         _foneController.text,
         _cpfController.text,
+        _ruaController.text,
+        _numeroController.text,
+        _cepController.text,
+        cidadeId,
+        bairroId,
         context);
 
     update();
+
+    //log("criaaaa ${signupSuccess.toString()}");
   }
 
   bool validateEmptyFields() {
     if (_nameController.text.isEmpty ||
-            _cpfController.text.isEmpty ||
-            _emailController.text.isEmpty ||
-            _foneController.text.isEmpty ||
-            _passwordController.text.isEmpty
-
-        // _cepController.text.isEmpty ||
-        // _ruaController.text.isEmpty ||
-        // _numeroController.text.isEmpty ||
-        // _paisController.text.isEmpty ||
-        //  estadoId.toString().isEmpty ||
-        // cidadeId.toString().isEmpty ||
-        // bairroId.toString().isEmpty) {
-        ) {
+        _cpfController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _foneController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _cepController.text.isEmpty ||
+        _ruaController.text.isEmpty ||
+        _numeroController.text.isEmpty ||
+        cidadeId.toString().isEmpty ||
+        bairroId.toString().isEmpty) {
       log('Error, o user não preencheu todos os campos, retornando falso');
       return false;
     }
@@ -177,13 +177,5 @@ class SignUpController extends GetxController {
     }
     log('Error no cadastro de número, retornando falso');
     return false;
-  }
-
-  @override
-  void onInit() {
-    //loadBairros();
-    //loadCidades();
-    //loadEstados();
-    super.onInit();
   }
 }

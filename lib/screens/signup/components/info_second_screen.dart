@@ -2,7 +2,6 @@
 
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
-import 'package:ecommerceassim/shared/core/models/estado_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/forms/custom_text_form_field.dart';
@@ -19,29 +18,7 @@ class InfoSecondScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DropdownButtonFormField<EstadoModel>(
-          isExpanded: true,
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.home_filled),
-            border: InputBorder.none,
-            filled: true,
-            fillColor: kBackgroundColor,
-          ),
-          style: Theme.of(context).textTheme.titleLarge,
-          hint: const Text('Estado'),
-          value: null,
-          items: controller.estados.map((obj) {
-            return DropdownMenuItem<EstadoModel>(
-              value: obj,
-              child: Text(obj.nome.toString()),
-            );
-          }).toList(),
-          onChanged: (selectedObj) {
-            controller.estadoId = selectedObj!.id!.toInt();
-          },
-        ),
         const VerticalSpacerBox(size: SpacerSize.small),
-
         DropdownButtonFormField<CidadeModel>(
           isExpanded: true,
           decoration: const InputDecoration(
@@ -63,12 +40,6 @@ class InfoSecondScreen extends StatelessWidget {
             controller.cidadeId = selectedObj!.id!.toInt();
           },
         ),
-        /*CustomTextFormField(
-          hintText: 'Cidade',
-          icon: Icons.home,
-          //maskFormatter: controller.cepFormatter,
-          controller: controller.cidadeController,
-        ),*/
         const VerticalSpacerBox(size: SpacerSize.small),
         DropdownButtonFormField<BairroModel>(
           isExpanded: true,
@@ -92,7 +63,6 @@ class InfoSecondScreen extends StatelessWidget {
           },
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
-
         CustomTextFormField(
           hintText: 'Rua',
           icon: Icons.location_city_sharp,
@@ -105,24 +75,6 @@ class InfoSecondScreen extends StatelessWidget {
           maskFormatter: controller.cepFormatter,
           controller: controller.cepController,
         ),
-        // DropdownButtonFormField<BairroModel>(
-        //   isExpanded: true,
-        //   decoration: const InputDecoration(
-        //       prefixIcon: Icon(Icons.location_city),
-        //       border: InputBorder.none),
-        //   style: Theme.of(context).textTheme.titleLarge,
-        //   hint: const Text('Bairro'),
-        //   value: null,
-        //   items: controller.bairros.map((obj) {
-        //     return DropdownMenuItem<BairroModel>(
-        //       value: obj,
-        //       child: Text(obj.nome.toString()),
-        //     );
-        //   }).toList(),
-        //   onChanged: (selectedObj) {
-        //     controller.bairroId = selectedObj!.id!.toInt();
-        //   },
-        // ),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
           keyboardType: TextInputType.number,
@@ -131,19 +83,6 @@ class InfoSecondScreen extends StatelessWidget {
           controller: controller.numeroController,
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
-
-        //CustomTextFormField(
-        //keyboardType: TextInputType.text,
-        //hintText: 'Estado',
-        //icon: Icons.home_filled,
-        //controller: controller.estadoController,
-        // ),
-        //CustomTextFormField(
-        //  keyboardType: TextInputType.text,
-        // hintText: 'País',
-        // icon: Icons.home_filled,
-        // controller: controller.paisController,
-        //),
       ],
     );
   }

@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import '../models/banca_model.dart';
 import '../../constants/app_text_constants.dart';
 
 class FirstRepository {
