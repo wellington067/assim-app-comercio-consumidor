@@ -140,7 +140,7 @@ class SignUpRepository {
                   Navigator.pushReplacementNamed(context, Screens.home);
                 },
                 child: const Text(
-                  'Ok',
+                  'Fechar',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class SignUpRepository {
                 ),
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text(
-                  'Ok',
+                  'Fechar',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

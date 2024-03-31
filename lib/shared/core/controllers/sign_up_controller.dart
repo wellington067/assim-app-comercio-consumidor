@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:ecommerceassim/shared/core/repositories/sign_up_repository.dart';
 import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
-import 'package:ecommerceassim/shared/core/models/estado_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';

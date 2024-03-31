@@ -13,49 +13,74 @@ import '../../../shared/core/controllers/sign_up_controller.dart';
 class InfoSecondScreen extends StatelessWidget {
   late SignUpController controller;
   InfoSecondScreen(this.controller, {super.key});
-
+  final double formFieldHeight = 48.0;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const VerticalSpacerBox(size: SpacerSize.small),
-        DropdownButtonFormField<CidadeModel>(
-          isExpanded: true,
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.home),
-            border: InputBorder.none,
-            filled: true,
-            fillColor: kBackgroundColor,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            color: kBackgroundColor,
           ),
-          style: Theme.of(context).textTheme.titleLarge,
-          hint: const Text('Cidade'),
-          value: null,
-          items: controller.cidades.map((obj) {
-            return DropdownMenuItem<CidadeModel>(
-              value: obj,
-              child: Text(obj.nome.toString()),
-            );
-          }).toList(),
-          onChanged: (selectedObj) {
-            controller.cidadeId = selectedObj!.id!.toInt();
-          },
+          child: DropdownButtonFormField<CidadeModel>(
+            isExpanded: true,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.home),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: kBackgroundColor,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: formFieldHeight / 7),
+            ),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontSize: 18,
+                ),
+            hint: const Text('Cidade'),
+            value: null,
+            items: controller.cidades.map((obj) {
+              return DropdownMenuItem<CidadeModel>(
+                value: obj,
+                child: Text(
+                  obj.nome.toString(),
+                  style: const TextStyle(fontSize: 18),
+                ),
+              );
+            }).toList(),
+            onChanged: (selectedObj) {
+              controller.cidadeId = selectedObj!.id!.toInt();
+            },
+          ),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
         DropdownButtonFormField<BairroModel>(
           isExpanded: true,
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.location_city_sharp),
-            border: InputBorder.none,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.location_city_sharp),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide.none,
+            ),
             filled: true,
             fillColor: kBackgroundColor,
+            contentPadding: EdgeInsets.symmetric(vertical: formFieldHeight / 4),
           ),
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontSize: 18,
+              ),
           hint: const Text('Bairro'),
           value: null,
           items: controller.bairros.map((obj) {
             return DropdownMenuItem<BairroModel>(
               value: obj,
-              child: Text(obj.nome.toString()),
+              child: Text(
+                obj.nome.toString(),
+                style: const TextStyle(fontSize: 18),
+              ),
             );
           }).toList(),
           onChanged: (selectedObj) {

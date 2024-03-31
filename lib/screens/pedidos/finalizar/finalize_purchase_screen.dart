@@ -12,7 +12,7 @@ import 'package:rating_dialog/rating_dialog.dart';
 import '../../../components/buttons/primary_button.dart';
 
 class FinalizePurchaseScreen extends StatefulWidget {
-  const FinalizePurchaseScreen({Key? key}) : super(key: key);
+  const FinalizePurchaseScreen({super.key});
 
   @override
   State<FinalizePurchaseScreen> createState() => _FinalizePurchaseScreenState();
@@ -38,8 +38,8 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                           child: Row(
                             children: [
                               Container(
-                                width: 440,
-                                height: 280,
+                                width: 350,
+                                height: 310,
                                 decoration: BoxDecoration(
                                   color: kOnSurfaceColor,
                                   borderRadius: const BorderRadius.all(
@@ -49,8 +49,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       color: kTextButtonColor.withOpacity(0.5),
                                       spreadRadius: 0,
                                       blurRadius: 3,
-                                      offset: const Offset(
-                                          0, 0), // changes position of shadow
+                                      offset: const Offset(0, 0),
                                     ),
                                   ],
                                 ),
@@ -98,7 +97,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     ),
                                     const Padding(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 6),
+                                          horizontal: 8, vertical: 6),
                                       child: Row(
                                         children: [
                                           HorizontalSpacerBox(
@@ -122,7 +121,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                         size: SpacerSize.small),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 6),
+                                          horizontal: 8, vertical: 6),
                                       child: Row(
                                         children: [
                                           const HorizontalSpacerBox(
@@ -144,7 +143,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 6),
+                                          horizontal: 8, vertical: 6),
                                       child: Row(
                                         children: [
                                           const HorizontalSpacerBox(
@@ -166,7 +165,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 6),
+                                          horizontal: 8, vertical: 6),
                                       child: Row(
                                         children: [
                                           const HorizontalSpacerBox(
@@ -190,7 +189,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 6),
+                                          horizontal: 8, vertical: 6),
                                       child: Row(
                                         children: [
                                           const HorizontalSpacerBox(
@@ -198,7 +197,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                           const Text(
                                             'Em 1x de RS 64,50 sem juros',
                                             style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           const Spacer(),
@@ -302,7 +301,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                width: 440,
+                                width: 350,
                                 height: 95,
                                 decoration: BoxDecoration(
                                   color: kOnSurfaceColor,
@@ -313,8 +312,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       color: kTextButtonColor.withOpacity(0.5),
                                       spreadRadius: 0,
                                       blurRadius: 3,
-                                      offset: const Offset(
-                                          0, 0), // changes position of shadow
+                                      offset: const Offset(0, 0),
                                     ),
                                   ],
                                 ),
@@ -329,7 +327,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                           ),
                                         ),
                                         const Text(
-                                          'Maria Eduarda',
+                                          'Endereço',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold),
@@ -366,7 +364,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                           Text(
                                             'Rua Professora Esmeralda Barros, 71, Apt, ...',
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 1,
                                                 color: kTextButtonColor),
                                           ),
                                         ],
@@ -477,7 +475,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                width: 440,
+                                width: 350,
                                 height: 110,
                                 decoration: BoxDecoration(
                                   color: kOnSurfaceColor,
@@ -488,8 +486,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       color: kTextButtonColor.withOpacity(0.5),
                                       spreadRadius: 0,
                                       blurRadius: 3,
-                                      offset: const Offset(
-                                          0, 0), // changes position of shadow
+                                      offset: const Offset(0, 0),
                                     ),
                                   ],
                                 ),
@@ -540,15 +537,15 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                               size: SpacerSize.huge),
                                           Text(
                                             'Mastercard ',
-                                            style: TextStyle(fontSize: 17),
+                                            style: TextStyle(fontSize: 16),
                                           ),
                                           Text('(Crédito) ',
                                               style: TextStyle(
-                                                  fontSize: 17,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold)),
                                           Text(
                                             'com final 1447 ',
-                                            style: TextStyle(fontSize: 17),
+                                            style: TextStyle(fontSize: 16),
                                           ),
                                         ],
                                       ),
@@ -560,7 +557,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                               size: SpacerSize.huge),
                                           Text(
                                             'Parcelas não disponíveis',
-                                            style: TextStyle(fontSize: 17),
+                                            style: TextStyle(fontSize: 16),
                                           ),
                                         ],
                                       ),
@@ -577,8 +574,8 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                         const VerticalSpacerBox(size: SpacerSize.large),
                         InkWell(
                           child: Container(
-                            width: 440,
-                            height: 300,
+                            width: 350,
+                            height: 320,
                             decoration: BoxDecoration(
                               color: kOnSurfaceColor,
                               borderRadius:
@@ -588,8 +585,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   color: kTextButtonColor.withOpacity(0.5),
                                   spreadRadius: 0,
                                   blurRadius: 3,
-                                  offset: const Offset(
-                                      0, 0), // changes position of shadow
+                                  offset: const Offset(0, 0),
                                 ),
                               ],
                             ),
@@ -603,7 +599,6 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       Container(
                                         transformAlignment: Alignment.center,
                                         alignment: Alignment.center,
-                                        width: 75.0,
                                         height: 75.0,
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.rectangle,
@@ -806,7 +801,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                 child: const Text(
                                   'Voltar a cesta',
                                   style:
-                                      TextStyle(color: kButtom, fontSize: 17),
+                                      TextStyle(color: kButtom, fontSize: 16),
                                 ))
                           ],
                         ),
