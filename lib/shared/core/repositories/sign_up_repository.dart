@@ -1,13 +1,10 @@
 // ignore_for_file: deprecated_member_use, avoid_print, use_build_context_synchronously
 
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../components/dialogs/default_alert_dialog.dart';
 import '../../constants/style_constants.dart';
 import '../models/bairro_model.dart';
 import '../user_storage.dart';
@@ -46,12 +43,12 @@ class SignUpRepository {
             "password": password,
             "telefone": telefone,
             "cpf": cpf,
-            "roles": [5],
             "rua": rua,
             "bairro_id": bairro,
             "numero": numero,
             "cep": cep,
             "cidade": cidade,
+            "roles": [5],
           });
       print(response.data);
       if (response.statusCode == 201) {
@@ -68,44 +65,35 @@ class SignUpRepository {
         //String deviceConsumidor = response.data["user"]["device_name"];
         // log('idConsumidor: $emailConsumidor');
         try {
-          Response login = await _dio.post(
-            '$kBaseURL/sanctum/token',
-            data: {
-              'email': email,
-              'password': password,
-              'device_name': 'PC',
-            },
+          // Substitua a chamada direta ao _dio.post pela função signIn do signInRepository
+          int signInResult = await signInRepository.signIn(
+            email: email,
+            password: password,
           );
 
-          if (login.statusCode == 200) {
-            String userToken = login.data['user']['token'].toString();
-            userStorage.saveUserCredentials(
-              nome: name,
-              email: email,
-              //deviceName: login.data['user']['device_name'],
-              id: id.toString(),
-              token: userToken,
-              //deviceName: deviceConsumidor
-            );
+          if (signInResult == 1) {
+            /*Se signIn retornar 1, login foi bem-sucedido.
+            Recupere os dados salvos pelo signIn para mostrar a mensagem de sucesso ou para uso posterior.
+            String name = await userStorage.getUserName();
+            String userToken = await userStorage.getUserToken(); */
 
-            showSignUpSuccessDialog(
-              context,
-              'Cadastro realizado com sucesso',
-            );
+            showSignUpSuccessDialog(context, 'Cadastro realizado com sucesso');
 
             return true;
+          } else {
+            log('Erro no login.');
+            return false;
           }
         } catch (e) {
-          log('Erro no login ${e.toString()}');
+          log('Erro no login: ${e.toString()}');
           return false;
         }
-        return false;
       } else {
         log('error dentro do request do cadastro do consumidor ${response.statusMessage}');
         return false;
       }
     } catch (e) {
-      log('Erro na chamada do cadastro do consumidor ${e.toString()}');
+      log('Erro no cadastro do consumidor ${e.toString()}');
       showSignUpErrorDialog(
         context,
         'Ocorreu um erro, verifique os campos e tente novamente',

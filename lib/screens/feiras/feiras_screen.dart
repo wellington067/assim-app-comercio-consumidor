@@ -1,6 +1,5 @@
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -56,7 +55,7 @@ class FeirasScreen extends StatelessWidget {
                     FeiraModel feira = feiras[index];
 
                     return Container(
-                      margin: const EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.all(7.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15.0),

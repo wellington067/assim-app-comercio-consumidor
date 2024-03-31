@@ -77,12 +77,12 @@ class FirstScreen extends StatelessWidget {
                   children: <Widget>[
                     const SizedBox(),
                     const VerticalSpacerBox(size: SpacerSize.medium),
-                    CustomTextButton(
+                    /* CustomTextButton(
                       title: 'Continuar como convidado',
                       onPressed: () async {
                         Navigator.pushNamed(context, Screens.home);
                       },
-                    ),
+                    ), */
                     const VerticalSpacerBox(size: SpacerSize.small),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

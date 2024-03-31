@@ -46,9 +46,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     widget.controller?.addListener(() {
       if ((widget.controller?.text.isNotEmpty == true ||
               widget.controller?.text.isEmpty == true) &&
-          widget.isPassword == true) {
-        setState(() {});
-      }
+          widget.isPassword == true) {}
+      setState(() {});
     });
   }
 

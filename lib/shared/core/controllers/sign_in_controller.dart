@@ -25,6 +25,10 @@ class SignInController with ChangeNotifier {
   var status = SignInStatus.idle;
   void signIn(BuildContext context) async {
     try {
+      if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+        throw Exception("Por favor, forneça seu email e senha.");
+      }
+
       status = SignInStatus.loading;
       notifyListeners();
 
@@ -39,8 +43,15 @@ class SignInController with ChangeNotifier {
       Navigator.pushReplacementNamed(context, Screens.home,
           arguments: userToken);
     } catch (e) {
-      status = SignInStatus.error;
-      setErrorMessage('Credenciais inválidas verifique seus dados');
+      status = SignInStatus.loading;
+      notifyListeners();
+      await Future.delayed(const Duration(milliseconds: 500));
+      status = SignInStatus.idle;
+      if (e is Exception) {
+        setErrorMessage('Por favor, forneça seu email e senha.');
+      } else {
+        setErrorMessage('Credenciais inválidas. Verifique seus dados.');
+      }
       notifyListeners();
     }
   }
