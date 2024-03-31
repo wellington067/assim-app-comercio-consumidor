@@ -84,7 +84,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       final Uri url = Uri.parse('$kBaseURL/users/$userId');
       final response = await http.patch(
         url,
-        body: json.encode({'name': newName, 'telefone': newPhone}),
+        body: json.encode({
+          'name': newName,
+          'telefone': newPhone,
+          'roles': [5]
+        }),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
