@@ -16,7 +16,7 @@ import '../../shared/constants/app_number_constants.dart';
 class CartScreen extends StatefulWidget {
   final ProdutoModel? selectedProduct;
 
-  const CartScreen({Key? key, this.selectedProduct}) : super(key: key);
+  const CartScreen({super.key, this.selectedProduct});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -71,7 +71,7 @@ class _CartScreenState extends State<CartScreen> {
                       InkWell(
                         child: Container(
                           width: 420,
-                          height: 235,
+                          height: 260,
                           decoration: BoxDecoration(
                             color: kOnSurfaceColor,
                             borderRadius:
@@ -81,8 +81,7 @@ class _CartScreenState extends State<CartScreen> {
                                 color: kTextButtonColor.withOpacity(0.5),
                                 spreadRadius: 0,
                                 blurRadius: 3,
-                                offset: const Offset(
-                                    0, 0), // changes position of shadow
+                                offset: const Offset(0, 0),
                               ),
                             ],
                           ),
@@ -94,11 +93,11 @@ class _CartScreenState extends State<CartScreen> {
                                     const HorizontalSpacerBox(
                                         size: SpacerSize.large),
                                     Container(
-                                      width: 160.0,
+                                      width: 80.0,
                                       height: 150.0,
                                       decoration: const BoxDecoration(
                                         image: DecorationImage(
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.contain,
                                           image: AssetImage(Assets.melancia),
                                         ),
                                       ),
@@ -130,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
                                             Text(
                                               'RS 5,50',
                                               style: TextStyle(
-                                                  fontSize: 35,
+                                                  fontSize: 25,
                                                   fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.end,
                                             ),
@@ -234,6 +233,7 @@ class _CartScreenState extends State<CartScreen> {
                                       child: const Text(
                                         'Excluir',
                                         style: TextStyle(
+                                          color: kOnSurfaceColor,
                                           fontSize: 15,
                                         ),
                                       ),
@@ -250,8 +250,8 @@ class _CartScreenState extends State<CartScreen> {
                       const VerticalSpacerBox(size: SpacerSize.small),
                       InkWell(
                         child: Container(
-                          width: 420,
-                          height: 235,
+                          width: 440,
+                          height: 260,
                           decoration: BoxDecoration(
                             color: kOnSurfaceColor,
                             borderRadius:
@@ -261,8 +261,7 @@ class _CartScreenState extends State<CartScreen> {
                                 color: kTextButtonColor.withOpacity(0.5),
                                 spreadRadius: 0,
                                 blurRadius: 3,
-                                offset: const Offset(
-                                    0, 0), // changes position of shadow
+                                offset: const Offset(0, 0),
                               ),
                             ],
                           ),
@@ -274,11 +273,11 @@ class _CartScreenState extends State<CartScreen> {
                                     const HorizontalSpacerBox(
                                         size: SpacerSize.large),
                                     Container(
-                                      width: 160.0,
+                                      width: 75.0,
                                       height: 150.0,
                                       decoration: const BoxDecoration(
                                         image: DecorationImage(
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.contain,
                                           image: AssetImage(Assets.limao),
                                         ),
                                       ),
@@ -308,7 +307,7 @@ class _CartScreenState extends State<CartScreen> {
                                             Text(
                                               'RS 3,50',
                                               style: TextStyle(
-                                                  fontSize: 35,
+                                                  fontSize: 25,
                                                   fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.end,
                                             ),
@@ -412,6 +411,7 @@ class _CartScreenState extends State<CartScreen> {
                                       child: const Text(
                                         'Excluir',
                                         style: TextStyle(
+                                          color: kOnSurfaceColor,
                                           fontSize: 15,
                                           // color: kTextButtonColor
                                         ),

@@ -41,8 +41,8 @@ class SelectAdress extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
-                              width: 440,
-                              height: 285,
+                              width: 350,
+                              height: 270,
                               decoration: BoxDecoration(
                                 color: kOnSurfaceColor,
                                 borderRadius:
@@ -91,14 +91,6 @@ class SelectAdress extends StatelessWidget {
                                   const Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 5),
-                                    child: Row(
-                                      children: [
-                                        HorizontalSpacerBox(
-                                            size: SpacerSize.large),
-                                        Text('Eduarda',
-                                            style: TextStyle(fontSize: 17)),
-                                      ],
-                                    ),
                                   ),
                                   const Padding(
                                     padding: EdgeInsets.symmetric(
@@ -120,7 +112,7 @@ class SelectAdress extends StatelessWidget {
                                       children: [
                                         HorizontalSpacerBox(
                                             size: SpacerSize.large),
-                                        Text('Apartamento',
+                                        Text('Apartamento - 10',
                                             style: TextStyle(fontSize: 17)),
                                       ],
                                     ),
@@ -132,7 +124,7 @@ class SelectAdress extends StatelessWidget {
                                       children: [
                                         HorizontalSpacerBox(
                                             size: SpacerSize.large),
-                                        Text('Caruaru, PE, 55044-070',
+                                        Text('Garanhuns, PE, 55098-070',
                                             style: TextStyle(fontSize: 17)),
                                       ],
                                     ),
@@ -144,19 +136,7 @@ class SelectAdress extends StatelessWidget {
                                       children: [
                                         HorizontalSpacerBox(
                                             size: SpacerSize.large),
-                                        Text('Brasil',
-                                            style: TextStyle(fontSize: 17)),
-                                      ],
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 5),
-                                    child: Row(
-                                      children: [
-                                        HorizontalSpacerBox(
-                                            size: SpacerSize.large),
-                                        Text('Telefone: (81) 99699-7476',
+                                        Text('Boa Vista',
                                             style: TextStyle(fontSize: 17)),
                                       ],
                                     ),
@@ -200,7 +180,7 @@ class SelectAdress extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: 440,
+                              width: 350,
                               height: 75,
                               decoration: BoxDecoration(
                                 color: kOnSurfaceColor,
@@ -211,8 +191,7 @@ class SelectAdress extends StatelessWidget {
                                     color: kTextButtonColor.withOpacity(0.5),
                                     spreadRadius: 0,
                                     blurRadius: 3,
-                                    offset: const Offset(
-                                        0, 0), // changes position of shadow
+                                    offset: const Offset(0, 0),
                                   ),
                                 ],
                               ),

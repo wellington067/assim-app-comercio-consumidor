@@ -6,14 +6,16 @@ class AuthFormField2 extends StatefulWidget {
   final bool isPassword;
   final TextInputType inputType;
   final Function(String) onChanged;
+  final Color backgroundColor;
 
   const AuthFormField2({
-    Key? key,
+    super.key,
     required this.label,
     required this.isPassword,
     required this.inputType,
     required this.onChanged,
-  }) : super(key: key);
+    this.backgroundColor = kOnBackgroundColorText,
+  });
 
   @override
   State<AuthFormField2> createState() => _AuthFormField2State();
@@ -33,6 +35,8 @@ class _AuthFormField2State extends State<AuthFormField2> {
         obscureText: widget.isPassword ? showPassword : false,
         keyboardType: widget.inputType,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: widget.backgroundColor,
           suffixIcon: widget.isPassword
               ? InkWell(
                   onTap: () {
@@ -46,9 +50,18 @@ class _AuthFormField2State extends State<AuthFormField2> {
               : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none, // Invisible border by default
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none, // Invisible border by default
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
-              color: kDetailColor,
-              width: 1,
+              color:
+                  kDetailColor, // The color you want the border to be when focused
+              width: 1.5,
             ),
           ),
         ),

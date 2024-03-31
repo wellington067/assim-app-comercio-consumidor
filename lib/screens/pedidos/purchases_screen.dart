@@ -3,16 +3,13 @@ import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
 import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:provider/provider.dart';
 import '../../components/utils/vertical_spacer_box.dart';
-import '../../shared/components/dialogs/finish_dialog.dart';
 import '../../shared/constants/app_enums.dart';
-import '../screens_index.dart';
 
 class PurchasesScreen extends StatefulWidget {
-  const PurchasesScreen({Key? key}) : super(key: key);
+  const PurchasesScreen({super.key});
 
   @override
   State<PurchasesScreen> createState() => _PurchasesScreenState();
@@ -45,9 +42,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                         shippingHandling: 10.00,
                         date: '07/10/2022',
                         status: 'Em andamento',
-                        onTap: () {
-                          // Ação ao tocar no cardy
-                        },
+                        onTap: () {},
                       ),
                       const VerticalSpacerBox(size: SpacerSize.medium),
                       OrderCard(
@@ -57,9 +52,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                         shippingHandling: 13.00,
                         date: '08/10/2022',
                         status: 'Entregue',
-                        onTap: () {
-                          // Ação ao tocar no card
-                        },
+                        onTap: () {},
                       ),
                       const VerticalSpacerBox(size: SpacerSize.medium),
                       OrderCard(
@@ -69,9 +62,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                         shippingHandling: 15.00,
                         date: '09/10/2022',
                         status: 'Cancelado',
-                        onTap: () {
-                          // Ação ao tocar no cardy
-                        },
+                        onTap: () {},
                       ),
                       const VerticalSpacerBox(size: SpacerSize.medium),
                     ])))))));

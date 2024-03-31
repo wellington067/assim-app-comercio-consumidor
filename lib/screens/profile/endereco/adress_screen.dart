@@ -1,9 +1,9 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/forms/auth_form_field.dart';
 import 'package:ecommerceassim/components/forms/auth_form_field3.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
 
 import '../../../components/buttons/primary_button.dart';
 import '../../../components/forms/auth_form_field2.dart';
@@ -12,7 +12,7 @@ import '../../../shared/constants/app_enums.dart';
 import '../../../shared/constants/style_constants.dart';
 
 class AdressScreen extends StatefulWidget {
-  const AdressScreen({Key? key}) : super(key: key);
+  const AdressScreen({super.key});
 
   @override
   State<AdressScreen> createState() => _AdressScreenState();
@@ -27,7 +27,7 @@ class _AdressScreenState extends State<AdressScreen> {
       body: Container(
           color: kOnSurfaceColor,
           width: size.width,
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(12),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -48,17 +48,41 @@ class _AdressScreenState extends State<AdressScreen> {
                         child: Column(children: [
                       const Row(
                         children: [
-                          Text(
-                            'Nome',
+                          Expanded(
+                            child: Text(
+                              'Cidade',
+                              style: TextStyle(),
+                            ),
                           ),
                         ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       AuthFormField(
-                          label: '',
-                          isPassword: false,
-                          inputType: TextInputType.streetAddress,
-                          onChanged: (String value) {}),
+                        label: '',
+                        isPassword: false,
+                        inputType: TextInputType.text,
+                        onChanged: (String value) {},
+                        backgroundColor:
+                            kOnBackgroundColorText, // Correctly placed within the constructor call
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+
+                      const Row(
+                        children: [
+                          Text(
+                            'Bairro',
+                          ),
+                        ],
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                      AuthFormField(
+                        label: '',
+                        isPassword: false,
+                        inputType: TextInputType.text,
+                        onChanged: (String value) {},
+                        backgroundColor:
+                            kOnBackgroundColorText, // Correctly placed within the constructor call
+                      ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Row(
                         children: [
@@ -66,8 +90,15 @@ class _AdressScreenState extends State<AdressScreen> {
                             'Rua',
                           ),
                           Spacer(),
-                          Text(
-                            'Número',
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 50.0),
+                              child: Text(
+                                'Número',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -75,46 +106,28 @@ class _AdressScreenState extends State<AdressScreen> {
                       Row(
                         children: [
                           AuthFormField3(
-                              label: '',
-                              isPassword: false,
-                              inputType: TextInputType.streetAddress,
-                              onChanged: (String value) {}),
+                            label: '',
+                            isPassword: false,
+                            inputType: TextInputType.streetAddress,
+                            onChanged: (String value) {},
+                            backgroundColor:
+                                kOnBackgroundColorText, // Correctly placed
+                          ),
                           const HorizontalSpacerBox(size: SpacerSize.small),
                           AuthFormField2(
-                              label: '',
-                              isPassword: false,
-                              inputType: TextInputType.streetAddress,
-                              onChanged: (String value) {}),
-                        ],
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      const Row(
-                        children: [
-                          Text(
-                            'Cidade',
-                          ),
-                          Spacer(),
-                          Text(
-                            'Estado',
+                            label: '',
+                            isPassword: false,
+                            inputType: TextInputType.streetAddress,
+                            onChanged: (String value) {},
+                            backgroundColor:
+                                kOnBackgroundColorText, // Correctly placed
                           ),
                         ],
                       ),
+// Repeat this correction for all instances where you are using these widgets
+
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      Row(
-                        children: [
-                          AuthFormField3(
-                              label: '',
-                              isPassword: false,
-                              inputType: TextInputType.streetAddress,
-                              onChanged: (String value) {}),
-                          const HorizontalSpacerBox(size: SpacerSize.small),
-                          AuthFormField2(
-                              label: '',
-                              isPassword: false,
-                              inputType: TextInputType.streetAddress,
-                              onChanged: (String value) {}),
-                        ],
-                      ),
+
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Row(
                         children: [
@@ -125,10 +138,13 @@ class _AdressScreenState extends State<AdressScreen> {
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       AuthFormField(
-                          label: '',
-                          isPassword: false,
-                          inputType: TextInputType.text,
-                          onChanged: (String value) {}),
+                        label: '',
+                        isPassword: false,
+                        inputType: TextInputType.text,
+                        onChanged: (String value) {},
+                        backgroundColor:
+                            kOnBackgroundColorText, // Correctly placed within the constructor call
+                      ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Row(
                         children: [
@@ -141,17 +157,14 @@ class _AdressScreenState extends State<AdressScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: AuthFormField3(
-                            label: '',
-                            isPassword: false,
-                            inputType: TextInputType.number,
-                            onChanged: (String value) {}),
+                          label: '',
+                          isPassword: false,
+                          inputType: TextInputType.streetAddress,
+                          onChanged: (String value) {},
+                          backgroundColor:
+                              kOnBackgroundColorText, // Correctly placed
+                        ),
                       ),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      const VerticalSpacerBox(size: SpacerSize.large),
                       const VerticalSpacerBox(size: SpacerSize.large),
                       const VerticalSpacerBox(size: SpacerSize.large),
                       PrimaryButton(
