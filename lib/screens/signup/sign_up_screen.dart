@@ -11,7 +11,7 @@ import 'components/info_first_screen.dart';
 import 'components/info_second_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -54,18 +54,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (controller.infoIndex == 0) InfoFirstScreen(controller),
                     if (controller.infoIndex == 1) InfoSecondScreen(controller),
                     const VerticalSpacerBox(size: SpacerSize.large),
-                    PrimaryButton(
-                      text: controller.infoIndex == 0 ? 'Próximo' : 'Concluir',
-                      onPressed: () {
-                        if (controller.infoIndex == 0) {
-                          controller.next();
-                        } else {
-                          controller.signUp(context);
-                        }
-                      },
-                      color: kDetailColor,
-                    ),
+                    if (controller.status == SignUpStatus.loading)
+                      const Center(
+                        child: CircularProgressIndicator(color: kDetailColor),
+                      ),
+                    if (controller.status != SignUpStatus.loading)
+                      PrimaryButton(
+                        text:
+                            controller.infoIndex == 0 ? 'Próximo' : 'Concluir',
+                        onPressed: () {
+                          if (controller.infoIndex == 0) {
+                            controller.next();
+                          } else {
+                            controller.signUp(context);
+                          }
+                        },
+                        color: kDetailColor,
+                      ),
                     const VerticalSpacerBox(size: SpacerSize.small),
+                    if (controller.errorMessage != null)
+                      Text(
+                        controller.errorMessage!,
+                        style: kCaption1,
+                        textAlign: TextAlign.center,
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

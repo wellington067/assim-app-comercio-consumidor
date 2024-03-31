@@ -27,6 +27,7 @@ class SignUpController extends GetxController {
   RegExp letterReg = RegExp(r".*[A-Z].*");
   String displayText = 'Digite sua Senha';
   String? errorMessage;
+  var status = SignUpStatus.idle;
 
   List<BairroModel> bairros = [];
   List<CidadeModel> cidades = [];
@@ -124,22 +125,30 @@ class SignUpController extends GetxController {
   }
 
   void signUp(BuildContext context) async {
-    signupSuccess = await signUpRepository.signUp(
-        _nameController.text,
-        _emailController.text,
-        _passwordController.text,
-        _foneController.text,
-        _cpfController.text,
-        _ruaController.text,
-        _numeroController.text,
-        _cepController.text,
-        cidadeId,
-        bairroId,
-        context);
+    try {
+      status = SignUpStatus.loading;
+      update();
 
-    update();
+      if (!validateEmptyFields()) {
+        throw Exception("Por favor, preencha todos os campos.");
+      }
 
-    //log("criaaaa ${signupSuccess.toString()}");
+      status = SignUpStatus.done;
+    } catch (e) {
+      status = SignUpStatus.loading;
+      update();
+      await Future.delayed(const Duration(milliseconds: 500));
+      status = SignUpStatus.idle;
+      if (e is Exception) {
+        setErrorMessage("Por favor, preencha todos os campos.");
+      } else {
+        setErrorMessage("Ocorreu um erro durante o cadastro. Tente novamente.");
+      }
+    } finally {
+      await Future.delayed(const Duration(milliseconds: 500));
+      status = SignUpStatus.idle;
+      update();
+    }
   }
 
   bool validateEmptyFields() {
@@ -176,5 +185,13 @@ class SignUpController extends GetxController {
     }
     log('Error no cadastro de número, retornando falso');
     return false;
+  }
+
+  void setErrorMessage(String value) async {
+    errorMessage = value;
+    update();
+    await Future.delayed(const Duration(seconds: 1));
+    errorMessage = null;
+    update();
   }
 }

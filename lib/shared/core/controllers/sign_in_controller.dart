@@ -32,16 +32,22 @@ class SignInController with ChangeNotifier {
       status = SignInStatus.loading;
       notifyListeners();
 
-      var userToken = await _repository.signIn(
+      var loginResult = await _repository.signIn(
         email: _emailController.text,
         password: _passwordController.text,
       );
 
-      status = SignInStatus.done;
-      notifyListeners();
+      if (loginResult == 1) {
+        status = SignInStatus.done;
+        notifyListeners();
 
-      Navigator.pushReplacementNamed(context, Screens.home,
-          arguments: userToken);
+        Navigator.pushReplacementNamed(context, Screens.home);
+      } else {
+        status = SignInStatus.error;
+        notifyListeners();
+        setErrorMessage(
+            "Por favor, verifique suas credenciais ou tente novamente mais tarde.");
+      }
     } catch (e) {
       status = SignInStatus.loading;
       notifyListeners();
