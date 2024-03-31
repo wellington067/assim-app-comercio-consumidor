@@ -37,9 +37,10 @@ class InfoSecondScreen extends StatelessWidget {
               contentPadding:
                   EdgeInsets.symmetric(vertical: formFieldHeight / 7),
             ),
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 18,
-                ),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
             hint: const Text('Cidade'),
             value: null,
             items: controller.cidades.map((obj) {
@@ -69,9 +70,10 @@ class InfoSecondScreen extends StatelessWidget {
             fillColor: kBackgroundColor,
             contentPadding: EdgeInsets.symmetric(vertical: formFieldHeight / 4),
           ),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: 18,
-              ),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
           hint: const Text('Bairro'),
           value: null,
           items: controller.bairros.map((obj) {
