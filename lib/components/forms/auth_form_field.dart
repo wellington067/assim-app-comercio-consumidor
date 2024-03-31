@@ -6,14 +6,16 @@ class AuthFormField extends StatefulWidget {
   final bool isPassword;
   final TextInputType inputType;
   final Function(String) onChanged;
+  final Color backgroundColor;
 
   const AuthFormField({
-    Key? key,
+    super.key,
     required this.label,
     required this.isPassword,
     required this.inputType,
     required this.onChanged,
-  }) : super(key: key);
+    this.backgroundColor = kOnBackgroundColorText,
+  });
 
   @override
   State<AuthFormField> createState() => _AuthFormFieldState();
@@ -21,6 +23,7 @@ class AuthFormField extends StatefulWidget {
 
 class _AuthFormFieldState extends State<AuthFormField> {
   bool showPassword = true;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,6 +35,8 @@ class _AuthFormFieldState extends State<AuthFormField> {
         obscureText: widget.isPassword ? showPassword : false,
         keyboardType: widget.inputType,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: widget.backgroundColor,
           suffixIcon: widget.isPassword
               ? InkWell(
                   onTap: () {
@@ -40,14 +45,25 @@ class _AuthFormFieldState extends State<AuthFormField> {
                     });
                   },
                   child: Icon(
-                      showPassword ? Icons.visibility : Icons.visibility_off,
-                      color: kDetailColor))
+                    showPassword ? Icons.visibility : Icons.visibility_off,
+                    color: kDetailColor,
+                  ),
+                )
               : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none, // Invisible border by default
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none, // Invisible border by default
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
-              color: kDetailColor,
-              width: 1,
+              color:
+                  kDetailColor, // The color you want the border to be when focused
+              width: 1.5, // The width of the border when focused
             ),
           ),
         ),
