@@ -1,14 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
+import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/core/repositories/sign_up_repository.dart';
 import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
-import '../../constants/app_enums.dart';
 
 enum SignUpStatus {
   done,
@@ -19,7 +19,7 @@ enum SignUpStatus {
 
 class SignUpController extends GetxController {
   double strength = 0;
-  int _infoIndex = 0;
+  int infoIndex = 0;
   int bairroId = 0;
   int cidadeId = 0;
   bool? signupSuccess;
@@ -27,12 +27,14 @@ class SignUpController extends GetxController {
   RegExp letterReg = RegExp(r".*[A-Z].*");
   String displayText = 'Digite sua Senha';
   String? errorMessage;
+  String specificErrorMessage = '';
   var status = SignUpStatus.idle;
+
+  CidadeModel? selectedCidade;
+  BairroModel? selectedBairro;
 
   List<BairroModel> bairros = [];
   List<CidadeModel> cidades = [];
-  ScreenState screenState = ScreenState.idle;
-
   SignUpRepository signUpRepository = SignUpRepository();
 
   MaskTextInputFormatter phoneFormatter = MaskTextInputFormatter(
@@ -72,8 +74,12 @@ class SignUpController extends GetxController {
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
 
-  int get infoIndex => _infoIndex;
-  bool? get signupSucess => signupSuccess;
+  @override
+  void onInit() {
+    super.onInit();
+    loadBairros();
+    loadCidades();
+  }
 
   void loadBairros() async {
     bairros = await signUpRepository.getBairros();
@@ -85,24 +91,29 @@ class SignUpController extends GetxController {
     update();
   }
 
+  void setCidade(CidadeModel? cidade) {
+    selectedCidade = cidade;
+    cidadeId = cidade?.id?.toInt() ?? 0;
+    update();
+  }
+
+  void setBairro(BairroModel? bairro) {
+    selectedBairro = bairro;
+    bairroId = bairro?.id?.toInt() ?? 0;
+    update();
+  }
+
   void next() {
-    _infoIndex++;
+    infoIndex++;
     update();
   }
 
   void back() {
-    _infoIndex--;
+    infoIndex--;
     update();
   }
 
-  @override
-  void onInit() {
-    loadBairros();
-    loadCidades();
-    super.onInit();
-  }
-
-  checkPasswordStrength(String password) {
+  void checkPasswordStrength(String password) {
     password = password.trim();
     if (password.isEmpty) {
       strength = 0;
@@ -125,25 +136,44 @@ class SignUpController extends GetxController {
   }
 
   void signUp(BuildContext context) async {
+    status = SignUpStatus.loading;
+    update();
+
+    if (!validateEmptyFields()) {
+      status = SignUpStatus.error;
+      setErrorMessage(specificErrorMessage);
+      update();
+      return;
+    }
+
     try {
-      status = SignUpStatus.loading;
-      update();
+      signupSuccess = await signUpRepository.signUp(
+          _nameController.text,
+          _emailController.text,
+          _passwordController.text,
+          _foneController.text,
+          _cpfController.text,
+          _ruaController.text,
+          _numeroController.text,
+          _cepController.text,
+          cidadeId,
+          bairroId,
+          context);
 
-      if (!validateEmptyFields()) {
-        throw Exception("Por favor, preencha todos os campos.");
-      }
+      if (signupSuccess == true) {
+        status = SignUpStatus.done;
 
-      status = SignUpStatus.done;
-    } catch (e) {
-      status = SignUpStatus.loading;
-      update();
-      await Future.delayed(const Duration(milliseconds: 500));
-      status = SignUpStatus.idle;
-      if (e is Exception) {
-        setErrorMessage("Por favor, preencha todos os campos.");
+        await Future.delayed(const Duration(milliseconds: 500));
+        update();
+
+        Navigator.pushReplacementNamed(context, Screens.home);
       } else {
-        setErrorMessage("Ocorreu um erro durante o cadastro. Tente novamente.");
+        throw Exception("Falha no cadastro, por favor, tente novamente.");
       }
+    } catch (e) {
+      status = SignUpStatus.error;
+      setErrorMessage(e.toString());
+      update();
     } finally {
       await Future.delayed(const Duration(milliseconds: 500));
       status = SignUpStatus.idle;
@@ -152,46 +182,66 @@ class SignUpController extends GetxController {
   }
 
   bool validateEmptyFields() {
-    if (_nameController.text.isEmpty ||
-        _cpfController.text.isEmpty ||
-        _emailController.text.isEmpty ||
-        _foneController.text.isEmpty ||
-        _passwordController.text.isEmpty ||
-        _cepController.text.isEmpty ||
-        _ruaController.text.isEmpty ||
-        _numeroController.text.isEmpty ||
-        cidadeId.toString().isEmpty ||
-        bairroId.toString().isEmpty) {
-      log('Error, o user não preencheu todos os campos, retornando falso');
+    if (_nameController.text.length < 4) {
+      specificErrorMessage = "O nome deve ter pelo menos 4 caracteres.";
+      return false;
+    } else if (_cpfController.text.isEmpty ||
+        !isValidCPF(_cpfController.text)) {
+      specificErrorMessage = "CPF inválido.";
+      return false;
+    } else if (!_emailController.text.contains('@') ||
+        !_emailController.text.contains('.com')) {
+      specificErrorMessage = "E-mail inválido.";
+      return false;
+    } else if (_foneController.text.isEmpty ||
+        !isValidPhone(_foneController.text)) {
+      specificErrorMessage = "Telefone inválido.";
       return false;
     }
-
+    if (_passwordController.text.isEmpty ||
+        _passwordController.text.length < 8) {
+      specificErrorMessage = "A senha deve ter pelo menos 8 caracteres.";
+      return false;
+    } else if (cidadeId == 0) {
+      specificErrorMessage = "Selecione uma cidade.";
+      return false;
+    } else if (bairroId == 0) {
+      specificErrorMessage = "Selecione um bairro.";
+      return false;
+    } else if (_ruaController.text.length < 4) {
+      specificErrorMessage = "A rua deve ter pelo menos 4 caracteres.";
+      return false;
+    } else if (_cepController.text.isEmpty ||
+        !isValidCEP(_cepController.text)) {
+      specificErrorMessage = "CEP inválido.";
+      return false;
+    } else if (_numeroController.text.isEmpty ||
+        _numeroController.text.length > 4) {
+      specificErrorMessage = "O número deve ter até 4 caracteres. ";
+      return false;
+    }
+    specificErrorMessage = '';
     return true;
   }
 
-  bool validateEmail() {
-    if (_emailController.text.contains('@') &&
-        _emailController.text.contains('.com')) {
-      return true;
-    }
-    log('Error no cadastro de email, retornando falso');
-    return false;
+  bool isValidPhone(String phone) {
+    return phoneFormatter.getUnmaskedText().length == 11;
   }
 
-  bool validateNumber() {
-    if (_numeroController.text.length <= 4 &&
-        _numeroController.text.contains(RegExp(r'[0-9]'))) {
-      return true;
-    }
-    log('Error no cadastro de número, retornando falso');
-    return false;
+  bool isValidCPF(String cpf) {
+    return cpfFormatter.getUnmaskedText().length == 11;
   }
 
-  void setErrorMessage(String value) async {
+  bool isValidCEP(String cep) {
+    return cepFormatter.getUnmaskedText().length == 8;
+  }
+
+  void setErrorMessage(String value) {
     errorMessage = value;
     update();
-    await Future.delayed(const Duration(seconds: 1));
-    errorMessage = null;
-    update();
+    Future.delayed(const Duration(seconds: 2), () {
+      errorMessage = null;
+      update();
+    });
   }
 }

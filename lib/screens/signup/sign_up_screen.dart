@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (controller.infoIndex == 1)
                       Center(
                         child: CustomTextButton(
-                            onPressed: () => controller.back(),
+                            onPressed: () => {controller.back()},
                             title: 'Anterior'),
                       ),
                   ],
