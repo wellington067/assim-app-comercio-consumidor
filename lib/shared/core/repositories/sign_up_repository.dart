@@ -77,8 +77,8 @@ class SignUpRepository {
             String name = await userStorage.getUserName();
             String userToken = await userStorage.getUserToken(); */
 
-            showSignUpSuccessDialog(context, 'Cadastro realizado com sucesso');
-
+/*             showSignUpSuccessDialog(context, 'Cadastro realizado com sucesso');
+ */
             return true;
           } else {
             log('Erro no login.');
@@ -94,10 +94,10 @@ class SignUpRepository {
       }
     } catch (e) {
       log('Erro no cadastro do consumidor ${e.toString()}');
-      showSignUpErrorDialog(
+      /* showSignUpErrorDialog(
         context,
         'Ocorreu um erro, verifique os campos e tente novamente',
-      );
+      ); */
 
       return false;
     }
