@@ -10,6 +10,8 @@ class Screens {
   static const String favorite = '/home/favorite_screen';
   static const String purchases = '/purchase/purchases_screen';
   static const String adress = '/profile/adress_screen';
+  static const String addressEdit =
+      '/profile/editar/endereco/adress_edit_screen';
   static const String payment = '/profile/card_screen';
   static const String selectAdress = '/profile/select_adress_screen';
   static const String selectCard = '/profile/select_card_screen';

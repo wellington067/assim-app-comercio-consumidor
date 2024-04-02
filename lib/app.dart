@@ -9,8 +9,9 @@ import 'package:ecommerceassim/screens/produto/detalhes/products_details_screen.
 import 'package:ecommerceassim/screens/produto/products_screen.dart';
 import 'package:ecommerceassim/screens/pedidos/finalizar/finalize_purchase_screen.dart';
 import 'package:ecommerceassim/screens/home/home_screen.dart';
+import 'package:ecommerceassim/screens/profile/editar/endereco/adress_edit_screen.dart';
 import 'package:ecommerceassim/screens/profile/endereco/adress_screen.dart';
-import 'package:ecommerceassim/screens/profile/editar/profile_edit_screen.dart';
+import 'package:ecommerceassim/screens/profile/editar/perfil/profile_edit_screen.dart';
 import 'package:ecommerceassim/screens/profile/profile_screen.dart';
 import 'package:ecommerceassim/screens/profile/endereco/select_adress_screen.dart';
 import 'package:ecommerceassim/screens/signup/sign_up_screen.dart';
@@ -57,7 +58,8 @@ class App extends StatelessWidget {
         Screens.favorite: (BuildContext context) => const FavoriteScreen(),
         Screens.purchases: (BuildContext context) => const PurchasesScreen(),
         Screens.adress: (BuildContext context) => const AdressScreen(),
-        Screens.selectAdress: (BuildContext context) => const SelectAdress(),
+        Screens.addressEdit: (BuildContext context) => const AdressEditScreen(),
+        Screens.selectAdress: (BuildContext context) => const SelectAddress(),
         Screens.menuSeller: (BuildContext context) => const MenuSellerScreen(),
         Screens.menuProducts: (BuildContext context) =>
             const MenuProductsScreen(),

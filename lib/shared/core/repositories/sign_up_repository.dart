@@ -77,8 +77,8 @@ class SignUpRepository {
             String name = await userStorage.getUserName();
             String userToken = await userStorage.getUserToken(); */
 
-            showSignUpSuccessDialog(context, 'Cadastro realizado com sucesso');
-
+/*             showSignUpSuccessDialog(context, 'Cadastro realizado com sucesso');
+ */
             return true;
           } else {
             log('Erro no login.');
@@ -94,10 +94,10 @@ class SignUpRepository {
       }
     } catch (e) {
       log('Erro no cadastro do consumidor ${e.toString()}');
-      showSignUpErrorDialog(
+      /* showSignUpErrorDialog(
         context,
         'Ocorreu um erro, verifique os campos e tente novamente',
-      );
+      ); */
 
       return false;
     }
@@ -140,7 +140,7 @@ class SignUpRepository {
                   Navigator.pushReplacementNamed(context, Screens.home);
                 },
                 child: const Text(
-                  'Ok',
+                  'Fechar',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class SignUpRepository {
                 ),
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text(
-                  'Ok',
+                  'Fechar',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -210,6 +210,37 @@ class SignUpRepository {
 
     try {
       Response response = await dio.get('$kBaseURL/bairros');
+
+      if (response.statusCode == 200 &&
+          response.data != null &&
+          response.data is Map &&
+          response.data.containsKey('bairros')) {
+        List<dynamic> bairrosData = response.data['bairros'];
+        List<BairroModel> bairros = bairrosData
+            .map((bairroJson) => BairroModel.fromJson(bairroJson))
+            .toList();
+
+        return bairros;
+      } else {
+        log('Erro ao buscar bairros: Status Code ${response.statusCode}');
+      }
+    } on DioError catch (e) {
+      log('DioError ao buscar bairros: ${e.toString()}');
+    } catch (e) {
+      log('Erro desconhecido ao buscar bairros: ${e.toString()}');
+    }
+
+    return [];
+  }
+
+  Future<List<BairroModel>> getBairrosByCidade(int cidadeId) async {
+    Dio dio = Dio();
+
+    dio.options.headers['Authorization'] =
+        'Bearer 219|XlaocG1Ae9AhwerSvgOTuNhN0nGv5OnciQDc8Lrc269b7169'; // fixo se nao nao da para fazer o cadastro
+
+    try {
+      Response response = await dio.get('$kBaseURL/bairros/cidade/$cidadeId');
 
       if (response.statusCode == 200 &&
           response.data != null &&
