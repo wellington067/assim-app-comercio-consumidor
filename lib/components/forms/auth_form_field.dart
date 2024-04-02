@@ -8,8 +8,8 @@ class AuthFormField extends StatefulWidget {
   final Function(String)? onChanged;
   final Color backgroundColor;
   final TextEditingController?
-      controller; // Adicione o parâmetro nomeado 'controller'
-  final String? initialValue; // Adicione o parâmetro nomeado 'initialValue'
+      controller; 
+  final String? initialValue; 
 
   const AuthFormField({
     Key? key,
@@ -18,7 +18,7 @@ class AuthFormField extends StatefulWidget {
     required this.inputType,
     this.onChanged,
     this.backgroundColor = kOnBackgroundColorText,
-    this.controller, // Defina o parâmetro nomeado 'controller' aqui
+    this.controller, 
     this.initialValue,
   }) : super(key: key);
 
@@ -27,7 +27,7 @@ class AuthFormField extends StatefulWidget {
 }
 
 class _AuthFormFieldState extends State<AuthFormField> {
-  late TextEditingController _controller; // Controlador para o TextFormField
+  late TextEditingController _controller; 
   bool showPassword = true;
 
   @override
@@ -35,7 +35,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
     super.initState();
     _controller = TextEditingController(
         text: widget
-            .initialValue); // Inicializando o controlador com o valor inicial
+            .initialValue);
   }
 
   @override
@@ -44,7 +44,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
     return SizedBox(
       height: size.height * 0.06,
       child: TextFormField(
-        controller: _controller, // Definindo o controlador
+        controller: _controller, 
         onChanged: widget.onChanged,
         style: const TextStyle(color: kSecondaryColor),
         obscureText: widget.isPassword ? showPassword : false,
@@ -67,18 +67,18 @@ class _AuthFormFieldState extends State<AuthFormField> {
               : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none, // Invisible border by default
+            borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none, // Invisible border by default
+            borderSide: BorderSide.none, 
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
               color:
-                  kDetailColor, // The color you want the border to be when focused
-              width: 1.5, // The width of the border when focused
+                  kDetailColor, 
+              width: 1.5,
             ),
           ),
         ),

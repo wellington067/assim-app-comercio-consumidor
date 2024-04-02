@@ -50,17 +50,17 @@ class _AuthFormField2State extends State<AuthFormField2> {
               : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none, // Invisible border by default
+            borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none, // Invisible border by default
+            borderSide: BorderSide.none, 
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
               color:
-                  kDetailColor, // The color you want the border to be when focused
+                  kDetailColor, 
               width: 1.5,
             ),
           ),
