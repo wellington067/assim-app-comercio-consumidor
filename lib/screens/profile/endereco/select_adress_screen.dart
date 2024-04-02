@@ -5,7 +5,7 @@ import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http; // Importe o pacote http
+import 'package:http/http.dart' as http;
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -119,26 +119,52 @@ class _SelectAddressState extends State<SelectAddress> {
                                         actionsAlignment:
                                             MainAxisAlignment.center,
                                         actions: <Widget>[
-                                          TextButton(
-                                            style: TextButton.styleFrom(
-                                              foregroundColor: Colors.white,
-                                              backgroundColor: kDetailColor,
+                                          ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      kDetailColor),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
                                             ),
                                             onPressed: () {
                                               Navigator.of(context).pop(false);
                                             },
-                                            child: const Text('Cancelar'),
+                                            child: const Text(
+                                              'Cancelar',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                           ),
                                           const SizedBox(width: 8),
-                                          TextButton(
-                                            style: TextButton.styleFrom(
-                                              foregroundColor: Colors.white,
-                                              backgroundColor: kButtom2,
+                                          ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      kButtom2),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
                                             ),
                                             onPressed: () {
                                               Navigator.of(context).pop(true);
                                             },
-                                            child: const Text('Excluir'),
+                                            child: const Text(
+                                              'Excluir',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                           ),
                                         ],
                                       );

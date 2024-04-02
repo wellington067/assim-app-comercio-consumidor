@@ -40,13 +40,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    _obscureText = true;
-    widget.controller?.addListener(_updateObscureText);
+    _obscureText = widget.isPassword ?? false;
+    widget.controller?.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
-    widget.controller?.removeListener(_updateObscureText);
+    widget.controller?.removeListener(() {
+      setState(() {});
+    });
     super.dispose();
   }
 

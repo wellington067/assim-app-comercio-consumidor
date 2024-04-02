@@ -19,20 +19,17 @@ class AddressFormField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       style: const TextStyle(
-        fontWeight: FontWeight.w400, // Set font weight to w500
-        // You can also set other text styles if needed
+        fontWeight: FontWeight.w400, 
       ),
       decoration: InputDecoration(
-        // Use label to show text above the TextFormField
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide.none,
         ),
         filled: true,
         fillColor: kBackgroundColor,
-        // Adjust the padding to add right padding
         contentPadding: const EdgeInsets.fromLTRB(
-            16, 13, 16, 13), // left, top, right, bottom
+            16, 13, 16, 13), 
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
