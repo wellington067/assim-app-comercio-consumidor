@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:ecommerceassim/components/forms/address_form_field.dart';
 import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
@@ -105,6 +106,9 @@ class _AddressScreenState extends State<AddressScreen> {
     if (_ruaController.text.isEmpty) {
       errorMessage = 'Preencha o campo Rua.';
       isValid = false;
+    } else if (RegExp(r'\d').hasMatch(_ruaController.text)) {
+      errorMessage = 'O campo Rua não deve conter números.';
+      isValid = false;
     } else if (_numeroController.text.isEmpty ||
         _numeroController.text.length > 4) {
       errorMessage =
@@ -142,15 +146,15 @@ class _AddressScreenState extends State<AddressScreen> {
         padding: const EdgeInsets.all(12),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const VerticalSpacerBox(size: SpacerSize.small),
-              const Row(
-                children: [
-                  Text(
-                    'Cadastrar novo endereço',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Cadastrar novo endereço',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
               ),
               const VerticalSpacerBox(size: SpacerSize.large),
               Padding(
@@ -159,6 +163,17 @@ class _AddressScreenState extends State<AddressScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Cidade',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       Container(
                         decoration: BoxDecoration(
@@ -168,7 +183,6 @@ class _AddressScreenState extends State<AddressScreen> {
                         child: DropdownButtonFormField<int>(
                           isExpanded: true,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.location_city),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide.none,
@@ -176,14 +190,12 @@ class _AddressScreenState extends State<AddressScreen> {
                             filled: true,
                             fillColor: kBackgroundColor,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: formFieldHeight / 4),
+                                vertical: formFieldHeight / 4, horizontal: 16),
                           ),
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge
-                              ?.copyWith(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                          hint: const Text('Cidade'),
+                              ?.copyWith(fontSize: 15),
                           value: _selectedCityId,
                           items: _cidades.map((CidadeModel cidade) {
                             return DropdownMenuItem<int>(
@@ -202,10 +214,20 @@ class _AddressScreenState extends State<AddressScreen> {
                         ),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Bairro',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                       DropdownButtonFormField<int>(
                         isExpanded: true,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.location_city_sharp),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide.none,
@@ -213,11 +235,12 @@ class _AddressScreenState extends State<AddressScreen> {
                           filled: true,
                           fillColor: kBackgroundColor,
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: formFieldHeight / 4),
+                              vertical: formFieldHeight / 4, horizontal: 15),
                         ),
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                        hint: const Text('Bairro'),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(fontSize: 16),
                         value: _selectedBairroId,
                         items: _bairros.map((BairroModel bairro) {
                           return DropdownMenuItem<int>(
@@ -232,30 +255,72 @@ class _AddressScreenState extends State<AddressScreen> {
                         },
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      CustomTextFormField(
-                        hintText: 'Rua',
-                        icon: Icons.location_city_sharp,
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Rua',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      AddressFormField(
+                        keyboardType: TextInputType.text,
+                        label: 'Rua',
                         controller: _ruaController,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      CustomTextFormField(
-                        hintText: 'CEP',
-                        icon: Icons.numbers_outlined,
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'CEP',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      AddressFormField(
+                        label: 'CEP',
+                        keyboardType: TextInputType.text,
                         maskFormatter: controller.cepFormatter,
                         controller: _cepController,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      CustomTextFormField(
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Número',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      AddressFormField(
                         keyboardType: TextInputType.number,
-                        hintText: 'Número',
-                        icon: Icons.home_filled,
+                        label: 'Número',
                         controller: _numeroController,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      CustomTextFormField(
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Complemento',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      AddressFormField(
                         keyboardType: TextInputType.text,
-                        hintText: 'Complemento',
-                        icon: Icons.home_work,
+                        label: 'Complemento',
                         controller: _complementoController,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),

@@ -217,6 +217,9 @@ class SignUpController extends GetxController {
     } else if (bairroId == 0) {
       specificErrorMessage = "Selecione um bairro.";
       return false;
+    } else if (RegExp(r'\d').hasMatch(_ruaController.text)) {
+      specificErrorMessage = "A rua não deve conter números.";
+      return false;
     } else if (_ruaController.text.length < 4) {
       specificErrorMessage = "A rua deve ter pelo menos 4 caracteres.";
       return false;
