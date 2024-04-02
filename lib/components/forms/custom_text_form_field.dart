@@ -35,32 +35,19 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool _obscureText = false;
+  late bool _obscureText;
 
   @override
   void initState() {
     super.initState();
-    if (widget.isPassword != null) {
-      _obscureText = widget.isPassword!;
-    }
-    widget.controller?.addListener(() {
-      if ((widget.controller?.text.isNotEmpty == true ||
-              widget.controller?.text.isEmpty == true) &&
-          widget.isPassword == true) {}
-      setState(() {});
-    });
+    _obscureText = true;
+    widget.controller?.addListener(_updateObscureText);
   }
 
   @override
   void dispose() {
-    widget.controller?.removeListener(() {});
+    widget.controller?.removeListener(_updateObscureText);
     super.dispose();
-  }
-
-  void _toggleVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
   }
 
   @override
@@ -108,5 +95,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
       ),
     );
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _updateObscureText() {
+    setState(() {
+      _obscureText = widget.controller?.text.isEmpty ?? true;
+    });
   }
 }

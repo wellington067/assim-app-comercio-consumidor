@@ -62,11 +62,9 @@ class _AdressScreenState extends State<AdressScreen> {
                         isPassword: false,
                         inputType: TextInputType.text,
                         onChanged: (String value) {},
-                        backgroundColor:
-                            kOnBackgroundColorText, // Correctly placed within the constructor call
+                        backgroundColor: kOnBackgroundColorText,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-
                       const Row(
                         children: [
                           Text(
@@ -80,8 +78,7 @@ class _AdressScreenState extends State<AdressScreen> {
                         isPassword: false,
                         inputType: TextInputType.text,
                         onChanged: (String value) {},
-                        backgroundColor:
-                            kOnBackgroundColorText, // Correctly placed within the constructor call
+                        backgroundColor: kOnBackgroundColorText,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Row(
@@ -110,8 +107,7 @@ class _AdressScreenState extends State<AdressScreen> {
                             isPassword: false,
                             inputType: TextInputType.streetAddress,
                             onChanged: (String value) {},
-                            backgroundColor:
-                                kOnBackgroundColorText, // Correctly placed
+                            backgroundColor: kOnBackgroundColorText,
                           ),
                           const HorizontalSpacerBox(size: SpacerSize.small),
                           AuthFormField2(
@@ -119,15 +115,10 @@ class _AdressScreenState extends State<AdressScreen> {
                             isPassword: false,
                             inputType: TextInputType.streetAddress,
                             onChanged: (String value) {},
-                            backgroundColor:
-                                kOnBackgroundColorText, // Correctly placed
+                            backgroundColor: kOnBackgroundColorText,
                           ),
                         ],
                       ),
-// Repeat this correction for all instances where you are using these widgets
-
-                      const VerticalSpacerBox(size: SpacerSize.small),
-
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Row(
                         children: [
@@ -142,8 +133,7 @@ class _AdressScreenState extends State<AdressScreen> {
                         isPassword: false,
                         inputType: TextInputType.text,
                         onChanged: (String value) {},
-                        backgroundColor:
-                            kOnBackgroundColorText, // Correctly placed within the constructor call
+                        backgroundColor: kOnBackgroundColorText,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Row(
@@ -161,8 +151,7 @@ class _AdressScreenState extends State<AdressScreen> {
                           isPassword: false,
                           inputType: TextInputType.streetAddress,
                           onChanged: (String value) {},
-                          backgroundColor:
-                              kOnBackgroundColorText, // Correctly placed
+                          backgroundColor: kOnBackgroundColorText,
                         ),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.large),

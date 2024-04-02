@@ -5,24 +5,38 @@ class AuthFormField extends StatefulWidget {
   final String label;
   final bool isPassword;
   final TextInputType inputType;
-  final Function(String) onChanged;
+  final Function(String)? onChanged;
   final Color backgroundColor;
+  final TextEditingController?
+      controller; // Adicione o parâmetro nomeado 'controller'
+  final String? initialValue; // Adicione o parâmetro nomeado 'initialValue'
 
   const AuthFormField({
-    super.key,
+    Key? key,
     required this.label,
     required this.isPassword,
     required this.inputType,
-    required this.onChanged,
+    this.onChanged,
     this.backgroundColor = kOnBackgroundColorText,
-  });
+    this.controller, // Defina o parâmetro nomeado 'controller' aqui
+    this.initialValue,
+  }) : super(key: key);
 
   @override
   State<AuthFormField> createState() => _AuthFormFieldState();
 }
 
 class _AuthFormFieldState extends State<AuthFormField> {
+  late TextEditingController _controller; // Controlador para o TextFormField
   bool showPassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+        text: widget
+            .initialValue); // Inicializando o controlador com o valor inicial
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +44,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
     return SizedBox(
       height: size.height * 0.06,
       child: TextFormField(
+        controller: _controller, // Definindo o controlador
         onChanged: widget.onChanged,
         style: const TextStyle(color: kSecondaryColor),
         obscureText: widget.isPassword ? showPassword : false,
