@@ -6,14 +6,16 @@ class AddressFormField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final TextInputType keyboardType;
-  final TextInputFormatter? maskFormatter; // Tornando opcional
+  final TextInputFormatter? maskFormatter;
+  final bool enabled;
 
   const AddressFormField({
     super.key,
     required this.controller,
     required this.label,
     this.keyboardType = TextInputType.text,
-    this.maskFormatter, // Agora é opcional
+    this.maskFormatter,
+    this.enabled = true,
   });
 
   @override
@@ -33,15 +35,14 @@ class AddressFormField extends StatelessWidget {
         fillColor: kBackgroundColor,
         contentPadding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
       ),
-      inputFormatters: maskFormatter != null
-          ? [maskFormatter!]
-          : [], // Aplica somente se for fornecido
+      inputFormatters: maskFormatter != null ? [maskFormatter!] : [],
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor, insira um valor';
         }
         return null;
       },
+      enabled: enabled,
     );
   }
 }

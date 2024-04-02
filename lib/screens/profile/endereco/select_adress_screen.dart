@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
+import 'package:ecommerceassim/components/buttons/primary_button.dart';
+import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
@@ -69,266 +70,237 @@ class _SelectAddressState extends State<SelectAddress> {
               child: Column(
                 children: [
                   const VerticalSpacerBox(size: SpacerSize.small),
-                  const Text(
-                    'Selecionar um endereço de envio',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Endereços cadastrados',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  const VerticalSpacerBox(size: SpacerSize.large),
+                  const VerticalSpacerBox(size: SpacerSize.medium),
                   ...controller.addresses.map((address) {
                     return Container(
-                      width: 350,
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                      decoration: BoxDecoration(
-                        color: kOnSurfaceColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: kTextButtonColor.withOpacity(0.5),
-                            spreadRadius: 0,
-                            blurRadius: 3,
-                            offset: const Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
+                        width: 350,
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.fromLTRB(15, 20, 15, 15),
+                        decoration: BoxDecoration(
+                          color: kOnSurfaceColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kTextButtonColor.withOpacity(0.5),
+                              spreadRadius: 0,
+                              blurRadius: 3,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(text: address.rua),
+                                        const TextSpan(text: ',\n'),
+                                        TextSpan(text: address.numero),
+                                      ],
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () async {
+                                    bool confirmDelete = await showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          title: const Text('Excluir endereço'),
+                                          content: const Text(
+                                            'Tem certeza de que deseja excluir este endereço?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.all(20),
+                                          actionsAlignment:
+                                              MainAxisAlignment.center,
+                                          actions: <Widget>[
+                                            SizedBox(
+                                              width: double.maxFinite,
+                                              child: Wrap(
+                                                alignment: WrapAlignment.center,
+                                                spacing: 30,
+                                                children: <Widget>[
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          kDetailColor,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      minimumSize:
+                                                          const Size(114, 50),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop(false);
+                                                    },
+                                                    child: const Text(
+                                                        'Cancelar',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          kErrorColor,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      minimumSize:
+                                                          const Size(114, 50),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop(true);
+                                                    },
+                                                    child: const Text('Excluir',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+
+                                    if (confirmDelete == true) {
+                                      String token =
+                                          await UserStorage().getUserToken();
+                                      await _deleteAddress(
+                                          address.id.toString(), token);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            const VerticalSpacer(size: 10),
+                            if (address.complemento != null)
+                              Container(
+                                padding: const EdgeInsets.only(bottom: 4),
                                 child: Text(
-                                  'Rua: ${address.rua}, ${address.numero}',
-                                  style: const TextStyle(fontSize: 17),
-                                  overflow: TextOverflow.ellipsis,
+                                  address.complemento!,
+                                  style: const TextStyle(
+                                      fontSize: 18, color: kTextButtonColor),
                                 ),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () async {
-                                  bool confirmDelete = await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        backgroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        title: const Text('Excluir endereço'),
-                                        content: const Text(
-                                          'Tem certeza de que deseja excluir este endereço?',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.all(20),
-                                        actionsAlignment:
-                                            MainAxisAlignment.center,
-                                        actions: <Widget>[
-                                          SizedBox(
-                                            width: double
-                                                .maxFinite, // Faz com que o ButtonBar ocupe todo o espaço horizontal
-                                            child: Wrap(
-                                              alignment: WrapAlignment
-                                                  .center, // Centraliza os botões horizontalmente
-                                              spacing:
-                                                  30, // Espaço entre os botões
-                                              children: <Widget>[
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        kDetailColor,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    minimumSize: const Size(114,
-                                                        50), // Largura e altura dos botões
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop(
-                                                        false); // Fecha o AlertDialog sem executar a ação
-                                                  },
-                                                  child: const Text('Cancelar',
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ),
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        kErrorColor,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    minimumSize: const Size(114,
-                                                        50), // Largura e altura dos botões
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop(
-                                                        true); // Fecha o AlertDialog e executa a ação
-                                                  },
-                                                  child: const Text('Excluir',
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-
-                                  if (confirmDelete == true) {
-                                    String token =
-                                        await UserStorage().getUserToken();
-                                    await _deleteAddress(
-                                        address.id.toString(), token);
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                          if (address.complemento != null)
                             Container(
                               padding: const EdgeInsets.only(bottom: 4),
                               child: Text(
-                                'Complemento: ${address.complemento}',
-                                style: const TextStyle(fontSize: 17),
+                                address.cep,
+                                style: const TextStyle(
+                                    fontSize: 18, color: kTextButtonColor),
                               ),
                             ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Text(
-                              'CEP: ${address.cep}',
-                              style: const TextStyle(fontSize: 17),
+                            Text(
+                              '${address.bairroNome}',
+                              style: const TextStyle(
+                                  fontSize: 18, color: kTextButtonColor),
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Text(
-                              'Bairro: ${address.bairroNome}',
-                              style: const TextStyle(fontSize: 17),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Text(
-                              'Cidade: ${address.cidadeNome}',
-                              style: const TextStyle(fontSize: 17),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    Screens.addressEdit,
-                                    arguments: {
-                                      'id': address.id,
-                                      'rua': address.rua,
-                                      'numero': address.numero,
-                                      'cep': address.cep,
-                                      'complemento': address.complemento,
-                                      'bairroId': address.bairroId,
-                                      'cidadeId': address.cidadeId,
-                                      'bairroNome': address.bairroNome,
-                                      'cidadeNome': address.cidadeNome,
-                                    },
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(kDetailColor),
-                                ),
-                                child: const Text(
-                                  'Editar',
-                                  style: TextStyle(
-                                      fontSize: 15, color: kOnSurfaceColor),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                  InkWell(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 350,
-                          height: 75,
-                          decoration: BoxDecoration(
-                            color: kOnSurfaceColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(15)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: kTextButtonColor.withOpacity(0.5),
-                                spreadRadius: 0,
-                                blurRadius: 3,
-                                offset: const Offset(0, 0),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Wrap(
+                            const VerticalSpacer(size: 5),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Text(
+                                  '${address.cidadeNome}',
+                                  style: const TextStyle(
+                                      fontSize: 18, color: kTextButtonColor),
+                                ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Container(
-                                      width: 35.0,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    const Text(
-                                      'Adicione um novo endereço',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: kTextButtonColor,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    const Spacer(),
-                                    IconButton(
+                                    ElevatedButton(
                                       onPressed: () {
                                         Navigator.pushNamed(
-                                            context, Screens.adress);
+                                          context,
+                                          Screens.addressEdit,
+                                          arguments: {
+                                            'id': address.id,
+                                            'rua': address.rua,
+                                            'numero': address.numero,
+                                            'cep': address.cep,
+                                            'complemento': address.complemento,
+                                            'bairroId': address.bairroId,
+                                            'cidadeId': address.cidadeId,
+                                            'bairroNome': address.bairroNome,
+                                            'cidadeNome': address.cidadeNome,
+                                          },
+                                        );
                                       },
-                                      icon: const Icon(
-                                        Icons.arrow_forward_ios_outlined,
-                                        color: kTextButtonColor,
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.white),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6.0),
+                                            side: const BorderSide(
+                                                color: Colors.grey),
+                                          ),
+                                        ),
+                                        elevation: MaterialStateProperty.all(0),
+                                      ),
+                                      child: const Text(
+                                        'Editar',
+                                        style: TextStyle(
+                                            fontSize: 15, color: kTextColor),
                                       ),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, Screens.adress);
-                    },
-                  ),
+                          ],
+                        ));
+                  }),
+                  PrimaryButton(
+                      text: "Adicionar novo endereço  ",
+                      onPressed: () =>
+                          {Navigator.pushNamed(context, Screens.adress)},
+                      color: kDetailColor)
                 ],
               ),
             );

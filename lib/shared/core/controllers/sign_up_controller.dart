@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/core/repositories/sign_up_repository.dart';
 import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
