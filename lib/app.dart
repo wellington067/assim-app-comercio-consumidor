@@ -57,7 +57,7 @@ class App extends StatelessWidget {
         Screens.profile: (BuildContext context) => const ProfileScreen(),
         Screens.favorite: (BuildContext context) => const FavoriteScreen(),
         Screens.purchases: (BuildContext context) => const PurchasesScreen(),
-        Screens.adress: (BuildContext context) => const AdressScreen(),
+        Screens.adress: (BuildContext context) => const AddressScreen(),
         Screens.addressEdit: (BuildContext context) => const AdressEditScreen(),
         Screens.selectAdress: (BuildContext context) => const SelectAddress(),
         Screens.menuSeller: (BuildContext context) => const MenuSellerScreen(),

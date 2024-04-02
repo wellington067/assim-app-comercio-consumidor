@@ -62,8 +62,10 @@ class SignUpController extends GetxController {
   final TextEditingController _numeroController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _complementoController = TextEditingController();
 
   TextEditingController get nameController => _nameController;
+  TextEditingController get complementoController => _complementoController;
   TextEditingController get bairroController => _bairroController;
   TextEditingController get cpfController => _cpfController;
   TextEditingController get foneController => _foneController;
@@ -162,6 +164,7 @@ class SignUpController extends GetxController {
           _ruaController.text,
           _numeroController.text,
           _cepController.text,
+          _complementoController.text,
           cidadeId,
           bairroId,
           context);

@@ -179,7 +179,6 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                   ),
                 ],
               ),
-              const VerticalSpacerBox(size: SpacerSize.large),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Form(

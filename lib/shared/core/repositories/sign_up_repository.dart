@@ -27,6 +27,7 @@ class SignUpRepository {
       String rua,
       String numero,
       String cep,
+      String complemento,
       int cidade,
       int bairro,
       BuildContext context) async {
@@ -48,6 +49,7 @@ class SignUpRepository {
             "numero": numero,
             "cep": cep,
             "cidade": cidade,
+            "complemento": complemento,
             "roles": [5],
           });
       print(response.data);

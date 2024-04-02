@@ -44,8 +44,7 @@ class InfoSecondScreen extends StatelessWidget {
                 .titleLarge
                 ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
             hint: const Text('Cidade'),
-            value: controller
-                .selectedCidade, // Alterado para usar o valor do controller
+            value: controller.selectedCidade,
             items: controller.cidades.map((cidade) {
               return DropdownMenuItem<CidadeModel>(
                 value: cidade,
@@ -109,6 +108,13 @@ class InfoSecondScreen extends StatelessWidget {
           hintText: 'Número',
           icon: Icons.home_filled,
           controller: controller.numeroController,
+        ),
+        const VerticalSpacerBox(size: SpacerSize.small),
+        CustomTextFormField(
+          keyboardType: TextInputType.text,
+          hintText: 'Complemento',
+          icon: Icons.home_work,
+          controller: controller.complementoController,
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
       ],

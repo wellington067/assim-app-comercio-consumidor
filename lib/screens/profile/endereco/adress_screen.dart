@@ -1,172 +1,290 @@
-import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
+import 'package:ecommerceassim/shared/core/controllers/sign_up_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/components/forms/auth_form_field.dart';
-import 'package:ecommerceassim/components/forms/auth_form_field3.dart';
-import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/components/buttons/primary_button.dart';
+import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/shared/constants/app_enums.dart';
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
+import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
+import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
+import 'package:ecommerceassim/shared/core/repositories/sign_up_repository.dart';
+import 'package:ecommerceassim/shared/core/user_storage.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../../components/buttons/primary_button.dart';
-import '../../../components/forms/auth_form_field2.dart';
-import '../../../components/utils/vertical_spacer_box.dart';
-import '../../../shared/constants/app_enums.dart';
-import '../../../shared/constants/style_constants.dart';
-
-class AdressScreen extends StatefulWidget {
-  const AdressScreen({super.key});
+class AddressScreen extends StatefulWidget {
+  const AddressScreen({super.key});
 
   @override
-  State<AdressScreen> createState() => _AdressScreenState();
+  State<AddressScreen> createState() => _AddressScreenState();
 }
 
-class _AdressScreenState extends State<AdressScreen> {
+class _AddressScreenState extends State<AddressScreen> {
+  late SignUpController controller;
+  final double formFieldHeight = 48.0;
+  final TextEditingController _ruaController = TextEditingController();
+  final TextEditingController _numeroController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _complementoController = TextEditingController();
+  int? _selectedCityId;
+  int? _selectedBairroId;
+  List<CidadeModel> _cidades = [];
+  List<BairroModel> _bairros = [];
+  final _formKey = GlobalKey<FormState>();
+  SignUpRepository signUpRepository = SignUpRepository();
+  final MaskTextInputFormatter _cepMaskFormatter = MaskTextInputFormatter(
+    mask: '#####-###',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    controller = SignUpController();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    List<CidadeModel> cidades = await signUpRepository.getCidades();
+    setState(() {
+      _cidades = cidades;
+    });
+  }
+
+  Future<void> _loadBairros(int cidadeId) async {
+    List<BairroModel> bairros =
+        await signUpRepository.getBairrosByCidade(cidadeId);
+    setState(() {
+      _bairros = bairros;
+      _selectedBairroId =
+          _selectedBairroId ?? (bairros.isNotEmpty ? bairros.first.id : null);
+    });
+  }
+
+  Future<void> _createAddress() async {
+    UserStorage userStorage = UserStorage();
+    String userToken = await userStorage.getUserToken();
+
+    final url = Uri.parse("$kBaseURL/users/enderecos");
+    final response = await http.post(
+      url,
+      body: json.encode({
+        "rua": _ruaController.text,
+        "cep": _cepController.text,
+        "numero": _numeroController.text,
+        "complemento": _complementoController.text,
+        "bairro_id": _selectedBairroId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $userToken",
+      },
+    );
+
+    if (response.statusCode == 201) {
+      Navigator.pushNamed(context, Screens.selectAdress);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Erro ao criar endereço. Por favor, tente novamente.')),
+      );
+    }
+  }
+
+  bool validateEmptyFields() {
+    bool isValid = true;
+    String errorMessage = '';
+
+    if (_ruaController.text.isEmpty) {
+      errorMessage = 'Preencha o campo Rua.';
+      isValid = false;
+    } else if (_numeroController.text.isEmpty ||
+        _numeroController.text.length > 4) {
+      errorMessage =
+          'O campo Número deve ser preenchido e ter no máximo 4 caracteres.';
+      isValid = false;
+    } else if (_cepController.text.isEmpty ||
+        _cepController.text.length != _cepMaskFormatter.getMask()?.length) {
+      errorMessage = 'Preencha o campo CEP corretamente.';
+      isValid = false;
+    } else if (_selectedCityId == null) {
+      errorMessage = 'Selecione uma cidade.';
+      isValid = false;
+    } else if (_selectedBairroId == null) {
+      errorMessage = 'Selecione um bairro.';
+      isValid = false;
+    }
+
+    if (!isValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage)),
+      );
+    }
+
+    return isValid;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const CustomAppBar(),
       body: Container(
-          color: kOnSurfaceColor,
-          width: size.width,
-          padding: const EdgeInsets.all(12),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const VerticalSpacerBox(size: SpacerSize.small),
-                const Row(
-                  children: [
-                    Text(
-                      'Adicione um novo endereço',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const VerticalSpacerBox(size: SpacerSize.large),
-                Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Form(
-                        child: Column(children: [
-                      const Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Cidade',
-                              style: TextStyle(),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      AuthFormField(
-                        label: '',
-                        isPassword: false,
-                        inputType: TextInputType.text,
-                        onChanged: (String value) {},
-                        backgroundColor: kOnBackgroundColorText,
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      const Row(
-                        children: [
-                          Text(
-                            'Bairro',
-                          ),
-                        ],
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      AuthFormField(
-                        label: '',
-                        isPassword: false,
-                        inputType: TextInputType.text,
-                        onChanged: (String value) {},
-                        backgroundColor: kOnBackgroundColorText,
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      const Row(
-                        children: [
-                          Text(
-                            'Rua',
-                          ),
-                          Spacer(),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 50.0),
-                              child: Text(
-                                'Número',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      Row(
-                        children: [
-                          AuthFormField3(
-                            label: '',
-                            isPassword: false,
-                            inputType: TextInputType.streetAddress,
-                            onChanged: (String value) {},
-                            backgroundColor: kOnBackgroundColorText,
-                          ),
-                          const HorizontalSpacerBox(size: SpacerSize.small),
-                          AuthFormField2(
-                            label: '',
-                            isPassword: false,
-                            inputType: TextInputType.streetAddress,
-                            onChanged: (String value) {},
-                            backgroundColor: kOnBackgroundColorText,
-                          ),
-                        ],
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      const Row(
-                        children: [
-                          Text(
-                            'Complemento',
-                          ),
-                        ],
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      AuthFormField(
-                        label: '',
-                        isPassword: false,
-                        inputType: TextInputType.text,
-                        onChanged: (String value) {},
-                        backgroundColor: kOnBackgroundColorText,
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      const Row(
-                        children: [
-                          Text(
-                            'CEP',
-                          ),
-                        ],
-                      ),
+        color: kOnSurfaceColor,
+        width: size.width,
+        padding: const EdgeInsets.all(12),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const VerticalSpacerBox(size: SpacerSize.small),
+              const Row(
+                children: [
+                  Text(
+                    'Cadastrar novo endereço',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const VerticalSpacerBox(size: SpacerSize.large),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
                       const VerticalSpacerBox(size: SpacerSize.small),
                       Container(
-                        alignment: Alignment.centerLeft,
-                        child: AuthFormField3(
-                          label: '',
-                          isPassword: false,
-                          inputType: TextInputType.streetAddress,
-                          onChanged: (String value) {},
-                          backgroundColor: kOnBackgroundColorText,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: kBackgroundColor,
+                        ),
+                        child: DropdownButtonFormField<int>(
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.location_city),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: kBackgroundColor,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: formFieldHeight / 4),
+                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                  fontSize: 18, fontWeight: FontWeight.w500),
+                          hint: const Text('Cidade'),
+                          value: _selectedCityId,
+                          items: _cidades.map((CidadeModel cidade) {
+                            return DropdownMenuItem<int>(
+                              value: cidade.id,
+                              child: Text(cidade.nome ?? ''),
+                            );
+                          }).toList(),
+                          onChanged: (int? newValue) {
+                            setState(() {
+                              _selectedCityId = newValue;
+                              _selectedBairroId = null;
+                              _bairros = [];
+                            });
+                            _loadBairros(newValue!);
+                          },
                         ),
                       ),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      const VerticalSpacerBox(size: SpacerSize.large),
-                      PrimaryButton(
-                        text: 'Salvar',
-                        onPressed: () {
-                          Navigator.pushNamed(context, Screens.selectAdress);
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                      DropdownButtonFormField<int>(
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.location_city_sharp),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: kBackgroundColor,
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: formFieldHeight / 4),
+                        ),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                        hint: const Text('Bairro'),
+                        value: _selectedBairroId,
+                        items: _bairros.map((BairroModel bairro) {
+                          return DropdownMenuItem<int>(
+                            value: bairro.id,
+                            child: Text(bairro.nome ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (int? newValue) {
+                          setState(() {
+                            _selectedBairroId = newValue;
+                          });
                         },
-                        color: kDetailColor,
                       ),
-                    ])))
-              ],
-            ),
-          )),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                      CustomTextFormField(
+                        hintText: 'Rua',
+                        icon: Icons.location_city_sharp,
+                        controller: _ruaController,
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                      CustomTextFormField(
+                        hintText: 'CEP',
+                        icon: Icons.numbers_outlined,
+                        maskFormatter: controller.cepFormatter,
+                        controller: _cepController,
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                      CustomTextFormField(
+                        keyboardType: TextInputType.number,
+                        hintText: 'Número',
+                        icon: Icons.home_filled,
+                        controller: _numeroController,
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                      CustomTextFormField(
+                        keyboardType: TextInputType.text,
+                        hintText: 'Complemento',
+                        icon: Icons.home_work,
+                        controller: _complementoController,
+                      ),
+                      const VerticalSpacerBox(size: SpacerSize.small),
+                    ],
+                  ),
+                ),
+              ),
+              PrimaryButton(
+                text: 'Salvar',
+                onPressed: () {
+                  if (validateEmptyFields()) {
+                    _createAddress();
+                  }
+                },
+                color: kDetailColor,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _ruaController.dispose();
+    _numeroController.dispose();
+    _cepController.dispose();
+    _complementoController.dispose();
+    super.dispose();
   }
 }
