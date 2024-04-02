@@ -13,7 +13,7 @@ import '../../../components/utils/vertical_spacer_box.dart';
 import '../../../shared/constants/app_enums.dart';
 
 class SelectAddress extends StatefulWidget {
-  const SelectAddress({Key? key}) : super(key: key);
+  const SelectAddress({super.key});
 
   @override
   State<SelectAddress> createState() => _SelectAddressState();
@@ -77,7 +77,7 @@ class _SelectAddressState extends State<SelectAddress> {
                     return Container(
                       width: 350,
                       margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                       decoration: BoxDecoration(
                         color: kOnSurfaceColor,
                         borderRadius:
@@ -96,10 +96,14 @@ class _SelectAddressState extends State<SelectAddress> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                'Rua: ${address.rua}, ${address.numero}',
-                                style: const TextStyle(fontSize: 17),
+                              Expanded(
+                                child: Text(
+                                  'Rua: ${address.rua}, ${address.numero}',
+                                  style: const TextStyle(fontSize: 17),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.delete),
@@ -108,21 +112,33 @@ class _SelectAddressState extends State<SelectAddress> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                        backgroundColor: Colors.white,
                                         title: const Text('Excluir endereço'),
                                         content: const Text(
                                             'Tem certeza de que deseja excluir este endereço?'),
+                                        actionsAlignment:
+                                            MainAxisAlignment.center,
                                         actions: <Widget>[
                                           TextButton(
-                                            child: const Text('Cancelar'),
+                                            style: TextButton.styleFrom(
+                                              foregroundColor: Colors.white,
+                                              backgroundColor: kDetailColor,
+                                            ),
                                             onPressed: () {
                                               Navigator.of(context).pop(false);
                                             },
+                                            child: const Text('Cancelar'),
                                           ),
+                                          const SizedBox(width: 8),
                                           TextButton(
-                                            child: const Text('Excluir'),
+                                            style: TextButton.styleFrom(
+                                              foregroundColor: Colors.white,
+                                              backgroundColor: kButtom2,
+                                            ),
                                             onPressed: () {
                                               Navigator.of(context).pop(true);
                                             },
+                                            child: const Text('Excluir'),
                                           ),
                                         ],
                                       );
@@ -140,50 +156,65 @@ class _SelectAddressState extends State<SelectAddress> {
                             ],
                           ),
                           if (address.complemento != null)
-                            Text(
-                              'Complemento: ${address.complemento}',
+                            Container(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text(
+                                'Complemento: ${address.complemento}',
+                                style: const TextStyle(fontSize: 17),
+                              ),
+                            ),
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text(
+                              'CEP: ${address.cep}',
                               style: const TextStyle(fontSize: 17),
                             ),
-                          Text(
-                            'CEP: ${address.cep}',
-                            style: const TextStyle(fontSize: 17),
                           ),
-                          Text(
-                            'Bairro: ${address.bairroNome}',
-                            style: const TextStyle(fontSize: 17),
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text(
+                              'Bairro: ${address.bairroNome}',
+                              style: const TextStyle(fontSize: 17),
+                            ),
                           ),
-                          Text(
-                            'Cidade: ${address.cidadeNome}',
-                            style: const TextStyle(fontSize: 17),
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text(
+                              'Cidade: ${address.cidadeNome}',
+                              style: const TextStyle(fontSize: 17),
+                            ),
                           ),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Screens.addressEdit,
-                                  arguments: {
-                                    'id': address.id,
-                                    'rua': address.rua,
-                                    'numero': address.numero,
-                                    'cep': address.cep,
-                                    'complemento': address.complemento,
-                                    'bairroId': address.bairroId,
-                                    'cidadeId': address.cidadeId,
-                                    'bairroNome': address.bairroNome,
-                                    'cidadeNome': address.cidadeNome,
-                                  },
-                                );
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(kDetailColor),
-                              ),
-                              child: const Text(
-                                'Editar',
-                                style: TextStyle(
-                                    fontSize: 15, color: kOnSurfaceColor),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Screens.addressEdit,
+                                    arguments: {
+                                      'id': address.id,
+                                      'rua': address.rua,
+                                      'numero': address.numero,
+                                      'cep': address.cep,
+                                      'complemento': address.complemento,
+                                      'bairroId': address.bairroId,
+                                      'cidadeId': address.cidadeId,
+                                      'bairroNome': address.bairroNome,
+                                      'cidadeNome': address.cidadeNome,
+                                    },
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(kDetailColor),
+                                ),
+                                child: const Text(
+                                  'Editar',
+                                  style: TextStyle(
+                                      fontSize: 15, color: kOnSurfaceColor),
+                                ),
                               ),
                             ),
                           ),

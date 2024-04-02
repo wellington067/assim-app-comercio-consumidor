@@ -3,6 +3,8 @@ import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
@@ -32,8 +34,14 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
   final TextEditingController _cepController = TextEditingController();
   final TextEditingController _complementoController = TextEditingController();
   String _addressId = "";
+  String? errorMessage;
+  final _formKey = GlobalKey<FormState>();
 
   SignUpRepository signUpRepository = SignUpRepository();
+  final MaskTextInputFormatter _cepMaskFormatter = MaskTextInputFormatter(
+    mask: '#####-###',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
 
   @override
   void initState() {
@@ -102,10 +110,52 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
     if (response.statusCode == 200) {
       Navigator.pushNamed(context, Screens.selectAdress);
     } else {
+      setErrorMessage('Erro ao atualizar endereço.');
+    }
+  }
+
+  bool validateEmptyFields() {
+    bool isValid = true;
+    String errorMessage = '';
+
+    if (_ruaController.text.isEmpty) {
+      errorMessage = 'Preencha o campo Rua.';
+      isValid = false;
+    } else if (_numeroController.text.isEmpty ||
+        _numeroController.text.length > 4) {
+      errorMessage =
+          'O campo Número deve ser preenchido e ter no máximo 4 caracteres.';
+      isValid = false;
+    } else if (_cepController.text.isEmpty ||
+        _cepController.text.length != _cepMaskFormatter.getMask()?.length) {
+      errorMessage = 'Preencha o campo CEP corretamente.';
+      isValid = false;
+    } else if (_selectedCityId == null) {
+      errorMessage = 'Selecione uma cidade.';
+      isValid = false;
+    } else if (_selectedBairroId == null) {
+      errorMessage = 'Selecione um bairro.';
+      isValid = false;
+    }
+
+    if (!isValid) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Erro ao atualizar endereço.')),
+        SnackBar(content: Text(errorMessage)),
       );
     }
+
+    return isValid;
+  }
+
+  void setErrorMessage(String value) {
+    setState(() {
+      errorMessage = value;
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        errorMessage = null;
+      });
+    });
   }
 
   @override
@@ -133,75 +183,191 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     children: [
-                      DropdownButtonFormField<int>(
-                        value: _selectedCityId,
-                        items: _cidades.map((cidade) {
-                          return DropdownMenuItem<int>(
-                            value: cidade.id!,
-                            child: Text(cidade.nome ?? ''),
-                          );
-                        }).toList(),
-                        onChanged: (value) async {
-                          if (value != null) {
-                            setState(() {
-                              _selectedCityId = value;
-                              _selectedBairroId = null;
-                              _bairros = [];
-                            });
-                            await _loadBairros(value);
-                          }
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Cidade',
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Cidade',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+
+                              color: Colors.black,
+                              // Change this as needed for your design
+                            ),
+                          ),
+                          const SizedBox(
+                              height:
+                                  8), // Add some space between the label and the dropdown
+                          DropdownButtonFormField<int>(
+                            value: _selectedCityId,
+                            items: _cidades.map((cidade) {
+                              return DropdownMenuItem<int>(
+                                value: cidade.id!,
+                                child: Text(cidade.nome ?? ''),
+                              );
+                            }).toList(),
+                            onChanged: (value) async {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedCityId = value;
+                                  _selectedBairroId = null;
+                                  _bairros = [];
+                                });
+                                await _loadBairros(value);
+                              }
+                            },
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: kBackgroundColor,
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  13, 13, 13, 13), // Updated padding
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Bairro',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors
+                                  .black, // Use the appropriate color for your design
+                            ),
+                          ),
+                          const SizedBox(
+                              height: 8), // Spacing between label and dropdown
+                          DropdownButtonFormField<int>(
+                            value: _selectedBairroId,
+                            items: _bairros.map((bairro) {
+                              return DropdownMenuItem<int>(
+                                value: bairro.id!,
+                                child: Text(bairro.nome ?? ''),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedBairroId = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: kBackgroundColor,
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  13, 13, 13, 13), // Updated padding
+                            ),
+                          ),
+                        ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      DropdownButtonFormField<int>(
-                        value: _selectedBairroId,
-                        items: _bairros.map((bairro) {
-                          return DropdownMenuItem<int>(
-                            value: bairro.id!,
-                            child: Text(bairro.nome ?? ''),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedBairroId = value;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Bairro',
-                        ),
-                      ),
-                      AddressFormField(
-                        controller: _ruaController,
-                        label: 'Rua',
-                        keyboardType: TextInputType.text,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Rua',
+                            style: TextStyle(
+                              // Add your desired style for the label
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          AddressFormField(
+                            controller: _ruaController,
+                            label: 'Rua',
+                            keyboardType: TextInputType.text,
+                          ),
+                        ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      AddressFormField(
-                        controller: _numeroController,
-                        label: 'Número',
-                        keyboardType: TextInputType.number,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Número',
+                            style: TextStyle(
+                              // Add your desired style for the label
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          AddressFormField(
+                            controller: _numeroController,
+                            label: 'Número',
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      AddressFormField(
-                        controller: _cepController,
-                        label: 'CEP',
-                        keyboardType: TextInputType.number,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'CEP',
+                            style: TextStyle(
+                              // Add your desired style for the label
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          TextField(
+                            controller: _cepController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [_cepMaskFormatter],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: kBackgroundColor,
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(13, 13, 13, 13),
+                            ),
+                          ),
+                        ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      AddressFormField(
-                        controller: _complementoController,
-                        label: 'Complemento',
-                        keyboardType: TextInputType.text,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Complemento',
+                            style: TextStyle(
+                              // Add your desired style for the label
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          AddressFormField(
+                            controller: _complementoController,
+                            label: 'Complemento',
+                            keyboardType: TextInputType.text,
+                          ),
+                        ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.large),
                       PrimaryButton(
                         text: 'Salvar',
-                        onPressed: _updateEndereco,
+                        onPressed: () {
+                          if (validateEmptyFields()) {
+                            _updateEndereco();
+                          }
+                        },
                         color: kDetailColor,
                       ),
                     ],
