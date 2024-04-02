@@ -80,7 +80,7 @@ class OrderCard extends StatelessWidget {
           onTap: onTap,
           child: Container(
             width: 430,
-            height: 255,
+            height: 230,
             decoration: BoxDecoration(
               color: kOnSurfaceColor,
               borderRadius: const BorderRadius.all(Radius.circular(15)),

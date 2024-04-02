@@ -40,7 +40,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    /* if (widget.isPassword != null) {
+    if (widget.isPassword != null) {
       _obscureText = widget.isPassword!;
     }
     widget.controller?.addListener(() {
@@ -48,7 +48,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               widget.controller?.text.isEmpty == true) &&
           widget.isPassword == true) {}
       setState(() {});
-    }); */
+    });
   }
 
   @override
