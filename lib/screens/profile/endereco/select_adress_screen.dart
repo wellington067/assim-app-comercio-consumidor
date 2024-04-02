@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
@@ -113,57 +114,75 @@ class _SelectAddressState extends State<SelectAddress> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
                                         title: const Text('Excluir endereço'),
                                         content: const Text(
-                                            'Tem certeza de que deseja excluir este endereço?'),
+                                          'Tem certeza de que deseja excluir este endereço?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.all(20),
                                         actionsAlignment:
                                             MainAxisAlignment.center,
                                         actions: <Widget>[
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      kDetailColor),
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
+                                          SizedBox(
+                                            width: double
+                                                .maxFinite, // Faz com que o ButtonBar ocupe todo o espaço horizontal
+                                            child: Wrap(
+                                              alignment: WrapAlignment
+                                                  .center, // Centraliza os botões horizontalmente
+                                              spacing:
+                                                  30, // Espaço entre os botões
+                                              children: <Widget>[
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        kDetailColor,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    minimumSize: const Size(114,
+                                                        50), // Largura e altura dos botões
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop(
+                                                        false); // Fecha o AlertDialog sem executar a ação
+                                                  },
+                                                  child: const Text('Cancelar',
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
                                                 ),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop(false);
-                                            },
-                                            child: const Text(
-                                              'Cancelar',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      kButtom2),
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        kErrorColor,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    minimumSize: const Size(114,
+                                                        50), // Largura e altura dos botões
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop(
+                                                        true); // Fecha o AlertDialog e executa a ação
+                                                  },
+                                                  child: const Text('Excluir',
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
                                                 ),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop(true);
-                                            },
-                                            child: const Text(
-                                              'Excluir',
-                                              style: TextStyle(
-                                                  color: Colors.white),
+                                              ],
                                             ),
                                           ),
                                         ],

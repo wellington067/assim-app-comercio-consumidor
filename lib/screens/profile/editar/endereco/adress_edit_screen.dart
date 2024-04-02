@@ -121,6 +121,9 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
     if (_ruaController.text.isEmpty) {
       errorMessage = 'Preencha o campo Rua.';
       isValid = false;
+    } else if (RegExp(r'\d').hasMatch(_ruaController.text)) {
+      errorMessage = 'O campo Rua não deve conter números.';
+      isValid = false;
     } else if (_numeroController.text.isEmpty ||
         _numeroController.text.length > 4) {
       errorMessage =
@@ -193,14 +196,10 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-
                               color: Colors.black,
-                              // Change this as needed for your design
                             ),
                           ),
-                          const SizedBox(
-                              height:
-                                  8), // Add some space between the label and the dropdown
+                          const SizedBox(height: 8),
                           DropdownButtonFormField<int>(
                             value: _selectedCityId,
                             items: _cidades.map((cidade) {
@@ -226,8 +225,8 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                               ),
                               filled: true,
                               fillColor: kBackgroundColor,
-                              contentPadding: const EdgeInsets.fromLTRB(
-                                  13, 13, 13, 13), // Updated padding
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
                           ),
                         ],
@@ -241,12 +240,10 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Colors
-                                  .black, // Use the appropriate color for your design
+                              color: Colors.black,
                             ),
                           ),
-                          const SizedBox(
-                              height: 8), // Spacing between label and dropdown
+                          const SizedBox(height: 8),
                           DropdownButtonFormField<int>(
                             value: _selectedBairroId,
                             items: _bairros.map((bairro) {
