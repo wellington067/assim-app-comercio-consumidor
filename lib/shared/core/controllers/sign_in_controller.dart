@@ -25,6 +25,7 @@ class SignInController with ChangeNotifier {
   var status = SignInStatus.idle;
   void signIn(BuildContext context) async {
     try {
+      // Verifica se os campos de email e senha estão preenchidos
       if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
         throw Exception("Por favor, forneça seu email e senha.");
       }
@@ -32,29 +33,35 @@ class SignInController with ChangeNotifier {
       status = SignInStatus.loading;
       notifyListeners();
 
-      var loginResult = await _repository.signIn(
+      // Tenta fazer o login e obtém o token do usuário
+      var userToken = await _repository.signIn(
         email: _emailController.text,
         password: _passwordController.text,
       );
 
-      if (loginResult == 1) {
-        status = SignInStatus.done;
-        notifyListeners();
-
-        Navigator.pushReplacementNamed(context, Screens.home);
-      } else {
-        status = SignInStatus.error;
-        notifyListeners();
-        setErrorMessage(
-            "Por favor, verifique suas credenciais ou tente novamente mais tarde.");
+      // Verifica se o token do usuário é nulo ou vazio
+      if (userToken == null) {
+        throw Exception(
+            "Não foi possível obter o token do usuário. Por favor, tente novamente.");
       }
-    } catch (e) {
-      status = SignInStatus.loading;
+
+      status = SignInStatus.done;
       notifyListeners();
+
+      // Se o token do usuário for válido, navega para a tela home
+      Navigator.pushReplacementNamed(context, Screens.home,
+          arguments: userToken);
+    } catch (e) {
+      status = SignInStatus.error;
+      notifyListeners();
+
+      // Define uma pequena espera antes de alterar o status para 'idle'
       await Future.delayed(const Duration(milliseconds: 500));
       status = SignInStatus.idle;
+
+      // Ajusta a mensagem de erro com base no tipo de exceção
       if (e is Exception) {
-        setErrorMessage('Por favor, forneça seu email e senha.');
+        setErrorMessage(e.toString());
       } else {
         setErrorMessage('Credenciais inválidas. Verifique seus dados.');
       }
