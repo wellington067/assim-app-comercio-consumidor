@@ -1,13 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
-
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:ecommerceassim/components/forms/address_form_field.dart';
-import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/controllers/sign_up_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
@@ -328,14 +326,24 @@ class _AddressScreenState extends State<AddressScreen> {
                   ),
                 ),
               ),
-              PrimaryButton(
-                text: 'Salvar',
-                onPressed: () {
-                  if (validateEmptyFields()) {
-                    _createAddress();
-                  }
-                },
-                color: kDetailColor,
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrimaryButton(
+                        text: 'Salvar',
+                        onPressed: () {
+                          if (validateEmptyFields()) {
+                            _createAddress();
+                          }
+                        },
+                        color: kDetailColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

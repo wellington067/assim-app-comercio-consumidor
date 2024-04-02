@@ -36,7 +36,8 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    final int produtoID = arguments?['id'];
+/*     final int produtoID = arguments?['id'];
+ */
     final int produtoEstoque = arguments?['estoque'];
     final String produtoTitulo = arguments?['titulo'];
     final String produtoDescricao = arguments?['descricao'];

@@ -1,11 +1,10 @@
-import 'package:ecommerceassim/shared/constants/app_enums.dart';
-import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
+// ignore_for_file: use_build_context_synchronously
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:ecommerceassim/shared/constants/app_enums.dart';
+import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -35,6 +34,8 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
   final TextEditingController _complementoController = TextEditingController();
   String _addressId = "";
   String? errorMessage;
+  bool _isEditing = false;
+
   final _formKey = GlobalKey<FormState>();
 
   SignUpRepository signUpRepository = SignUpRepository();
@@ -43,11 +44,17 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
     filter: {"#": RegExp(r'[0-9]')},
   );
 
+  void _toggleEdit() {
+    setState(() {
+      _isEditing = !_isEditing;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final arguments =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
@@ -88,6 +95,8 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
   }
 
   Future<void> _updateEndereco() async {
+    if (!_isEditing) return;
+
     UserStorage userStorage = UserStorage();
     String userToken = await userStorage.getUserToken();
 
@@ -112,6 +121,10 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
     } else {
       setErrorMessage('Erro ao atualizar endereço.');
     }
+
+    setState(() {
+      _isEditing = false;
+    });
   }
 
   bool validateEmptyFields() {
@@ -202,22 +215,28 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           const SizedBox(height: 8),
                           DropdownButtonFormField<int>(
                             value: _selectedCityId,
+                            onChanged: _isEditing
+                                ? (int? value) async {
+                                    if (value != null) {
+                                      setState(() {
+                                        _selectedCityId = value;
+                                        _selectedBairroId = null;
+                                        _bairros = [];
+                                      });
+                                      await _loadBairros(value);
+                                    }
+                                  }
+                                : null,
                             items: _cidades.map((cidade) {
                               return DropdownMenuItem<int>(
                                 value: cidade.id!,
-                                child: Text(cidade.nome ?? ''),
+                                child: Text(
+                                  cidade.nome ?? '',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.normal),
+                                ),
                               );
                             }).toList(),
-                            onChanged: (value) async {
-                              if (value != null) {
-                                setState(() {
-                                  _selectedCityId = value;
-                                  _selectedBairroId = null;
-                                  _bairros = [];
-                                });
-                                await _loadBairros(value);
-                              }
-                            },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -249,14 +268,20 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                             items: _bairros.map((bairro) {
                               return DropdownMenuItem<int>(
                                 value: bairro.id!,
-                                child: Text(bairro.nome ?? ''),
+                                child: Text(
+                                  bairro.nome ?? '',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.normal),
+                                ),
                               );
                             }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedBairroId = value;
-                              });
-                            },
+                            onChanged: _isEditing
+                                ? (int? value) {
+                                    setState(() {
+                                      _selectedBairroId = value;
+                                    });
+                                  }
+                                : null,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -264,8 +289,8 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                               ),
                               filled: true,
                               fillColor: kBackgroundColor,
-                              contentPadding: const EdgeInsets.fromLTRB(
-                                  13, 13, 13, 13), // Updated padding
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
                           ),
                         ],
@@ -277,7 +302,6 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           const Text(
                             'Rua',
                             style: TextStyle(
-                              // Add your desired style for the label
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -285,6 +309,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           AddressFormField(
                             controller: _ruaController,
                             label: 'Rua',
+                            enabled: _isEditing,
                             keyboardType: TextInputType.text,
                           ),
                         ],
@@ -296,7 +321,6 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           const Text(
                             'Número',
                             style: TextStyle(
-                              // Add your desired style for the label
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -304,6 +328,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           AddressFormField(
                             controller: _numeroController,
                             label: 'Número',
+                            enabled: _isEditing,
                             keyboardType: TextInputType.number,
                           ),
                         ],
@@ -315,7 +340,6 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           const Text(
                             'CEP',
                             style: TextStyle(
-                              // Add your desired style for the label
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -323,6 +347,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           TextField(
                             controller: _cepController,
                             keyboardType: TextInputType.number,
+                            enabled: _isEditing,
                             inputFormatters: [_cepMaskFormatter],
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -344,7 +369,6 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           const Text(
                             'Complemento',
                             style: TextStyle(
-                              // Add your desired style for the label
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -352,18 +376,21 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                           AddressFormField(
                             controller: _complementoController,
                             label: 'Complemento',
+                            enabled: _isEditing,
                             keyboardType: TextInputType.text,
                           ),
                         ],
                       ),
                       const VerticalSpacerBox(size: SpacerSize.large),
                       PrimaryButton(
-                        text: 'Salvar',
-                        onPressed: () {
-                          if (validateEmptyFields()) {
-                            _updateEndereco();
-                          }
-                        },
+                        text: _isEditing ? 'Salvar' : 'Editar',
+                        onPressed: _isEditing
+                            ? () {
+                                if (validateEmptyFields()) {
+                                  _updateEndereco();
+                                }
+                              }
+                            : _toggleEdit,
                         color: kDetailColor,
                       ),
                     ],

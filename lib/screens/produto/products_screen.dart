@@ -21,7 +21,8 @@ class MenuProductsScreen extends StatelessWidget {
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int bancaId = arguments['id'];
-    final String bancaNome = arguments['nome'];
+/*     final String bancaNome = arguments['nome'];
+ */
     int selectedIndex = 1;
 
     return Scaffold(
