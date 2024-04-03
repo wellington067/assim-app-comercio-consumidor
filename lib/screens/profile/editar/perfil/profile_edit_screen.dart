@@ -1,9 +1,9 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print
-
+import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:flutter/material.dart';
+import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
@@ -98,106 +98,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       if (response.statusCode == 200) {
         userStorage.saveUserCredentials(
             id: userId, token: token, nome: newName);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              title: const Text(
-                'Sucesso!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: kDetailColor,
-                ),
-              ),
-              content: const Text(
-                'Perfil atualizado com sucesso!',
-                textAlign: TextAlign.center,
-              ),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: kDetailColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text(
-                      'Ok',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+        Navigator.pushNamed(context, Screens.profile);
       } else {
-        showErrorDialog(
-            context, 'Erro ao atualizar perfil. Tente novamente mais tarde.');
         revertChanges(oldName, oldPhone);
       }
     } catch (e) {
-      showErrorDialog(context, 'Ocorreu um erro ao atualizar o perfil: $e');
       revertChanges(oldName, oldPhone);
     }
-  }
-
-  showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Text(
-            'Erro!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.red,
-            ),
-          ),
-          content: Text(
-            message,
-            textAlign: TextAlign.center,
-          ),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: <Widget>[
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   void revertChanges(String oldName, String oldPhone) {
@@ -238,9 +145,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       controller: nameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        /* focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kDetailColor),
-                        ), */
                       ),
                       enabled: isEditing,
                     ),
@@ -252,9 +156,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       controller: phoneController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        /* focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kDetailColor),
-                        ), */
                       ),
                       keyboardType: TextInputType.phone,
                       maskFormatter: phoneFormatter,
@@ -264,44 +165,25 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 ),
               ),
               if (!isEditing)
-                ElevatedButton(
+                PrimaryButton(
                   onPressed: () {
                     setState(() {
                       isEditing = true;
                     });
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: kDetailColor,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    side: const BorderSide(color: kDetailColor),
-                    minimumSize: const Size(double.infinity, 50), // Adicionado
-                  ),
-                  child: const Text('Editar Perfil',
-                      style: TextStyle(fontSize: 18)),
+                  text: 'Editar Perfil',
+                  color: kDetailColor,
                 ),
               if (isEditing)
-                ElevatedButton(
+                PrimaryButton(
                   onPressed: () {
                     saveUserProfile(nameController.text, phoneController.text);
                     setState(() {
                       isEditing = false; // Sai do modo de edição
                     });
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: kDetailColor,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    side: const BorderSide(color: kDetailColor),
-                    minimumSize: const Size(double.infinity, 50), // Adicionado
-                  ),
-                  child: const Text('Salvar', style: TextStyle(fontSize: 18)),
+                  text: 'Salvar',
+                  color: kDetailColor,
                 ),
               const SizedBox(height: 20),
             ],
