@@ -1,11 +1,8 @@
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/core/navigator.dart';
-import 'package:ecommerceassim/shared/core/preferences_manager.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 
 class SplashScreenController {
@@ -17,27 +14,26 @@ class SplashScreenController {
   final userStorage = UserStorage();
 
   void initApplication(Function onComplete) async {
-    Navigator.pushNamed(context, Screens.first);
+    await Future.delayed(const Duration(seconds: 3), () {
+      onComplete.call();
+    });
+    await configDefaultAppSettings();
   }
 
   Future configDefaultAppSettings() async {
     _logger.config('Configuring default app settings...');
-    const String loadedKey = 'loadedFirstTime';
-    final prefs = await SharedPreferences.getInstance();
-    PreferencesManager.saveIsFirstTime();
-
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _logger.fine('Default app settings configured!');
-    final bool? isFirstTime = prefs.getBool(loadedKey);
-    if (isFirstTime != null && isFirstTime) {
-      log('First time user in: carrosel');
-      navigatorKey.currentState!.pushNamed(Screens.signin);
+    if (await userStorage.userHasCredentials()) {
+      navigatorKey.currentState!
+          .popAndPushNamed(Screens.first);
     } else {
-      log('User already open app: sign in or home');
-      return;
+      // ignore: use_build_context_synchronously
+      navigatorKey.currentState!
+          .popAndPushNamed(Screens.signin);
     }
   }
 }
+
