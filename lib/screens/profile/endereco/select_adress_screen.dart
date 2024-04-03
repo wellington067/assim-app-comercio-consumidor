@@ -121,98 +121,103 @@ class _SelectAddressState extends State<SelectAddress> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () async {
-                                    bool confirmDelete = await showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                          title: const Text('Excluir endereço'),
-                                          content: const Text(
-                                            'Tem certeza de que deseja excluir este endereço?',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          contentPadding:
-                                              const EdgeInsets.all(20),
-                                          actionsAlignment:
-                                              MainAxisAlignment.center,
-                                          actions: <Widget>[
-                                            SizedBox(
-                                              width: double.maxFinite,
-                                              child: Wrap(
-                                                alignment: WrapAlignment.center,
-                                                spacing: 30,
-                                                children: <Widget>[
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          kDetailColor,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      minimumSize:
-                                                          const Size(114, 50),
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop(false);
-                                                    },
-                                                    child: const Text(
-                                                        'Cancelar',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                  ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          kErrorColor,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      minimumSize:
-                                                          const Size(114, 50),
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop(true);
-                                                    },
-                                                    child: const Text('Excluir',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                  ),
-                                                ],
-                                              ),
+                                if (controller.addresses.length >
+                                    1) // Condicional para mostrar o botão
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () async {
+                                      bool confirmDelete = await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                             ),
-                                          ],
-                                        );
-                                      },
-                                    );
+                                            title:
+                                                const Text('Excluir endereço'),
+                                            content: const Text(
+                                              'Tem certeza de que deseja excluir este endereço?',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.all(20),
+                                            actionsAlignment:
+                                                MainAxisAlignment.center,
+                                            actions: <Widget>[
+                                              SizedBox(
+                                                width: double.maxFinite,
+                                                child: Wrap(
+                                                  alignment:
+                                                      WrapAlignment.center,
+                                                  spacing: 30,
+                                                  children: <Widget>[
+                                                    ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            kDetailColor,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        minimumSize:
+                                                            const Size(114, 50),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop(false);
+                                                      },
+                                                      child: const Text(
+                                                          'Cancelar',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                    ),
+                                                    ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            kErrorColor,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        minimumSize:
+                                                            const Size(114, 50),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop(true);
+                                                      },
+                                                      child: const Text(
+                                                          'Excluir',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
 
-                                    if (confirmDelete == true) {
-                                      String token =
-                                          await UserStorage().getUserToken();
-                                      await _deleteAddress(
-                                          address.id.toString(), token);
-                                    }
-                                  },
-                                ),
+                                      if (confirmDelete == true) {
+                                        String token =
+                                            await UserStorage().getUserToken();
+                                        await _deleteAddress(
+                                            address.id.toString(), token);
+                                      }
+                                    },
+                                  ),
                               ],
                             ),
                             const VerticalSpacer(size: 10),
@@ -295,12 +300,13 @@ class _SelectAddressState extends State<SelectAddress> {
                             ),
                           ],
                         ));
-                  }),
+                  }).toList(),
                   PrimaryButton(
-                      text: "Adicionar novo endereço  ",
-                      onPressed: () =>
-                          {Navigator.pushNamed(context, Screens.adress)},
-                      color: kDetailColor)
+                    text: "Adicionar novo endereço",
+                    onPressed: () =>
+                        Navigator.pushNamed(context, Screens.adress),
+                    color: kDetailColor,
+                  ),
                 ],
               ),
             );
