@@ -4,11 +4,10 @@ import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/screens/splash/splash_screen_controller.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -22,30 +21,30 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    animController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 10));
+    animController = AnimationController(
+        vsync: this, duration: const Duration(seconds: 2));
     _controller = SplashScreenController(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setController();
       stopController();
-      _controller.initApplication(() {
-        Navigator.popAndPushNamed(context, Screens.signin);
-      });
+      _controller.initApplication(() {});
     });
   }
 
-  void setController() async {
+   void setController() async {
     await animController.repeat();
   }
 
   void stopController() async {
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
+     
       setState(() {
         opacity = 1;
       });
       animController.stop();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
