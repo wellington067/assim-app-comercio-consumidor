@@ -141,11 +141,11 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void signUp(BuildContext context) async {
+  void signUp(BuildContext context, formkey) async {
     status = SignUpStatus.loading;
     update();
 
-    if (!validateEmptyFields()) {
+    if (!formkey.currentState.validate()) {
       status = SignUpStatus.error;
       setErrorMessage(specificErrorMessage);
       update();
@@ -186,52 +186,6 @@ class SignUpController extends GetxController {
       status = SignUpStatus.idle;
       update();
     }
-  }
-
-  bool validateEmptyFields() {
-    if (_nameController.text.length < 4) {
-      specificErrorMessage = "O nome deve ter pelo menos 4 caracteres.";
-      return false;
-    } else if (_cpfController.text.isEmpty ||
-        !isValidCPF(_cpfController.text)) {
-      specificErrorMessage = "CPF inválido.";
-      return false;
-    } else if (!_emailController.text.contains('@') ||
-        !_emailController.text.contains('.com')) {
-      specificErrorMessage = "E-mail inválido.";
-      return false;
-    } else if (_foneController.text.isEmpty ||
-        !isValidPhone(_foneController.text)) {
-      specificErrorMessage = "Telefone inválido.";
-      return false;
-    }
-    if (_passwordController.text.isEmpty ||
-        _passwordController.text.length < 8) {
-      specificErrorMessage = "A senha deve ter pelo menos 8 caracteres.";
-      return false;
-    } else if (cidadeId == 0) {
-      specificErrorMessage = "Selecione uma cidade.";
-      return false;
-    } else if (bairroId == 0) {
-      specificErrorMessage = "Selecione um bairro.";
-      return false;
-    } else if (RegExp(r'\d').hasMatch(_ruaController.text)) {
-      specificErrorMessage = "A rua não deve conter números.";
-      return false;
-    } else if (_ruaController.text.length < 4) {
-      specificErrorMessage = "A rua deve ter pelo menos 4 caracteres.";
-      return false;
-    } else if (_cepController.text.isEmpty ||
-        !isValidCEP(_cepController.text)) {
-      specificErrorMessage = "CEP inválido.";
-      return false;
-    } else if (_numeroController.text.isEmpty ||
-        _numeroController.text.length > 4) {
-      specificErrorMessage = "O número deve ter até 4 caracteres. ";
-      return false;
-    }
-    specificErrorMessage = '';
-    return true;
   }
 
   bool isValidPhone(String phone) {

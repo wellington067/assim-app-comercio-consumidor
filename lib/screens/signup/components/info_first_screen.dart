@@ -1,13 +1,15 @@
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
-
 import '../../../components/forms/custom_text_form_field.dart';
 import '../../../components/utils/vertical_spacer_box.dart';
 import '../../../shared/constants/app_enums.dart';
 import '../../../shared/core/controllers/sign_up_controller.dart';
 
 // ignore: must_be_immutable
-class InfoFirstScreen extends StatelessWidget {
+class InfoFirstScreen extends StatelessWidget with ValidationMixin {
   late SignUpController controller;
+  late ValidationMixin validate;
+
   InfoFirstScreen(this.controller, {super.key});
 
   @override
@@ -15,39 +17,39 @@ class InfoFirstScreen extends StatelessWidget {
     return Column(
       children: [
         CustomTextFormField(
-          hintText: 'Nome',
-          icon: Icons.person,
-          controller: controller.nameController,
-        ),
+            hintText: 'Nome',
+            icon: Icons.person,
+            controller: controller.nameController,
+            validateForm: (value) => isValidName(value)),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
-          hintText: 'CPF',
-          icon: Icons.description,
-          maskFormatter: controller.cpfFormatter,
-          controller: controller.cpfController,
-        ),
+            hintText: 'CPF',
+            icon: Icons.description,
+            maskFormatter: controller.cpfFormatter,
+            controller: controller.cpfController,
+            validateForm: (value) => isValidCpf(value)),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
-          hintText: 'E-mail',
-          icon: Icons.email,
-          controller: controller.emailController,
-        ),
+            hintText: 'E-mail',
+            icon: Icons.email,
+            controller: controller.emailController,
+            validateForm: (value) => isValidEmail(value)),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
-          hintText: 'Telefone',
-          maskFormatter: controller.phoneFormatter,
-          icon: Icons.phone,
-          controller: controller.foneController,
-        ),
+            hintText: 'Telefone',
+            maskFormatter: controller.phoneFormatter,
+            icon: Icons.phone,
+            controller: controller.foneController,
+            validateForm: (value) => isValidPhone(value)),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
-          hintText: 'Senha',
-          onChanged: (value) => controller
-              .checkPasswordStrength(controller.passwordController.text),
-          isPassword: true,
-          icon: Icons.lock,
-          controller: controller.passwordController,
-        ),
+            hintText: 'Senha',
+            onChanged: (value) => controller
+                .checkPasswordStrength(controller.passwordController.text),
+            isPassword: true,
+            icon: Icons.lock,
+            controller: controller.passwordController,
+            validateForm: (value) => isValidPassword(value)),
         const VerticalSpacerBox(size: SpacerSize.small),
         LinearProgressIndicator(
           value: controller.strength,

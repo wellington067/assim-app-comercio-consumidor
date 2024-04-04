@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const SignInScreen()),
+              MaterialPageRoute(builder: (context) => SignInScreen()),
               (Route<dynamic> route) => false,
             );
           },
