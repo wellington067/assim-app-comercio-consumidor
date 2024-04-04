@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerceassim/components/forms/address_form_field.dart';
@@ -24,7 +25,7 @@ class AddressScreen extends StatefulWidget {
   State<AddressScreen> createState() => _AddressScreenState();
 }
 
-class _AddressScreenState extends State<AddressScreen> {
+class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
   late SignUpController controller;
   final double formFieldHeight = 48.0;
   final TextEditingController _ruaController = TextEditingController();
@@ -97,42 +98,6 @@ class _AddressScreenState extends State<AddressScreen> {
     }
   }
 
-  bool validateEmptyFields() {
-    bool isValid = true;
-    String errorMessage = '';
-
-    if (_ruaController.text.isEmpty) {
-      errorMessage = 'Preencha o campo Rua.';
-      isValid = false;
-    } else if (RegExp(r'\d').hasMatch(_ruaController.text)) {
-      errorMessage = 'O campo Rua não deve conter números.';
-      isValid = false;
-    } else if (_numeroController.text.isEmpty ||
-        _numeroController.text.length > 4) {
-      errorMessage =
-          'O campo Número deve ser preenchido e ter no máximo 4 caracteres.';
-      isValid = false;
-    } else if (_cepController.text.isEmpty ||
-        _cepController.text.length != _cepMaskFormatter.getMask()?.length) {
-      errorMessage = 'Preencha o campo CEP corretamente.';
-      isValid = false;
-    } else if (_selectedCityId == null) {
-      errorMessage = 'Selecione uma cidade.';
-      isValid = false;
-    } else if (_selectedBairroId == null) {
-      errorMessage = 'Selecione um bairro.';
-      isValid = false;
-    }
-
-    if (!isValid) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
-    }
-
-    return isValid;
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -181,6 +146,24 @@ class _AddressScreenState extends State<AddressScreen> {
                         child: DropdownButtonFormField<int>(
                           isExpanded: true,
                           decoration: InputDecoration(
+                            errorBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: kErrorColor)),
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0)),
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(0, 255, 255, 255)),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Color.fromARGB(0, 0, 0, 0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide.none,
@@ -209,6 +192,8 @@ class _AddressScreenState extends State<AddressScreen> {
                             });
                             _loadBairros(newValue!);
                           },
+                          // validator: (value) => isValidCidade(value),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
@@ -268,6 +253,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         keyboardType: TextInputType.text,
                         label: 'Rua',
                         controller: _ruaController,
+                        validateForm: (value) => isValidRua(value),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Align(
@@ -286,6 +272,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         keyboardType: TextInputType.text,
                         maskFormatter: controller.cepFormatter,
                         controller: _cepController,
+                        validateForm: (value) => isValidCEP(value),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Align(
@@ -303,6 +290,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         keyboardType: TextInputType.number,
                         label: 'Número',
                         controller: _numeroController,
+                        validateForm: (value) => isValidNumero(value),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Align(
@@ -320,6 +308,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         keyboardType: TextInputType.text,
                         label: 'Complemento',
                         controller: _complementoController,
+                        validateForm: (value) => isValidComplemento(value),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                     ],
@@ -335,7 +324,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       child: PrimaryButton(
                         text: 'Salvar',
                         onPressed: () {
-                          if (validateEmptyFields()) {
+                          if (_formKey.currentState!.validate()) {
                             _createAddress();
                           }
                         },
