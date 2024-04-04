@@ -81,10 +81,31 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               ? TextStyle(color: Colors.grey.withOpacity(0.6))
               : null,
           decoration: (widget.decoration ?? const InputDecoration()).copyWith(
+            disabledBorder:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromARGB(0, 0, 0, 0)),
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
             prefixIcon: widget.icon == null ? null : Icon(widget.icon),
-            border: InputBorder.none,
+            errorBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                borderSide: BorderSide(color: kErrorColor )),
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(12.0),
+              
+            ),
+            errorStyle: const TextStyle(
+              color: kErrorColor,
+              backgroundColor: Colors.white,
+            ),
             labelText: widget.label,
             hintText: widget.hintText,
             suffixIcon: widget.isPassword == true &&
