@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
-class AddressFormField extends StatelessWidget {
+class AddressFormField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final TextInputType keyboardType;
   final TextInputFormatter? maskFormatter;
   final bool enabled;
+  final Function? validateForm;
 
   const AddressFormField({
     super.key,
@@ -16,33 +17,53 @@ class AddressFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.maskFormatter,
     this.enabled = true,
+    this.validateForm,
   });
 
   @override
+  State<AddressFormField> createState() => _AddressFormFieldState();
+}
+
+class _AddressFormFieldState extends State<AddressFormField> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: widget.controller,
+      keyboardType: widget.keyboardType,
       style: const TextStyle(
         fontWeight: FontWeight.w400,
       ),
       decoration: InputDecoration(
+        disabledBorder:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          borderSide: BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color.fromARGB(0, 0, 0, 0)),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+        errorBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            borderSide: BorderSide(color: kErrorColor)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        errorStyle: const TextStyle(
+          color: kErrorColor,
+          backgroundColor: Colors.white,
         ),
         filled: true,
         fillColor: kBackgroundColor,
         contentPadding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
       ),
-      inputFormatters: maskFormatter != null ? [maskFormatter!] : [],
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Por favor, insira um valor';
-        }
-        return null;
-      },
-      enabled: enabled,
+      inputFormatters:
+          widget.maskFormatter != null ? [widget.maskFormatter!] : [],
+      validator: (value) => widget.validateForm!(value),
+      enabled: widget.enabled,
     );
   }
 }
