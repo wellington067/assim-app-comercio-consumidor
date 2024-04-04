@@ -2,6 +2,7 @@
 
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
 import '../../../components/forms/custom_text_form_field.dart';
 import '../../../components/utils/vertical_spacer_box.dart';
@@ -9,8 +10,9 @@ import '../../../shared/constants/app_enums.dart';
 import '../../../shared/core/models/bairro_model.dart';
 import '../../../shared/core/controllers/sign_up_controller.dart';
 
-class InfoSecondScreen extends StatelessWidget {
+class InfoSecondScreen extends StatelessWidget with ValidationMixin {
   late SignUpController controller;
+  late ValidationMixin validate;
 
   InfoSecondScreen(this.controller, {super.key});
 
@@ -54,6 +56,8 @@ class InfoSecondScreen extends StatelessWidget {
               // controller.cidadeId = newValue!.id!.toInt();
               controller.setCidade(newValue);
             },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) => isValidCidade(value),
           ),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
@@ -83,12 +87,15 @@ class InfoSecondScreen extends StatelessWidget {
             // controller.bairroId = newValue!.id!.toInt(); // Estava assim antes
             controller.setBairro(newValue);
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) => isValidBairro(value),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
           hintText: 'Rua',
           icon: Icons.location_city_sharp,
           controller: controller.ruaController,
+          validateForm: (value) => isValidRua(value),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
@@ -96,6 +103,7 @@ class InfoSecondScreen extends StatelessWidget {
           icon: Icons.numbers_outlined,
           maskFormatter: controller.cepFormatter,
           controller: controller.cepController,
+          validateForm: (value) => isValidCEP(value),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
@@ -103,6 +111,7 @@ class InfoSecondScreen extends StatelessWidget {
           hintText: 'Número',
           icon: Icons.home_filled,
           controller: controller.numeroController,
+          validateForm: (value) => isValidNumero(value),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
@@ -110,6 +119,7 @@ class InfoSecondScreen extends StatelessWidget {
           hintText: 'Complemento',
           icon: Icons.home_work,
           controller: controller.complementoController,
+          validateForm: (value) => isValidComplemento(value),
         ),
         const VerticalSpacerBox(size: SpacerSize.small),
       ],

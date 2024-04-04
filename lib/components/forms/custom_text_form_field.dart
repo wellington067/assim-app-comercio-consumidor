@@ -3,21 +3,22 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  const CustomTextFormField({
-    super.key,
-    this.onChanged,
-    this.label,
-    this.maskFormatter,
-    this.controller,
-    this.keyboardType,
-    this.hintText,
-    this.isPassword,
-    this.icon,
-    this.isBordered,
-    this.decoration,
-    this.enabled,
-  });
+  const CustomTextFormField(
+      {super.key,
+      this.onChanged,
+      this.label,
+      this.maskFormatter,
+      this.controller,
+      this.keyboardType,
+      this.hintText,
+      this.isPassword,
+      this.icon,
+      this.isBordered,
+      this.decoration,
+      this.enabled,
+      this.validateForm});
 
+  final Function? validateForm;
   final String? label;
   final String? hintText;
   final TextEditingController? controller;
@@ -41,7 +42,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   void initState() {
     super.initState();
     _obscureText = widget.isPassword ?? false;
-
     widget.controller?.addListener(() {
       if (mounted) {
         setState(() {});
@@ -97,6 +97,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   )
                 : null,
           ),
+          validator: (value) => widget.validateForm!(value),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
     );

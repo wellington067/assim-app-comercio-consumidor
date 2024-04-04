@@ -25,19 +25,14 @@ import 'screens/signin/sign_in_screen.dart';
 import 'screens/splash/splash_screen.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowMaterialGrid: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('pt, BR')
-      ],
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+      supportedLocales: const [Locale('en'), Locale('pt, BR')],
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       navigatorKey: navigatorKey,
@@ -53,7 +48,7 @@ class App extends StatelessWidget {
         Screens.splash: (BuildContext context) => const SplashScreen(),
         // Screens.carrousel: (BuildContext context) => const CarrouselScreen(),
         Screens.home: (BuildContext context) => const HomeScreen(),
-        Screens.signin: (BuildContext context) => const SignInScreen(),
+        Screens.signin: (BuildContext context) => SignInScreen(),
         Screens.register: (BuildContext context) => const SignUpScreen(),
         Screens.first: (BuildContext context) => const FirstScreen(),
         Screens.profile: (BuildContext context) => const ProfileScreen(),

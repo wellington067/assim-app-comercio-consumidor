@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,15 @@ import 'components/info_second_screen.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
+// ignore: recursive_getters
+  GlobalKey<FormState> get formkey => formkey;
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,6 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: size.width,
               padding: const EdgeInsets.all(20),
               child: Form(
+                key: formkey,
                 child: Column(
                   children: [
                     const VerticalSpacerBox(size: SpacerSize.large),
@@ -63,10 +69,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         text:
                             controller.infoIndex == 0 ? 'Próximo' : 'Concluir',
                         onPressed: () {
-                          if (controller.infoIndex == 0) {
-                            controller.next();
-                          } else {
-                            controller.signUp(context);
+                          if (formkey.currentState?.validate() == true) {
+                            if (controller.infoIndex == 0) {
+                              controller.next();
+                            } else {
+                              controller.signUp(context, formkey);
+                            }
                           }
                         },
                         color: kDetailColor,

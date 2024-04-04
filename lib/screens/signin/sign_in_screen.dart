@@ -1,4 +1,5 @@
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_text_button.dart';
@@ -10,8 +11,8 @@ import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import '../../shared/constants/app_enums.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class SignInScreen extends StatelessWidget with ValidationMixin {
+  SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ class SignInScreen extends StatelessWidget {
                     hintText: 'E-mail',
                     icon: Icons.email,
                     controller: controller.emailController,
+                    validateForm: (value) => isValidEmail(value),
                   ),
                   const VerticalSpacerBox(size: SpacerSize.small),
                   CustomTextFormField(
@@ -50,6 +52,7 @@ class SignInScreen extends StatelessWidget {
                     isPassword: true,
                     icon: Icons.lock,
                     controller: controller.passwordController,
+                    validateForm: (value) => isValidPassword(value),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
