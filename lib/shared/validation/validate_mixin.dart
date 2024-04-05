@@ -31,11 +31,11 @@ mixin ValidationMixin {
 
   isValidEmail(value) {
     if (value.isEmpty) {
-      return 'Por favor, insira um E-mail.';
+      return 'Insira um E-mail.';
     } else if (!value.contains('@')) {
-      return 'E-mail deve conter o simbolo "@".';
+      return 'O E-mail deve conter o simbolo "@".';
     } else if (!value.contains('.com')) {
-      return 'E-mail deve conter o ".com" no final.';
+      return 'O E-mail deve conter o ".com" no final.';
     }
     return null;
   }
@@ -50,7 +50,7 @@ mixin ValidationMixin {
                                  '86', '87', '88', '89', '91', '92', '93', '94', '95',
                                  '96', '97', '98', '99'];
     if (value.isEmpty) {
-      return 'Por favor, informe um número de telefone.';
+      return 'Informe um número de telefone.';
     } else if (value.length != 15) {
       return 'Número deve conter 10 ou 11 digitos.';
     } else if (!validDDDCodes.contains(value.substring(1, 3))) {
@@ -61,31 +61,35 @@ mixin ValidationMixin {
 
   isValidPassword(value) {
     if (value.isEmpty) {
-      return 'Por favor, informe uma senha.';
+      return 'Informe uma senha.';
     } else if (value.length < 8) {
       return 'A senha deve ter no minimo 8 caracteres.';
     }
     return null;
   }
 
-  isValidCidade(CidadeModel? value){
-    if(value == null){
-      return 'Selecione uma opção.';
-    }
-    return null;
+  isValidCidade(dynamic value) {
+  if (value == null || (value is int && value == 0)) {
+    return 'Selecione uma opção.';
   }
+  return null;
+}
+ 
 
-  isValidBairro(BairroModel? value){
-    if(value == null){
-      return 'Selecione uma opção.';
-    }
-    return null;
+  isValidBairro(dynamic value) {
+  if (value == null || (value is int && value == 0)) {
+    return 'Selecione uma opção.';
   }
-
+  return null;
+}
+ 
+ 
   isValidRua(value) {
     if (value.isEmpty) {
       return 'Informe o nome da rua.';
-    }
+    } else if (RegExp(r'\d').hasMatch(value)) {
+      return 'O nome da rua não pode conter números.';
+  }
     return null;
   }
 
@@ -99,6 +103,10 @@ mixin ValidationMixin {
   isValidNumero(value) {
     if (value.isEmpty) {
       return 'Informe o número.';
+    } else if(value.length > 4) {
+      return 'O número deve ter no maximo 4 caracteres';
+    }else if(RegExp(r'[a-zA-Z]').hasMatch(value)){
+      return 'O número não deve conter letras';
     }
     return null;
   }

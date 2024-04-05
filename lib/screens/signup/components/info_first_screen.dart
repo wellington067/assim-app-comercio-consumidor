@@ -24,6 +24,7 @@ class InfoFirstScreen extends StatelessWidget with ValidationMixin {
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
             hintText: 'CPF',
+            keyboardType: TextInputType.number,
             icon: Icons.description,
             maskFormatter: controller.cpfFormatter,
             controller: controller.cpfController,
@@ -37,6 +38,7 @@ class InfoFirstScreen extends StatelessWidget with ValidationMixin {
         const VerticalSpacerBox(size: SpacerSize.small),
         CustomTextFormField(
             hintText: 'Telefone',
+            keyboardType: TextInputType.number,
             maskFormatter: controller.phoneFormatter,
             icon: Icons.phone,
             controller: controller.foneController,

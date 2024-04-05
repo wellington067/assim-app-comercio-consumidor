@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerceassim/components/forms/address_form_field.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
@@ -138,63 +139,57 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                         ),
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: kBackgroundColor,
-                        ),
-                        child: DropdownButtonFormField<int>(
-                          isExpanded: true,
-                          decoration: InputDecoration(
-                            errorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: kErrorColor)),
-                            disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0)),
-                            focusedBorder: const OutlineInputBorder(
+                      DropdownButtonFormField<int>(
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          errorBorder: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12.0)),
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(0, 255, 255, 255)),
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Color.fromARGB(0, 0, 0, 0)),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: kBackgroundColor,
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: formFieldHeight / 4, horizontal: 16),
+                              borderSide: BorderSide(color: kErrorColor)),
+                          disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(0, 255, 255, 255)),
                           ),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(fontSize: 15),
-                          value: _selectedCityId,
-                          items: _cidades.map((CidadeModel cidade) {
-                            return DropdownMenuItem<int>(
-                              value: cidade.id,
-                              child: Text(cidade.nome ?? ''),
-                            );
-                          }).toList(),
-                          onChanged: (int? newValue) {
-                            setState(() {
-                              _selectedCityId = newValue;
-                              _selectedBairroId = null;
-                              _bairros = [];
-                            });
-                            _loadBairros(newValue!);
-                          },
-                          // validator: (value) => isValidCidade(value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Color.fromARGB(0, 0, 0, 0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: kBackgroundColor,
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: formFieldHeight / 4, horizontal: 16),
                         ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(fontSize: 15),
+                        value: _selectedCityId,
+                        items: _cidades.map((CidadeModel cidade) {
+                          return DropdownMenuItem<int>(
+                            value: cidade.id,
+                            child: Text(cidade.nome ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (int? newValue) {
+                          setState(() {
+                            _selectedCityId = newValue;
+                            _selectedBairroId = null;
+                            _bairros = [];
+                          });
+                          _loadBairros(newValue!);
+                        },
+                        validator: (value) => isValidCidade(value),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Align(
@@ -211,6 +206,24 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                       DropdownButtonFormField<int>(
                         isExpanded: true,
                         decoration: InputDecoration(
+                          errorBorder: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide: BorderSide(color: kErrorColor)),
+                          disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(0, 255, 255, 255)),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Color.fromARGB(0, 0, 0, 0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide.none,
@@ -236,6 +249,8 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                             _selectedBairroId = newValue;
                           });
                         },
+                        validator: (value) => isValidBairro(value),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                       const VerticalSpacerBox(size: SpacerSize.small),
                       const Align(
@@ -269,7 +284,7 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                       ),
                       AddressFormField(
                         label: 'CEP',
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         maskFormatter: controller.cepFormatter,
                         controller: _cepController,
                         validateForm: (value) => isValidCEP(value),
@@ -323,10 +338,9 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                       width: double.infinity,
                       child: PrimaryButton(
                         text: 'Salvar',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _createAddress();
-                          }
+                        onPressed: () => {
+                          if (_formKey.currentState!.validate() == true)
+                            {_createAddress()}
                         },
                         color: kDetailColor,
                       ),
