@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
@@ -23,7 +24,8 @@ class AdressEditScreen extends StatefulWidget {
   State<AdressEditScreen> createState() => _AdressEditScreenState();
 }
 
-class _AdressEditScreenState extends State<AdressEditScreen> {
+class _AdressEditScreenState extends State<AdressEditScreen>
+    with ValidationMixin {
   int? _selectedCityId;
   int? _selectedBairroId;
   List<CidadeModel> _cidades = [];
@@ -127,41 +129,6 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
     });
   }
 
-  bool validateEmptyFields() {
-    bool isValid = true;
-    String errorMessage = '';
-
-    if (_ruaController.text.isEmpty) {
-      errorMessage = 'Preencha o campo Rua.';
-      isValid = false;
-    } else if (RegExp(r'\d').hasMatch(_ruaController.text)) {
-      errorMessage = 'O campo Rua não deve conter números.';
-      isValid = false;
-    } else if (_numeroController.text.isEmpty ||
-        _numeroController.text.length > 4) {
-      errorMessage =
-          'O campo Número deve ser preenchido e ter no máximo 4 caracteres.';
-      isValid = false;
-    } else if (_cepController.text.isEmpty ||
-        _cepController.text.length != _cepMaskFormatter.getMask()?.length) {
-      errorMessage = 'Preencha o campo CEP corretamente.';
-      isValid = false;
-    } else if (_selectedCityId == null) {
-      errorMessage = 'Selecione uma cidade.';
-      isValid = false;
-    } else if (_selectedBairroId == null) {
-      errorMessage = 'Selecione um bairro.';
-      isValid = false;
-    }
-
-    if (!isValid) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
-    }
-
-    return isValid;
-  }
 
   void setErrorMessage(String value) {
     setState(() {
@@ -247,6 +214,9 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                               contentPadding:
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
+                            validator: (value) => isValidCidade(value),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                         ],
                       ),
@@ -292,6 +262,8 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                               contentPadding:
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
+                             validator: (value) => isValidBairro(value),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                           ),
                         ],
                       ),
@@ -311,6 +283,8 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                             label: 'Rua',
                             enabled: _isEditing,
                             keyboardType: TextInputType.text,
+                             validateForm: (value) => isValidRua(value),
+                        
                           ),
                         ],
                       ),
@@ -330,6 +304,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                             label: 'Número',
                             enabled: _isEditing,
                             keyboardType: TextInputType.number,
+                            validateForm: (value) => isValidNumero(value),
                           ),
                         ],
                       ),
@@ -359,6 +334,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                               contentPadding:
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
+                            
                           ),
                         ],
                       ),
@@ -378,6 +354,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                             label: 'Complemento',
                             enabled: _isEditing,
                             keyboardType: TextInputType.text,
+                            validateForm: (value) => isValidComplemento(value),
                           ),
                         ],
                       ),
@@ -386,7 +363,7 @@ class _AdressEditScreenState extends State<AdressEditScreen> {
                         text: _isEditing ? 'Salvar' : 'Editar',
                         onPressed: _isEditing
                             ? () {
-                                if (validateEmptyFields()) {
+                                if (_formKey.currentState!.validate() == true) {
                                   _updateEndereco();
                                 }
                               }

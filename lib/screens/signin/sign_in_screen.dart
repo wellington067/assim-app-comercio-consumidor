@@ -13,7 +13,7 @@ import '../../shared/constants/app_enums.dart';
 
 class SignInScreen extends StatelessWidget with ValidationMixin {
   SignInScreen({super.key});
-
+ final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -30,125 +30,132 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(kDefaultPadding),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Entrar',
-                    style: kTitle.copyWith(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  const VerticalSpacerBox(size: SpacerSize.huge),
-                  CustomTextFormField(
-                    hintText: 'E-mail',
-                    icon: Icons.email,
-                    controller: controller.emailController,
-                    validateForm: (value) => isValidEmail(value),
-                  ),
-                  const VerticalSpacerBox(size: SpacerSize.small),
-                  CustomTextFormField(
-                    hintText: 'Senha',
-                    isPassword: true,
-                    icon: Icons.lock,
-                    controller: controller.passwordController,
-                    validateForm: (value) => isValidPassword(value),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: CustomTextButton(
-                      title: 'Esqueceu a senha?',
-                      onPressed: () {},
+              child: Form(
+                key: formkey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Entrar',
+                      style: kTitle.copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  const VerticalSpacerBox(size: SpacerSize.medium),
-                  if (controller.status == SignInStatus.loading)
-                    const Center(
-                      child: CircularProgressIndicator(color: kDetailColor),
-                    )
-                  else
-                    ElevatedButton(
-                      onPressed: () => controller.signIn(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kDetailColor,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        textStyle: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                      child: const Text(
-                        'Entrar',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                    const VerticalSpacerBox(size: SpacerSize.huge),
+                    CustomTextFormField(
+                      hintText: 'E-mail',
+                      icon: Icons.email,
+                      controller: controller.emailController,
+                      validateForm: (value) => isValidEmail(value),
+                    ),
+                    const VerticalSpacerBox(size: SpacerSize.small),
+                    CustomTextFormField(
+                      hintText: 'Senha',
+                      isPassword: true,
+                      icon: Icons.lock,
+                      controller: controller.passwordController,
+                      validateForm: (value) => isValidPassword(value),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: CustomTextButton(
+                        title: 'Esqueceu a senha?',
+                        onPressed: () {},
                       ),
                     ),
-                  const VerticalSpacerBox(size: SpacerSize.medium),
-                  const Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Divider(
-                          color: Colors.grey,
-                          thickness: 1,
+                    const VerticalSpacerBox(size: SpacerSize.medium),
+                    if (controller.status == SignInStatus.loading)
+                      const Center(
+                        child: CircularProgressIndicator(color: kDetailColor),
+                      )
+                    else
+                      ElevatedButton(
+                        onPressed: () {
+                          if(formkey.currentState!.validate() == true) {
+                            controller.signIn(context);
+                          }
+                        } ,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kDetailColor,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          textStyle: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'ou',
+                        child: const Text(
+                          'Entrar',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Divider(
-                          color: Colors.grey,
-                          thickness: 1,
+                    const VerticalSpacerBox(size: SpacerSize.medium),
+                    const Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const VerticalSpacerBox(size: SpacerSize.medium),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(FontAwesomeIcons.google,
-                            color: kErrorColor),
-                        iconSize: 38,
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(FontAwesomeIcons.facebook,
-                            color: kTextSign),
-                        iconSize: 38,
-                      ),
-                    ],
-                  ),
-                  const VerticalSpacerBox(size: SpacerSize.medium),
-                  if (controller.errorMessage != null)
-                    Text(
-                      controller.errorMessage!,
-                      style: kCaption1,
-                      textAlign: TextAlign.center,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'ou',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
+                        ),
+                      ],
                     ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Não possui conta?'),
-                      CustomTextButton(
-                        title: 'Crie aqui',
-                        onPressed: () =>
-                            Navigator.pushNamed(context, Screens.register),
+                    const VerticalSpacerBox(size: SpacerSize.medium),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(FontAwesomeIcons.google,
+                              color: kErrorColor),
+                          iconSize: 38,
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(FontAwesomeIcons.facebook,
+                              color: kTextSign),
+                          iconSize: 38,
+                        ),
+                      ],
+                    ),
+                    const VerticalSpacerBox(size: SpacerSize.medium),
+                    if (controller.errorMessage != null)
+                      Text(
+                        controller.errorMessage!,
+                        style: kCaption1,
+                        textAlign: TextAlign.center,
                       ),
-                    ],
-                  ),
-                  const VerticalSpacerBox(size: SpacerSize.small),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Não possui conta?'),
+                        CustomTextButton(
+                          title: 'Crie aqui',
+                          onPressed: () =>
+                              Navigator.pushNamed(context, Screens.register),
+                        ),
+                      ],
+                    ),
+                    const VerticalSpacerBox(size: SpacerSize.small),
+                  ],
+                ),
               ),
             ),
           ),

@@ -120,6 +120,7 @@ class InfoSecondScreen extends StatelessWidget with ValidationMixin {
           hintText: 'CEP',
           icon: Icons.numbers_outlined,
           maskFormatter: controller.cepFormatter,
+          keyboardType: TextInputType.number,
           controller: controller.cepController,
           validateForm: (value) => isValidCEP(value),
         ),

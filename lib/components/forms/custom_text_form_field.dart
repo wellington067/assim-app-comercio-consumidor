@@ -16,7 +16,7 @@ class CustomTextFormField extends StatefulWidget {
       this.isBordered,
       this.decoration,
       this.enabled,
-      this.validateForm});
+      this.validateForm, this.maxLength});
 
   final Function? validateForm;
   final String? label;
@@ -26,6 +26,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool? isPassword;
   final Function(String)? onChanged;
   final IconData? icon;
+  final int? maxLength;
   final MaskTextInputFormatter? maskFormatter;
   final bool? isBordered;
   final bool? enabled;
@@ -60,6 +61,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return SizedBox(
       child: TextFormField(
         onChanged: widget.onChanged,
+        keyboardType: widget.keyboardType,
+        maxLength: widget.maxLength,
         inputFormatters:
             widget.maskFormatter == null ? null : [widget.maskFormatter!],
         obscureText: _obscureText,
@@ -72,7 +75,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           filled: true,
           fillColor: Colors.grey[300],
           disabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(12.0),
+              borderSide: const BorderSide(color: Color.fromARGB(0, 0, 0, 0))),
           focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
             borderSide: BorderSide(color: Color.fromARGB(0, 255, 255, 255)),

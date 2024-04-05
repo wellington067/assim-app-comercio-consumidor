@@ -1,4 +1,5 @@
 import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
@@ -18,7 +19,8 @@ class ProfileEditScreen extends StatefulWidget {
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
 }
 
-class _ProfileEditScreenState extends State<ProfileEditScreen> {
+class _ProfileEditScreenState extends State<ProfileEditScreen>
+    with ValidationMixin {
   final UserStorage userStorage = UserStorage();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -138,8 +140,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text('Nome',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Nome',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
                       controller: nameController,
@@ -147,10 +151,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         border: OutlineInputBorder(),
                       ),
                       enabled: isEditing,
+                      validateForm: (value) => isValidName(value),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Telefone',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Telefone',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
                       controller: phoneController,
@@ -160,6 +167,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       keyboardType: TextInputType.phone,
                       maskFormatter: phoneFormatter,
                       enabled: isEditing,
+                      validateForm: (value) => isValidPhone(value),
                     ),
                   ],
                 ),
