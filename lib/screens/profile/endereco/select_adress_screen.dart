@@ -300,12 +300,15 @@ class _SelectAddressState extends State<SelectAddress> {
                             ),
                           ],
                         ));
-                  }).toList(),
-                  PrimaryButton(
-                    text: "Adicionar novo endereço",
-                    onPressed: () =>
-                        Navigator.pushNamed(context, Screens.adress),
-                    color: kDetailColor,
+                  }),
+                  SizedBox(
+                    width: 350, // Largura do card
+                    child: PrimaryButton(
+                      text: "Adicionar novo endereço",
+                      onPressed: () =>
+                          Navigator.pushNamed(context, Screens.adress),
+                      color: kDetailColor,
+                    ),
                   ),
                 ],
               ),
