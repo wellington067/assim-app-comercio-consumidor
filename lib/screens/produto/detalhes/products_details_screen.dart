@@ -2,36 +2,21 @@
 
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/core/controllers/products_details_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../shared/constants/style_constants.dart';
 
 class ProdutoDetalheScreen extends StatefulWidget {
-  const ProdutoDetalheScreen({super.key});
+  final controller = ProductsDetailsController();
+  ProdutoDetalheScreen({super.key});
 
   @override
   _ProdutoDetalheScreenState createState() => _ProdutoDetalheScreenState();
 }
 
 class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
-  int quantity = 1;
-
-  void incrementQuantity(int maxQuantity) {
-    if (quantity < maxQuantity) {
-      setState(() {
-        quantity++;
-      });
-    }
-  }
-
-  void decrementQuantity() {
-    if (quantity > 1) {
-      setState(() {
-        quantity--;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -43,7 +28,8 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
     final String produtoDescricao = arguments?['descricao'];
     final String produtoTipo = arguments?['tipoUnidade'];
     final String produtoPreco = arguments?['preco'];
-
+    final productsDetailsController =
+        Provider.of<ProductsDetailsController>(context);
     int selectedIndex = 1;
 
     return Scaffold(
@@ -114,18 +100,22 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           _buildQuantityButton(
-                              Icons.remove, () => decrementQuantity()),
+                              Icons.remove,
+                              () => productsDetailsController
+                                  .decrementQuantity()),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 25.0),
                             child: Text(
-                              '$quantity',
+                              '${productsDetailsController.quantity}',
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          _buildQuantityButton(Icons.add,
-                              () => incrementQuantity(produtoEstoque)),
+                          _buildQuantityButton(
+                              Icons.add,
+                              () => productsDetailsController
+                                  .incrementQuantity(produtoEstoque)),
                         ],
                       ),
                     ],

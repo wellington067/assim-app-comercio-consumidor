@@ -5,6 +5,7 @@ import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.da
 import 'package:ecommerceassim/shared/core/controllers/bairro_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/products_details_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:ecommerceassim/shared/core/selected_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => HomeScreenController()),
         ChangeNotifierProvider(create: (_) => SelectedItem()),
+        ChangeNotifierProvider(create: (_) => ProductsDetailsController()),
         ChangeNotifierProvider(create: (_) => BancaController()),
         ChangeNotifierProvider(create: (_) => BairroController()),
         ChangeNotifierProvider(create: (_) => SignInController()),

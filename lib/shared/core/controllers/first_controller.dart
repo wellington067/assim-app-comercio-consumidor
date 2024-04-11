@@ -30,6 +30,12 @@ class FirstController extends GetxController {
     update();
   }
 
+  String firstThreeWords(String? fullName) {
+    if (fullName == null || fullName.isEmpty) return '';
+    List<String> words = fullName.split(' ');
+    return words.take(3).join(' ');
+  }
+
   @override
   void onInit() {
     super.onInit();

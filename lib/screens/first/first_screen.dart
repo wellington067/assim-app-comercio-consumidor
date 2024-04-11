@@ -21,12 +21,6 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    String firstThreeWords(String? fullName) {
-      if (fullName == null || fullName.isEmpty) return '';
-      List<String> words = fullName.split(' ');
-      return words.take(3).join(' ');
-    }
-
     return GetBuilder<FirstController>(
       init: FirstController(),
       builder: (controller) => Scaffold(
@@ -56,7 +50,7 @@ class FirstScreen extends StatelessWidget {
               ),
               const Spacer(),
               PrimaryButton(
-                text: "Continuar como ${firstThreeWords(controller.userName)}",
+                text: "Continuar como ${controller.firstThreeWords(controller.userName)}",
                 onPressed: () {
                   Navigator.pushNamed(context, Screens.home);
                 },
@@ -64,7 +58,7 @@ class FirstScreen extends StatelessWidget {
               ),
               const VerticalSpacerBox(size: SpacerSize.large),
               PrimaryButton(
-                text: 'Não sou ${firstThreeWords(controller.userName)}',
+                text: 'Não sou ${controller.firstThreeWords(controller.userName)}',
                 onPressed: () {
                   Navigator.pushNamed(context, Screens.signin);
                 },
