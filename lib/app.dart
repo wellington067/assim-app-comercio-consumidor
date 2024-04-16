@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:ecommerceassim/screens/banca/banca_screen.dart';
+import 'package:ecommerceassim/screens/cidade/cidade_screen.dart';
 import 'package:ecommerceassim/screens/feiras/feiras_screen.dart';
 import 'package:ecommerceassim/screens/first/first_screen.dart';
 import 'package:ecommerceassim/screens/cesta/cart.screen.dart';
@@ -47,6 +48,7 @@ class App extends StatelessWidget {
       routes: {
         Screens.splash: (BuildContext context) => const SplashScreen(),
         // Screens.carrousel: (BuildContext context) => const CarrouselScreen(),
+        Screens.cidades: (BuildContext context) => const CidadeScreen(),
         Screens.home: (BuildContext context) => const HomeScreen(),
         Screens.signin: (BuildContext context) => SignInScreen(),
         Screens.register: (BuildContext context) => const SignUpScreen(),

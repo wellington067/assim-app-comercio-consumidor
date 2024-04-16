@@ -1,39 +1,32 @@
-import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
+import 'package:ecommerceassim/shared/core/controllers/cidade_controllers.dart';
+import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart';
-import 'package:ecommerceassim/shared/core/models/feira_model.dart';
 
-class FeirasScreen extends StatelessWidget {
-  const FeirasScreen({super.key});
+class CidadeScreen extends StatelessWidget {
+  const CidadeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic> ??
-            {};
-    final String cidadeNome = arguments['nome'] as String? ?? 'Cidade';
+    final cidadeController = Provider.of<CidadeController>(context);
 
-    final feiraController = Provider.of<FeiraController>(context);
-
-    if (feiraController.feiras.isEmpty) {
-      feiraController.loadFeiras();
+    if (cidadeController.cidades.isEmpty) {
+      cidadeController.loadCidades();
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text(
-              'Feiras em $cidadeNome',
-              style: const TextStyle(
+              'Cidades',
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -42,24 +35,24 @@ class FeirasScreen extends StatelessWidget {
           const CustomSearchField(
             fillColor: kOnBackgroundColorText,
             iconColor: kDetailColor,
-            hintText: 'Buscar por feiras',
+            hintText: 'Buscar por Cidades',
             padding: EdgeInsets.all(5),
           ),
           Expanded(
-            child: Consumer<FeiraController>(
-              builder: (context, feiraController, child) {
-                List<FeiraModel> feiras = feiraController.feiras;
+            child: Consumer<CidadeController>(
+              builder: (context, cidadeController, child) {
+                List<CidadeModel> cidades = cidadeController.cidades;
 
-                if (feiras.isEmpty) {
+                if (cidades.isEmpty) {
                   return const Center(
                     child: CircularProgressIndicator(color: kDetailColor),
                   );
                 }
 
                 return ListView.builder(
-                  itemCount: feiras.length,
+                  itemCount: cidades.length,
                   itemBuilder: (context, index) {
-                    FeiraModel feira = feiras[index];
+                    CidadeModel cidade = cidades[index];
 
                     return Container(
                       margin: const EdgeInsets.all(7.0),
@@ -80,12 +73,10 @@ class FeirasScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, Screens.bancas,
+                            Navigator.pushNamed(context, Screens.feiras,
                                 arguments: {
-                                  'id': feira.id,
-                                  'nome': feira.nome,
-                                  'bairro': feira.bairroId,
-                                  'horarios': feira.horariosFuncionamento,
+                                  'id': cidade.id,
+                                  'nome': cidade.nome,
                                 });
                           },
                           borderRadius: BorderRadius.circular(15.0),
@@ -102,7 +93,7 @@ class FeirasScreen extends StatelessWidget {
                                 const SizedBox(width: 16.0),
                                 Expanded(
                                   child: Text(
-                                    feira.nome,
+                                    cidade.nome!,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

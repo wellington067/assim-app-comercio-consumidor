@@ -6,7 +6,7 @@ class BancaModel {
   String horarioFechamento;
   int feiraId;
   int agricultorId;
-  int precoMinimo;
+  double precoMinimo;
   bool entrega;
 
   BancaModel({
@@ -30,7 +30,7 @@ class BancaModel {
       horarioFechamento: json['horario_fechamento'],
       feiraId: json['feira_id'],
       agricultorId: json['agricultor_id'],
-      precoMinimo: int.parse(json['preco_minimo']),
+      precoMinimo: double.parse(json['preco_minimo']),
       entrega: json['entrega'] ?? false,
     );
   }

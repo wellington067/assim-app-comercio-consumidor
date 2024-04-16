@@ -1,4 +1,5 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/screens/cidade/cidade_screen.dart';
 import 'package:ecommerceassim/screens/feiras/feiras_screen.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: kOnSurfaceColor,
                 width: size.width,
                 padding: const EdgeInsets.all(20),
-                child: const FeirasScreen(),
+                child: const CidadeScreen(),
               ),
             )),
       ),
