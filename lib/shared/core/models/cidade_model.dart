@@ -13,6 +13,7 @@ class CidadeModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['nome'] = nome;
+
     return data;
   }
 }

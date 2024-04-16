@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:ecommerceassim/app.dart';
 import 'package:ecommerceassim/assets/index.dart';
+import 'package:ecommerceassim/shared/core/controllers/cidade_controllers.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/bairro_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => BairroController()),
         ChangeNotifierProvider(create: (_) => SignInController()),
         ChangeNotifierProvider(create: (_) => ProfileController()),
+        ChangeNotifierProvider(create: (_) => CidadeController()),
         ChangeNotifierProxyProvider2<BairroController, BancaController,
             FeiraController>(
           create: (context) =>
