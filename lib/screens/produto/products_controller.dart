@@ -1,17 +1,20 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:ecommerceassim/screens/cesta/card_cart.dart';
+import 'package:ecommerceassim/shared/core/models/table_products_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/banca_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../shared/core/models/banca_model.dart';
 import '../../shared/core/models/cart_model.dart';
 import '../../shared/core/models/produto_model.dart';
 import '../../shared/core/repositories/produto_repository.dart';
-import '../../shared/core/user_storage.dart';
+
 
 class ProductsController extends GetxController {
   List<CartModel> listCart = [];
+  List<TableProductsModel> listTableProducts = [];
   ProdutoModel? produto;
   List<ProdutoModel?> cartProduct = [];
 
@@ -26,5 +29,20 @@ class ProductsController extends GetxController {
     CartModel cart = CartModel(
         produto.id, bancaId, produto.descricao, produto.preco, amount);
     return cart;
+  }
+
+  Future<List<TableProductsModel>> loadList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> listaString =
+        prefs.getStringList('listaProdutosTabelados') ?? [];
+    return listaString
+        .map((string) => TableProductsModel.fromJson(json.decode(string)))
+        .toList();
+  }
+
+  @override
+  void onInit() async{
+    listTableProducts = await loadList();
+    super.onInit();
   }
 }
