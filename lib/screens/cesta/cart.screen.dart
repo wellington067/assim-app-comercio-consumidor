@@ -59,7 +59,7 @@ class _CartScreenState extends State<CartScreen> {
                     Text(
                         NumberFormat.simpleCurrency(
                     locale: 'pt-BR', decimalDigits: 2)
-                        .format(controller.total),
+                        .format(cartListProvider.total),
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold),
                     ),
@@ -67,7 +67,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 const VerticalSpacerBox(size: SpacerSize.medium),
                 PrimaryButton(
-                  text: 'Fechar Pedido (${controller.counter} itens)',
+                  text: 'Fechar Pedido (${cartListProvider.itens} itens)',
                   onPressed: () {
                     Navigator.pushNamed(context, Screens.finalizePurchase);
                   },
@@ -88,185 +88,6 @@ class _CartScreenState extends State<CartScreen> {
               ],
             ),
           ),
-          // const VerticalSpacerBox(size: SpacerSize.small),
-          // InkWell(
-          //   child: Container(
-          //     width: 440,
-          //     height: 260,
-          //     decoration: BoxDecoration(
-          //       color: kOnSurfaceColor,
-          //       borderRadius:
-          //           const BorderRadius.all(Radius.circular(15)),
-          //       boxShadow: [
-          //         BoxShadow(
-          //           color: kTextButtonColor.withOpacity(0.5),
-          //           spreadRadius: 0,
-          //           blurRadius: 3,
-          //           offset: const Offset(0, 0),
-          //         ),
-          //       ],
-          //     ),
-          //     child: Center(
-          //       child: Wrap(
-          //         children: [
-          //           Row(
-          //             children: [
-          //               const HorizontalSpacerBox(
-          //                   size: SpacerSize.large),
-          //               Container(
-          //                 width: 75.0,
-          //                 height: 150.0,
-          //                 decoration: const BoxDecoration(
-          //                   image: DecorationImage(
-          //                     fit: BoxFit.contain,
-          //                     image: AssetImage(Assets.limao),
-          //                   ),
-          //                 ),
-          //               ),
-          //               const Column(
-          //                 mainAxisAlignment:
-          //                     MainAxisAlignment.center,
-          //                 crossAxisAlignment:
-          //                     CrossAxisAlignment.start,
-          //                 children: [
-          //                   VerticalSpacerBox(
-          //                       size: SpacerSize.large),
-          //                   Row(
-          //                     children: [
-          //                       Text(
-          //                         'Limão',
-          //                         style: TextStyle(
-          //                             fontSize: 20,
-          //                             fontWeight: FontWeight.bold),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                   VerticalSpacerBox(
-          //                       size: SpacerSize.medium),
-          //                   Row(
-          //                     children: [
-          //                       Text(
-          //                         'RS 3,50',
-          //                         style: TextStyle(
-          //                             fontSize: 25,
-          //                             fontWeight: FontWeight.bold),
-          //                         textAlign: TextAlign.end,
-          //                       ),
-          //                       HorizontalSpacerBox(
-          //                           size: SpacerSize.tiny),
-          //                       Text(
-          //                         'Kg',
-          //                         style: TextStyle(fontSize: 15),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                   VerticalSpacerBox(
-          //                       size: SpacerSize.small),
-          //                   Row(
-          //                     children: [
-          //                       Text(
-          //                         'Vendido por ',
-          //                         style: TextStyle(
-          //                           fontSize: 16,
-          //                         ),
-          //                       ),
-          //                       Text(
-          //                         'João Frutas',
-          //                         style: TextStyle(
-          //                             fontSize: 16, color: kButtom),
-          //                       ),
-          //                       IconButton(
-          //                         onPressed: null,
-          //                         icon: Icon(
-          //                           Icons.phone,
-          //                           color: Colors.green,
-          //                           size: 30,
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ],
-          //               ),
-          //             ],
-          //           ),
-          //           const HorizontalSpacerBox(
-          //               size: SpacerSize.huge),
-          //           const Text(
-          //             'Quantidade:',
-          //             style: TextStyle(
-          //                 fontSize: 15,
-          //                 fontWeight: FontWeight.bold),
-          //             textAlign: TextAlign.end,
-          //           ),
-          //           Row(
-          //             children: [
-          //               const HorizontalSpacerBox(
-          //                   size: SpacerSize.small),
-          //               IconButton(
-          //                 icon: const Icon(Icons.remove),
-          //                 onPressed: () {
-          //                   if (controller.limao > 0 &&
-          //                       controller.counter > 0) {
-          //                     setState(() {
-          //                       controller.limao--;
-          //                       controller.decrementCounter();
-          //                       controller.total -= 3.50;
-          //                     });
-          //                   }
-          //                 },
-          //               ),
-          //               const HorizontalSpacerBox(
-          //                   size: SpacerSize.small),
-          //               Text(
-          //                 controller.limao.toString(),
-          //                 style: const TextStyle(fontSize: 15),
-          //                 textAlign: TextAlign.end,
-          //               ),
-          //               const HorizontalSpacerBox(
-          //                   size: SpacerSize.small),
-          //               IconButton(
-          //                 icon: const Icon(Icons.add),
-          //                 onPressed: () {
-          //                   setState(() {
-          //                     controller.limao++;
-          //                     controller.incrementCounter();
-          //                     controller.total += 3.50;
-          //                   });
-          //                 },
-          //               ),
-          //               const HorizontalSpacerBox(
-          //                   size: SpacerSize.large),
-          //               ElevatedButton(
-          //                 onPressed: () {
-          //                   setState(() {
-          //                     controller.limao--;
-          //                     controller.decrementCounter();
-          //                     controller.total -= 3.50;
-          //                   });
-          //                 },
-          //                 style: ButtonStyle(
-          //                   backgroundColor:
-          //                       MaterialStateProperty.all(
-          //                           kErrorColor),
-          //                 ),
-          //                 child: const Text(
-          //                   'Excluir',
-          //                   style: TextStyle(
-          //                     color: kOnSurfaceColor,
-          //                     fontSize: 15,
-          //                     // color: kTextButtonColor
-          //                   ),
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //           const VerticalSpacerBox(size: SpacerSize.tiny),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          //   onTap: () async {},
-          // ),
         ),
       ),
     );

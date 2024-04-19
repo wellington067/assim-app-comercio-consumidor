@@ -131,7 +131,8 @@ class _CardCartState extends State<CardCart> {
                         setState(() {
                           widget.model.amount--;
                           widget.controller?.decrementCounter();
-                          widget.controller?.total -= doublePrice!;
+                          cartListProvider.itens--;
+                          cartListProvider.total -= doublePrice!;
                         });
                       }
                     },
@@ -149,7 +150,8 @@ class _CardCartState extends State<CardCart> {
                       setState(() {
                         widget.model.amount++;
                         widget.controller?.incrementCounter();
-                        widget.controller?.total += doublePrice!;
+                        cartListProvider.itens++;
+                        cartListProvider.total += doublePrice!;
                       });
                     },
                   ),
