@@ -33,8 +33,8 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int bancaId = arguments['id'];
-/*     final String bancaNome = arguments['nome'];
- */
+    final String bancaNome = arguments['nome'];
+
     int selectedIndex = 1;
 
     return GetBuilder<ProductsController>(
@@ -48,13 +48,13 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Column(
               children: [
-                const Align(
+                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 24.0),
+                    padding: const EdgeInsets.only(left: 24.0),
                     child: Text(
-                      'Loja Sem Produtos',
-                      style: TextStyle(
+                      bancaNome,
+                      style: const TextStyle(
                         fontSize: 25,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

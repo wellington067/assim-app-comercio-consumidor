@@ -1,5 +1,6 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
@@ -25,6 +26,8 @@ class FeirasScreen extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomNavigation(selectedIndex: 0),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

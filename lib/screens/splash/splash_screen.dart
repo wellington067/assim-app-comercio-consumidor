@@ -56,8 +56,8 @@ class _SplashScreenState extends State<SplashScreen>
           Container(
             padding: const EdgeInsets.all(kDefaultPadding),
             margin: const EdgeInsets.only(bottom: 245),
-            decoration: BoxDecoration(
-                color: kDetailColor, borderRadius: BorderRadius.circular(40)),
+            decoration: const BoxDecoration(
+                color: kDetailColor, borderRadius: BorderRadius.only(bottomRight: Radius.circular(40), bottomLeft: Radius.circular(40))),
             width: size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
