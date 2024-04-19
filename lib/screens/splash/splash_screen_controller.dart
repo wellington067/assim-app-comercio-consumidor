@@ -22,6 +22,7 @@ class SplashScreenController {
 
   void initApplication(Function onComplete) async {
     await Future.delayed(const Duration(seconds: 3), () {
+      getTableProducts();
       onComplete.call();
     });
     await configDefaultAppSettings();
