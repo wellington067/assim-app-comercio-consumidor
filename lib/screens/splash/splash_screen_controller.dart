@@ -21,7 +21,8 @@ class SplashScreenController {
   final userStorage = UserStorage();
 
   void initApplication(Function onComplete) async {
-    await Future.delayed(const Duration(seconds: 3), () {
+    await Future.delayed(const Duration(seconds: 3), () async {
+      getTableProducts();
       onComplete.call();
     });
     await configDefaultAppSettings();
@@ -34,12 +35,10 @@ class SplashScreenController {
       DeviceOrientation.portraitDown,
     ]);
     if (await userStorage.userHasCredentials()) {
-      navigatorKey.currentState!
-          .popAndPushNamed(Screens.first);
+      navigatorKey.currentState!.popAndPushNamed(Screens.first);
     } else {
       // ignore: use_build_context_synchronously
-      navigatorKey.currentState!
-          .popAndPushNamed(Screens.signin);
+      navigatorKey.currentState!.popAndPushNamed(Screens.signin);
     }
   }
 
@@ -58,34 +57,30 @@ class SplashScreenController {
     }
   }
 
-   void getTableProducts() async {
+  void getTableProducts() async {
     Dio dio = Dio();
     UserStorage userStorage = UserStorage();
     List<TableProductsModel> products = [];
 
     var userToken = await userStorage.getUserToken();
 
-    var response =
-        await dio.get('$kBaseURL/produtos/tabelados',
-            options: Options(
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": "Bearer $userToken"
-              },
-            ));
+    var response = await dio.get('$kBaseURL/produtos/tabelados',
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $userToken"
+          },
+        ));
 
     List<dynamic> responseData = response.data['produtos'];
     for (int i = 0; i < responseData.length; i++) {
       var product = TableProductsModel.fromJson(responseData[i]);
       products.add(product);
     }
-    print(products);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> listProducts = products
-        .map((product) => json.encode(product.toJson())).toList();
-    prefs.setStringList(
-        'listaProdutosTabelados', listProducts);
+    List<String> listProducts =
+        products.map((product) => json.encode(product.toJson())).toList();
+    prefs.setStringList('listaProdutosTabelados', listProducts);
   }
 }
-
