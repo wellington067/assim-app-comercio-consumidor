@@ -4,6 +4,7 @@ import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/screens/produto/products_controller.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
+import 'package:ecommerceassim/screens/produto/components/build_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/produto_repository.dart';
@@ -161,93 +162,6 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                 const VerticalSpacerBox(size: SpacerSize.small),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  String capitalize(String text) {
-    if (text.isEmpty) return text;
-    return text[0].toUpperCase() + text.substring(1);
-  }
-
-  Widget _buildProductCard(BuildContext context, ProdutoModel produto,
-      ProductsController controller, CartProvider cartProvider) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          Screens.produtoDetalhe,
-          arguments: {
-            'id': produto.id,
-            'titulo': produto.titulo,
-            'descricao': produto.descricao,
-            'tipoUnidade': produto.tipoUnidade,
-            'preco': produto.preco,
-            'estoque': produto.estoque,
-          },
-        );
-        print('Produto ${produto.titulo} foi tocado!');
-      },
-      child: Material(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Center(
-                  child: Image.asset(
-                    'lib/assets/images/maça.png', // foto fixa para correção
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              Text(
-                produto.titulo,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF858080),
-                ),
-              ),
-              Text(
-                'R\$ ${double.parse(produto.preco).toStringAsFixed(2).replaceAll('.', ',')}',
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    capitalize(produto.tipoUnidade),
-                    style: const TextStyle(fontSize: 18, color: kDetailColor),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      //bool click = true;
-                      CartModel card = controller.createCart(context, 0, produto);
-                      cartProvider.addCart(card);
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_outline,
-                      color: kDetailColor,
-                      size: 40,
-                    ),
-                  ),
-                ],
-              ),
-            ],
           ),
         ),
       ),
