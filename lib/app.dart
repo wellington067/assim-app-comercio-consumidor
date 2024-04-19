@@ -7,6 +7,7 @@ import 'package:ecommerceassim/screens/cesta/cart.screen.dart';
 import 'package:ecommerceassim/screens/favorito/favorite_screen.dart';
 import 'package:ecommerceassim/screens/favorito/favorite_seller_screen.dart';
 import 'package:ecommerceassim/screens/produto/detalhes/products_details_screen.dart';
+import 'package:ecommerceassim/screens/produto/products_controller.dart';
 import 'package:ecommerceassim/screens/produto/products_screen.dart';
 import 'package:ecommerceassim/screens/pedidos/finalizar/finalize_purchase_screen.dart';
 import 'package:ecommerceassim/screens/home/home_screen.dart';
@@ -24,6 +25,7 @@ import 'package:ecommerceassim/screens/screens_index.dart';
 import 'screens/pedidos/purchases_screen.dart';
 import 'screens/signin/sign_in_screen.dart';
 import 'screens/splash/splash_screen.dart';
+
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -60,9 +62,8 @@ class App extends StatelessWidget {
         Screens.addressEdit: (BuildContext context) => const AdressEditScreen(),
         Screens.selectAdress: (BuildContext context) => const SelectAddress(),
         Screens.menuSeller: (BuildContext context) => const MenuSellerScreen(),
-        Screens.menuProducts: (BuildContext context) =>
-            const MenuProductsScreen(),
-        Screens.cart: (BuildContext context) => const CartScreen(),
+         Screens.menuProducts: (BuildContext context) => MenuProductsScreen(),
+        Screens.cart: (BuildContext context) => CartScreen(),
         Screens.feiras: (BuildContext context) => const FeirasScreen(),
         Screens.bancas: (BuildContext context) => const Bancas(),
         Screens.produtoDetalhe: (BuildContext context) =>

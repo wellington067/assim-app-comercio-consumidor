@@ -1,5 +1,6 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
@@ -25,11 +26,13 @@ class FeirasScreen extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomNavigation(selectedIndex: 0),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(25.0, 16.0, 16.0,10.0),
             child: Text(
               'Feiras em $cidadeNome',
               style: const TextStyle(
@@ -42,14 +45,14 @@ class FeirasScreen extends StatelessWidget {
             fillColor: kOnBackgroundColorText,
             iconColor: kDetailColor,
             hintText: 'Buscar por feiras',
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(21),
           ),
           Expanded(
             child: Consumer<FeiraController>(
               builder: (context, feiraController, child) {
                 if (feiraController.isLoading) {
                   // Se ainda estiver carregando, exiba o indicador de progresso
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(color: kDetailColor),
                   );
                 } else {
@@ -62,7 +65,8 @@ class FeirasScreen extends StatelessWidget {
                       FeiraModel feira = feiras[index];
 
                       return Container(
-                        margin: const EdgeInsets.all(7.0),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 22.0,vertical:8.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15.0),
@@ -89,8 +93,9 @@ class FeirasScreen extends StatelessWidget {
                                   });
                             },
                             borderRadius: BorderRadius.circular(15.0),
+                            
                             child: Padding(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0,16.0),
                               child: Row(
                                 children: [
                                   const CircleAvatar(

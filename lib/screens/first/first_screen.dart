@@ -58,7 +58,7 @@ class FirstScreen extends StatelessWidget {
               PrimaryButton(
                 text: "Continuar como ${firstThreeWords(controller.userName)}",
                 onPressed: () {
-                  Navigator.pushNamed(context, Screens.home);
+                  Navigator.popAndPushNamed(context, Screens.home);
                 },
                 color: kDetailColor,
               ),

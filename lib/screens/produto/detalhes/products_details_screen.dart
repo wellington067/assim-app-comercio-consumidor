@@ -1,8 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:convert';
+
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
+
 
 import '../../../shared/constants/style_constants.dart';
 
@@ -43,6 +46,7 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
     final String produtoDescricao = arguments?['descricao'];
     final String produtoTipo = arguments?['tipoUnidade'];
     final String produtoPreco = arguments?['preco'];
+    final String? base64Image = arguments?['produtoImage'];
 
     int selectedIndex = 1;
 
@@ -60,11 +64,16 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Image.asset(
-                        'lib/assets/images/maça.png', // foto fixa
-                        height: 120,
-                        fit: BoxFit.contain,
-                      ),
+
+                         base64Image != null
+                    ? Image.memory(base64Decode(base64Image.split(',').last))
+                    : const Icon(
+                  Icons.shopping_bag,
+                  size: 80,
+                  color: Colors.orange,
+                ),
+                     
+
                       const SizedBox(height: 15),
                       Text(
                         produtoTitulo,
