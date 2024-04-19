@@ -1,25 +1,19 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
-import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/cesta/cart_controller.dart';
-import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
-import 'package:ecommerceassim/shared/core/models/produto_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ecommerceassim/shared/core/models/table_products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../assets/index.dart';
-import '../../components/buttons/primary_button.dart';
-import '../../shared/constants/app_number_constants.dart';
 import 'cart_provider.dart';
 
+// ignore: must_be_immutable
 class CardCart extends StatefulWidget {
   CartModel model;
   CartController? controller;
@@ -33,6 +27,13 @@ class CardCart extends StatefulWidget {
 class _CardCartState extends State<CardCart> {
   @override
   Widget build(BuildContext context) {
+    print(widget.controller?.listTableProducts.length);
+    TableProductsModel? tableProductsModel = widget.controller
+        ?.returnProdutoTabelado(widget.model.produtoTabeladoId!);
+    String? base64Image = tableProductsModel != null &&
+            tableProductsModel.imagem != null
+        ? 'data:image/jpeg;base64,${base64Encode(tableProductsModel.imagem!)}'
+        : null;
     final cartListProvider = Provider.of<CartProvider>(context);
     log(widget.model.nameProduct.toString());
     Size size = MediaQuery.of(context).size;
@@ -63,15 +64,20 @@ class _CardCartState extends State<CardCart> {
                 children: [
                   const HorizontalSpacerBox(size: SpacerSize.large),
                   Container(
-                    width: size.width * 0.3,
-                    height: size.height * 0.1,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: AssetImage(Assets.melancia),
-                      ),
-                    ),
-                  ),
+                      width: size.width * 0.3,
+                      height: size.height * 0.1,
+                      decoration: base64Image != null
+                          ? BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                alignment: Alignment.center,
+                                image: MemoryImage(
+                                    base64Decode(base64Image.split(',').last)),
+                              ),
+                            )
+                          : const BoxDecoration(
+                              color: kErrorColor,
+                            )),
                   const HorizontalSpacerBox(size: SpacerSize.small),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -27,7 +27,7 @@ class ProductsController extends GetxController {
     final int bancaId = arguments['id'];
 
     CartModel cart = CartModel(
-        produto.id, bancaId, produto.descricao, produto.preco, amount);
+        produto.id, bancaId, produto.descricao, produto.preco,produto.produtoTabeladoId, amount);
     return cart;
   }
 
@@ -44,5 +44,6 @@ class ProductsController extends GetxController {
   void onInit() async{
     listTableProducts = await loadList();
     super.onInit();
+    update();
   }
 }
