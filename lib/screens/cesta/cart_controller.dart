@@ -1,10 +1,7 @@
 import 'dart:developer';
-import 'package:ecommerceassim/screens/produto/products_controller.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/core/user_storage.dart';
 import 'card_cart.dart';
 

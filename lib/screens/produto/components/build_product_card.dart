@@ -6,12 +6,16 @@ import 'package:ecommerceassim/shared/core/controllers/produto_screen_controller
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:ecommerceassim/shared/core/models/table_products_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/retry.dart';
+import '../../../shared/core/models/cart_model.dart';
+import '../../cesta/cart_provider.dart';
+import '../products_controller.dart';
 
 
 class BuildProductCard extends StatefulWidget {
   ProdutoModel produto;
-  BuildProductCard(this.produto, {super.key});
+  ProductsController controller;
+  CartProvider cartProvider;
+  BuildProductCard(this.produto, this.controller, this.cartProvider , {super.key});
 
   @override
   State<BuildProductCard> createState() => _BuildProductCardState();
@@ -102,7 +106,10 @@ class _BuildProductCardState extends State<BuildProductCard> {
                               fontSize: 18, color: kDetailColor),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            CartModel card = widget.controller.createCart(context, 1, widget.produto);
+                            widget.cartProvider.addCart(card);
+                          },
                           icon: const Icon(
                             Icons.add_circle_outline,
                             color: kDetailColor,

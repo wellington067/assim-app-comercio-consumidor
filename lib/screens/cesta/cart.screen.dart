@@ -31,7 +31,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartListProvider = Provider.of<CartProvider>(context);
-    print(cartListProvider.listCart[0].storeId);
     //late int melancia = 0;
     //late int limao = 0;
     late int selectedIndex = 1;
