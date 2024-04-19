@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/screens/produto/products_controller.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/screens/produto/components/build_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
@@ -21,7 +19,7 @@ import '../cesta/cart_provider.dart';
 
 class MenuProductsScreen extends StatefulWidget {
 
-  MenuProductsScreen({super.key});
+ const MenuProductsScreen({super.key});
 
   @override
   State<MenuProductsScreen> createState() => _MenuProductsScreenState();
@@ -150,7 +148,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                         ),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return _buildProductCard(context,
+                          return BuildProductCard(
                               snapshot.data![index], controller, cartListProvider);
                         },
                       );
