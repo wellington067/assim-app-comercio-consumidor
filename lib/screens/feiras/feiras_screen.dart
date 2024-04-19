@@ -32,7 +32,7 @@ class FeirasScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(25.0, 16.0, 16.0,10.0),
             child: Text(
               'Feiras em $cidadeNome',
               style: const TextStyle(
@@ -45,14 +45,14 @@ class FeirasScreen extends StatelessWidget {
             fillColor: kOnBackgroundColorText,
             iconColor: kDetailColor,
             hintText: 'Buscar por feiras',
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(21),
           ),
           Expanded(
             child: Consumer<FeiraController>(
               builder: (context, feiraController, child) {
                 if (feiraController.isLoading) {
                   // Se ainda estiver carregando, exiba o indicador de progresso
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(color: kDetailColor),
                   );
                 } else {
@@ -65,7 +65,8 @@ class FeirasScreen extends StatelessWidget {
                       FeiraModel feira = feiras[index];
 
                       return Container(
-                        margin: const EdgeInsets.all(7.0),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 22.0,vertical:8.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15.0),
@@ -92,8 +93,9 @@ class FeirasScreen extends StatelessWidget {
                                   });
                             },
                             borderRadius: BorderRadius.circular(15.0),
+                            
                             child: Padding(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0,16.0),
                               child: Row(
                                 children: [
                                   const CircleAvatar(
