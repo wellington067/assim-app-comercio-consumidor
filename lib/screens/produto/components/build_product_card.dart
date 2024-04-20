@@ -64,7 +64,7 @@ class _BuildProductCardState extends State<BuildProductCard> {
                       : const Icon(
                           Icons.shopping_bag,
                           size: 80,
-                          color: Colors.orange,
+                          color: kDetailColor,
                         ),
                 ),
               ),

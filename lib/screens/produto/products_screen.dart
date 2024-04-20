@@ -18,8 +18,7 @@ import 'package:provider/provider.dart';
 import '../cesta/cart_provider.dart';
 
 class MenuProductsScreen extends StatefulWidget {
-
- const MenuProductsScreen({super.key});
+  const MenuProductsScreen({super.key});
 
   @override
   State<MenuProductsScreen> createState() => _MenuProductsScreenState();
@@ -48,7 +47,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Column(
               children: [
-                 Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 24.0),
@@ -66,7 +65,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                   fillColor: kOnBackgroundColorText,
                   iconColor: kDetailColor,
                   hintText: 'Buscar',
-                  padding: EdgeInsets.all(22),
+                  padding: EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 12.0),
                 ),
                 const CategoryMenuList(),
                 const VerticalSpacerBox(size: SpacerSize.medium),
@@ -148,8 +147,8 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                         ),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return BuildProductCard(
-                              snapshot.data![index], controller, cartListProvider);
+                          return BuildProductCard(snapshot.data![index],
+                              controller, cartListProvider);
                         },
                       );
                     } else {

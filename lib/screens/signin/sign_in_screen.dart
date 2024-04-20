@@ -13,7 +13,7 @@ import '../../shared/constants/app_enums.dart';
 
 class SignInScreen extends StatelessWidget with ValidationMixin {
   SignInScreen({super.key});
- final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -71,10 +71,10 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
                     else
                       ElevatedButton(
                         onPressed: () {
-                          if(formkey.currentState!.validate() == true) {
+                          if (formkey.currentState!.validate() == true) {
                             controller.signIn(context);
                           }
-                        } ,
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: kDetailColor,
                           shape: const RoundedRectangleBorder(
@@ -91,50 +91,6 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
                           ),
                         ),
                       ),
-                    const VerticalSpacerBox(size: SpacerSize.medium),
-                    const Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            'ou',
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const VerticalSpacerBox(size: SpacerSize.medium),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(FontAwesomeIcons.google,
-                              color: kErrorColor),
-                          iconSize: 38,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(FontAwesomeIcons.facebook,
-                              color: kTextSign),
-                          iconSize: 38,
-                        ),
-                      ],
-                    ),
                     const VerticalSpacerBox(size: SpacerSize.medium),
                     if (controller.errorMessage != null)
                       Text(
