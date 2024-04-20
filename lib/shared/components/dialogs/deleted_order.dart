@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 
 class DeletedOrderDialog extends StatelessWidget {
   const DeletedOrderDialog({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
         width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
         constraints: const BoxConstraints(minHeight: 200),
         child: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
@@ -33,7 +38,7 @@ class DeletedOrderDialog extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                  height: 20), // Espaçamento entre o texto e os botões
+                  height: 5), // Espaçamento entre o texto e os botões
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
