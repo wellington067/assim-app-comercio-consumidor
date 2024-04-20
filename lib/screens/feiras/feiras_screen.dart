@@ -6,6 +6,7 @@ import 'package:ecommerceassim/shared/core/controllers/feira_controller.dart';
 import 'package:ecommerceassim/shared/core/models/feira_model.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 
 class FeirasScreen extends StatelessWidget {
   const FeirasScreen({Key? key});
@@ -21,9 +22,7 @@ class FeirasScreen extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
-
       bottomNavigationBar: BottomNavigation(selectedIndex: 0),
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,7 +70,6 @@ class FeirasScreen extends StatelessWidget {
                     itemCount: feiras.length,
                     itemBuilder: (context, index) {
                       FeiraModel feira = feiras[index];
-
 
                       return Container(
                         margin: const EdgeInsets.symmetric(
@@ -130,7 +128,6 @@ class FeirasScreen extends StatelessWidget {
                           ),
                         ),
                       );
-
                     },
                   );
                 }
