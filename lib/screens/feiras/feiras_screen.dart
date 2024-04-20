@@ -27,12 +27,11 @@ class FeirasScreen extends StatelessWidget {
       appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigation(selectedIndex: 0),
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(25.0, 16.0, 16.0,10.0),
+            padding: const EdgeInsets.fromLTRB(25.0, 16.0, 16.0, 10.0),
             child: Text(
               'Feiras em $cidadeNome',
               style: const TextStyle(
@@ -45,7 +44,7 @@ class FeirasScreen extends StatelessWidget {
             fillColor: kOnBackgroundColorText,
             iconColor: kDetailColor,
             hintText: 'Buscar por feiras',
-            padding: EdgeInsets.all(21),
+            padding: EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 5.0),
           ),
           Expanded(
             child: Consumer<FeiraController>(
@@ -66,7 +65,7 @@ class FeirasScreen extends StatelessWidget {
 
                       return Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 22.0,vertical:8.0),
+                            horizontal: 22.0, vertical: 8.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15.0),
@@ -93,9 +92,9 @@ class FeirasScreen extends StatelessWidget {
                                   });
                             },
                             borderRadius: BorderRadius.circular(15.0),
-                            
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0,16.0),
+                              padding: const EdgeInsets.fromLTRB(
+                                  16.0, 16.0, 16.0, 16.0),
                               child: Row(
                                 children: [
                                   const CircleAvatar(

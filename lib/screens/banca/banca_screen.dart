@@ -11,7 +11,7 @@ import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 
 class Bancas extends StatelessWidget {
-  const Bancas({Key? key}) : super(key: key);
+  const Bancas({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +63,10 @@ class Bancas extends StatelessWidget {
               const CustomSearchField(
                 fillColor: kOnBackgroundColorText,
                 iconColor: kDetailColor,
-                hintText: 'Buscar',
-                padding: EdgeInsets.all(21.0),
+                hintText: 'Buscar por bancas',
+                padding: EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 10.0),
               ),
-              const CategoryMenuList(),
+              const VerticalSpacer(size: 5),
               Expanded(
                 child: ListView.builder(
                   itemCount: bancaController.bancas.length,

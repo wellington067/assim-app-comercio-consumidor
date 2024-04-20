@@ -6,7 +6,6 @@ import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 
-
 import '../../../shared/constants/style_constants.dart';
 
 class ProdutoDetalheScreen extends StatefulWidget {
@@ -60,20 +59,18 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.fromLTRB(21.0, 5.0, 21.0, 5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-
-                         base64Image != null
-                    ? Image.memory(base64Decode(base64Image.split(',').last))
-                    : const Icon(
-                  Icons.shopping_bag,
-                  size: 80,
-                  color: Colors.orange,
-                ),
-                     
-
+                      base64Image != null
+                          ? Image.memory(
+                              base64Decode(base64Image.split(',').last))
+                          : const Icon(
+                              Icons.shopping_bag,
+                              size: 80,
+                              color: kDetailColor,
+                            ),
                       const SizedBox(height: 15),
                       Text(
                         produtoTitulo,

@@ -42,7 +42,7 @@ class OrderCard extends StatelessWidget {
         };
       case 'Entregue':
         return {
-          'color': kSuccessColorPurshase,
+          'color': kDetailColor,
           'icon': Icons.check_circle,
         };
       case 'Cancelado':
