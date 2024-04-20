@@ -1,13 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/shared/core/controllers/cidade_controllers.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
-class CidadeScreen extends StatelessWidget {
-  const CidadeScreen({super.key});
+class CidadeScreen extends StatefulWidget {
+  const CidadeScreen({Key? key}) : super(key: key);
+
+  @override
+  _CidadeScreenState createState() => _CidadeScreenState();
+}
+
+class _CidadeScreenState extends State<CidadeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final cidadeController =
+        Provider.of<CidadeController>(context, listen: false);
+    if (cidadeController.cidades.isEmpty) {
+      cidadeController.loadCidades();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +59,7 @@ class CidadeScreen extends StatelessWidget {
                 List<CidadeModel> cidades = cidadeController.cidades;
 
                 if (cidades.isEmpty) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: kDetailColor),
-                  );
+                  return _buildEmptyListWidget();
                 }
 
                 return ListView.builder(
@@ -113,6 +126,38 @@ class CidadeScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyListWidget() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 100.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.storefront, color: kButtom, size: 80),
+            const SizedBox(height: 20),
+            const Text(
+              'Nenhuma cidade foi encontrada.',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: kButtom,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Não há feiras cadastradas para esta cidade ou elas estão indisponíveis no momento.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

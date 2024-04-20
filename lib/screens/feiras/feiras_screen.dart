@@ -60,67 +60,15 @@ class FeirasScreen extends StatelessWidget {
                   List<FeiraModel> feiras =
                       Provider.of<FeiraController>(context).feiras;
 
+                  if (feiras.isEmpty) {
+                    return _buildEmptyListWidget(cidadeNome);
+                  }
+
                   return ListView.builder(
                     itemCount: feiras.length,
                     itemBuilder: (context, index) {
                       FeiraModel feira = feiras[index];
-
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 22.0, vertical: 8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 6,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, Screens.bancas,
-                                  arguments: {
-                                    'id': feira.id,
-                                    'nome': feira.nome,
-                                    'bairro': feira.bairroId,
-                                    'horarios': feira.horariosFuncionamento,
-                                  });
-                            },
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 25.0,
-                                    backgroundImage: AssetImage(
-                                      "lib/assets/images/banca-fruta.jpg",
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: Text(
-                                      feira.nome,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: kTextColorBlack,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
+                      return _buildFeiraCard(context, feira);
                     },
                   );
                 }
@@ -128,6 +76,95 @@ class FeirasScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyListWidget(String cidadeNome) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 120.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.storefront, color: kDetailColor, size: 80),
+            const SizedBox(height: 20),
+            Text(
+              'Nenhuma feira encontrada em $cidadeNome.',
+              textAlign: TextAlign.center, // Centraliza o texto horizontalmente
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: kDetailColor,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Não há feiras cadastradas para esta cidade ou elas estão indisponíveis no momento.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeiraCard(BuildContext context, FeiraModel feira) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, Screens.bancas, arguments: {
+              'id': feira.id,
+              'nome': feira.nome,
+              'bairro': feira.bairroId,
+              'horarios': feira.horariosFuncionamento,
+            });
+          },
+          borderRadius: BorderRadius.circular(15.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                const CircleAvatar(
+                  radius: 25.0,
+                  backgroundImage:
+                      AssetImage("lib/assets/images/banca-fruta.jpg"),
+                ),
+                const SizedBox(width: 16.0),
+                Expanded(
+                  child: Text(
+                    feira.nome,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: kTextColorBlack,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
