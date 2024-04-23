@@ -54,8 +54,8 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
 
     int selectedIndex = 1;
 
-    String shortDescription = produtoDescricao.length > 80
-        ? '${produtoDescricao.substring(0, 80)}...'
+    String shortDescription = produtoDescricao.length > 100
+        ? '${produtoDescricao.substring(0, 100)}...'
         : produtoDescricao;
 
     return Scaffold(
@@ -103,7 +103,7 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                                   : shortDescription,
                               style: const TextStyle(fontSize: 16),
                             ),
-                            if (produtoDescricao.length > 80)
+                            if (produtoDescricao.length > 100)
                               Text(
                                 isDescriptionExpanded
                                     ? 'Ver menos'
