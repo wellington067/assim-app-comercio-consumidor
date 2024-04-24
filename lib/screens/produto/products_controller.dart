@@ -11,7 +11,6 @@ import '../../shared/core/models/cart_model.dart';
 import '../../shared/core/models/produto_model.dart';
 import '../../shared/core/repositories/produto_repository.dart';
 
-
 class ProductsController extends GetxController {
   List<CartModel> listCart = [];
   List<TableProductsModel> listTableProducts = [];
@@ -26,8 +25,8 @@ class ProductsController extends GetxController {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int bancaId = arguments['id'];
 
-    CartModel cart = CartModel(
-        produto.id, bancaId, produto.descricao, produto.preco,produto.produtoTabeladoId, amount);
+    CartModel cart = CartModel(produto.id, bancaId, produto.titulo,
+        produto.preco, produto.produtoTabeladoId, amount, produto.estoque);
     return cart;
   }
 
@@ -41,7 +40,7 @@ class ProductsController extends GetxController {
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     listTableProducts = await loadList();
     super.onInit();
     update();
