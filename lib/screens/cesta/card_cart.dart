@@ -126,8 +126,7 @@ class _CardCartState extends State<CardCart> {
                   IconButton(
                     icon: const Icon(Icons.remove),
                     onPressed: () {
-                      if (widget.model.amount > 0 &&
-                          widget.controller!.counter > 0) {
+                      if (widget.model.amount > 0) {
                         setState(() {
                           widget.model.amount--;
                           widget.controller?.decrementCounter();
@@ -148,10 +147,12 @@ class _CardCartState extends State<CardCart> {
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       setState(() {
-                        widget.model.amount++;
-                        widget.controller?.incrementCounter();
-                        cartListProvider.itens++;
-                        cartListProvider.total += doublePrice!;
+                        if(widget.model.amount < widget.model.stock){
+                          widget.model.amount++;
+                          widget.controller?.incrementCounter();
+                          cartListProvider.itens++;
+                          cartListProvider.total += doublePrice!;
+                        }
                       });
                     },
                   ),
