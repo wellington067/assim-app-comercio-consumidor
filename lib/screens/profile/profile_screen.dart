@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
-import 'package:ecommerceassim/screens/profile/components/custom_ink.dart';
+import 'package:ecommerceassim/components/forms/custom_ink.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';

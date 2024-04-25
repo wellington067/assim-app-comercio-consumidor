@@ -16,8 +16,7 @@ class FeirasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic> ??
-            {};
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int cidadeId = arguments['id'] as int;
     final String cidadeNome = arguments['nome'] as String;
 
@@ -174,7 +173,7 @@ class FeirasScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeiraCard(BuildContext context, FeiraModel feira) {
+  /* Widget _buildFeiraCard(BuildContext context, FeiraModel feira) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0),
       decoration: BoxDecoration(
@@ -228,5 +227,5 @@ class FeirasScreen extends StatelessWidget {
         ),
       ),
     );
-  }
+  } */
 }

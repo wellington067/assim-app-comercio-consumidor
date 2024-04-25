@@ -1,11 +1,18 @@
 import 'package:ecommerceassim/shared/core/repositories/pedidos_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:ecommerceassim/shared/core/models/pedidos_model.dart';
+
+enum PedidosStatus {
+  done,
+  error,
+  loading,
+  idle,
+}
 
 class PedidoController with ChangeNotifier {
   final PedidosRepository _pedidosRepository;
 
+  PedidosStatus status = PedidosStatus.idle;
   List<PedidoModel> orders = [];
 
   PedidoController(this._pedidosRepository) {
@@ -13,7 +20,18 @@ class PedidoController with ChangeNotifier {
   }
 
   Future<void> loadOrders() async {
-    orders = await _pedidosRepository.getOrders();
+    status = PedidosStatus.loading;
+    notifyListeners();
+    try {
+      orders = await _pedidosRepository.getOrders();
+      if (orders.isEmpty) {
+        status = PedidosStatus.done;
+      } else {
+        status = PedidosStatus.done;
+      }
+    } catch (e) {
+      status = PedidosStatus.error;
+    }
     notifyListeners();
   }
 }

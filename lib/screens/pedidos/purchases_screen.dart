@@ -8,7 +8,7 @@ import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/controllers/pedidos_controller.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
-import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
+import 'package:ecommerceassim/components/forms/custom_order.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import '../../shared/constants/app_enums.dart';
 
@@ -32,6 +32,17 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
       create: (_) => PedidoController(PedidosRepository(Dio())),
       child: Consumer<PedidoController>(
         builder: (context, controller, child) {
+          if (controller.status == PedidosStatus.loading) {
+            return Scaffold(
+              appBar: const CustomAppBar(),
+              bottomNavigationBar:
+                  BottomNavigation(selectedIndex: selectedIndex),
+              body: const Center(
+                child: CircularProgressIndicator(color: kDetailColor),
+              ),
+            );
+          }
+
           return Scaffold(
             appBar: const CustomAppBar(),
             bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
@@ -54,25 +65,54 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                               shippingHandling: order.taxaEntrega,
                               date: formatDate(order.dataPedido),
                               status: order.status,
-                              onTap: () => _onOrderTapped(
-                                  order.id), // Passing the correct ID now
+                              onTap: () => _onOrderTapped(order.id),
                             );
                           }),
                           const VerticalSpacerBox(size: SpacerSize.medium),
                         ],
                       ),
                     )
-                  : const Center(
-                      child: CircularProgressIndicator(
-                        color: kDetailColor,
-                      ),
-                    ),
+                  : _buildEmptyListWidget(),
             ),
           );
         },
       ),
     );
   }
+}
+
+Widget _buildEmptyListWidget() {
+  return Center(
+    child: Padding(
+      padding: const EdgeInsets.only(top: 0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(Icons.storefront, color: kDetailColor, size: 80),
+          const SizedBox(height: 20),
+          const Text(
+            'Nenhum pedido encontrado.',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: kDetailColor,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'Você ainda não tem pedidos realizados ou estão indisponíveis no momento.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 String formatDate(DateTime? date) {

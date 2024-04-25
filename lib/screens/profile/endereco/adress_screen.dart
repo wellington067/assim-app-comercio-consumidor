@@ -16,8 +16,9 @@ import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/sign_up_repository.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+/* import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+ */
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
 
@@ -38,10 +39,10 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
   List<BairroModel> _bairros = [];
   final _formKey = GlobalKey<FormState>();
   SignUpRepository signUpRepository = SignUpRepository();
-  final MaskTextInputFormatter _cepMaskFormatter = MaskTextInputFormatter(
+  /* final MaskTextInputFormatter _cepMaskFormatter = MaskTextInputFormatter(
     mask: '#####-###',
     filter: {"#": RegExp(r'[0-9]')},
-  );
+  ); */
 
   @override
   void initState() {
@@ -164,7 +165,7 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: kBackgroundColor,
+                          fillColor: kButtomBackgroundColor,
                           contentPadding: EdgeInsets.symmetric(
                               vertical: formFieldHeight / 4, horizontal: 16),
                         ),
@@ -228,7 +229,7 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: kBackgroundColor,
+                          fillColor: kButtomBackgroundColor,
                           contentPadding: EdgeInsets.symmetric(
                               vertical: formFieldHeight / 4, horizontal: 15),
                         ),
