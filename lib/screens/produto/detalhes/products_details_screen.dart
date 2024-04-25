@@ -17,6 +17,7 @@ class ProdutoDetalheScreen extends StatefulWidget {
 
 class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
   int quantity = 1;
+  bool isDescriptionExpanded = false;
 
   void incrementQuantity(int maxQuantity) {
     if (quantity < maxQuantity) {
@@ -34,12 +35,16 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
     }
   }
 
+  void toggleDescription() {
+    setState(() {
+      isDescriptionExpanded = !isDescriptionExpanded;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-/*     final int produtoID = arguments?['id'];
- */
     final int produtoEstoque = arguments?['estoque'];
     final String produtoTitulo = arguments?['titulo'];
     final String produtoDescricao = arguments?['descricao'];
@@ -48,6 +53,10 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
     final String? base64Image = arguments?['produtoImage'];
 
     int selectedIndex = 1;
+
+    String shortDescription = produtoDescricao.length > 100
+        ? '${produtoDescricao.substring(0, 100)}...'
+        : produtoDescricao;
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -66,55 +75,52 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                       base64Image != null
                           ? Image.memory(
                               base64Decode(base64Image.split(',').last))
-                          : const Icon(
-                              Icons.shopping_bag,
-                              size: 80,
-                              color: kDetailColor,
-                            ),
+                          : const Icon(Icons.shopping_bag,
+                              size: 80, color: kDetailColor),
                       const SizedBox(height: 15),
+                      Text(produtoTitulo,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24)),
                       Text(
-                        produtoTitulo,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      Text(
-                        'R\$ ${double.parse(produtoPreco).toStringAsFixed(2).replaceAll('.', ',')}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        produtoTipo,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: kDetailColor,
+                          'R\$ ${double.parse(produtoPreco).toStringAsFixed(2).replaceAll('.', ',')}',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text(produtoTipo,
+                          style: const TextStyle(
+                              fontSize: 16, color: kDetailColor)),
+                      const SizedBox(height: 16),
+                      const Text('Descrição',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18)),
+                      InkWell(
+                        onTap: toggleDescription,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              isDescriptionExpanded
+                                  ? produtoDescricao
+                                  : shortDescription,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            if (produtoDescricao.length > 100)
+                              Text(
+                                isDescriptionExpanded
+                                    ? 'Ver menos'
+                                    : 'Ver mais',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: kDetailColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        'Descrição',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      Text(
-                        produtoDescricao,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Quantidade',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
+                      const Text('Quantidade',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18)),
                       const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -124,11 +130,9 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 25.0),
-                            child: Text(
-                              '$quantity',
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
+                            child: Text('$quantity',
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
                           _buildQuantityButton(Icons.add,
                               () => incrementQuantity(produtoEstoque)),
@@ -154,12 +158,8 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                 onPressed: () {
                   // função de adicionar ao carrinho
                 },
-                child: const Text(
-                  'Adicionar ao carrinho',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                child: const Text('Adicionar ao carrinho',
+                    style: TextStyle(fontSize: 18)),
               ),
             ),
           ],

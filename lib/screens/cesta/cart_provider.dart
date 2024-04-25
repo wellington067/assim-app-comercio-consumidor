@@ -1,7 +1,7 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import '../../shared/core/models/cart_model.dart';
 
 class CartProvider extends ChangeNotifier {

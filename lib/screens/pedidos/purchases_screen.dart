@@ -1,11 +1,15 @@
-import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
-import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
-import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
+// ignore_for_file: avoid_print
+
+import 'package:ecommerceassim/shared/core/repositories/pedidos_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:provider/provider.dart';
-import '../../components/utils/vertical_spacer_box.dart';
+import 'package:dio/dio.dart';
+import 'package:ecommerceassim/shared/constants/style_constants.dart';
+import 'package:ecommerceassim/shared/core/controllers/pedidos_controller.dart';
+import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
+import 'package:ecommerceassim/screens/profile/components/custom_order.dart';
+import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import '../../shared/constants/app_enums.dart';
 
 class PurchasesScreen extends StatefulWidget {
@@ -18,53 +22,60 @@ class PurchasesScreen extends StatefulWidget {
 class _PurchasesScreenState extends State<PurchasesScreen> {
   int selectedIndex = 2;
 
+  void _onOrderTapped(int orderId) {
+    print('Pedido com id ID $orderId clicado!');
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
-        create: (_) => ProfileController(),
-        builder: (context, child) => Consumer<ProfileController>(
-            builder: ((context, controller, child) => Scaffold(
-                appBar: const CustomAppBar(),
-                bottomNavigationBar:
-                    BottomNavigation(selectedIndex: selectedIndex),
-                body: Container(
-                    color: kOnSurfaceColor,
-                    width: size.width,
-                    padding: const EdgeInsets.all(20),
-                    child: SingleChildScrollView(
-                        child: Column(children: [
-                      const VerticalSpacerBox(size: SpacerSize.small),
-                      OrderCard(
-                        orderNumber: '#0001',
-                        sellerName: 'Frutas Mix',
-                        itemsTotal: 55.34,
-                        shippingHandling: 10.00,
-                        date: '07/10/2022',
-                        status: 'Em andamento',
-                        onTap: () {},
+      create: (_) => PedidoController(PedidosRepository(Dio())),
+      child: Consumer<PedidoController>(
+        builder: (context, controller, child) {
+          return Scaffold(
+            appBar: const CustomAppBar(),
+            bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
+            body: Container(
+              color: kOnSurfaceColor,
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(20),
+              child: controller.orders.isNotEmpty
+                  ? SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const VerticalSpacerBox(size: SpacerSize.small),
+                          ...List.generate(controller.orders.length, (index) {
+                            var order = controller.orders[index];
+                            return OrderCard(
+                              orderNumber: '#${index + 1}',
+                              sellerName:
+                                  order.bancaNome ?? 'Banca Desconhecida',
+                              itemsTotal: order.subtotal,
+                              shippingHandling: order.taxaEntrega,
+                              date: formatDate(order.dataPedido),
+                              status: order.status,
+                              onTap: () => _onOrderTapped(
+                                  order.id), // Passing the correct ID now
+                            );
+                          }),
+                          const VerticalSpacerBox(size: SpacerSize.medium),
+                        ],
                       ),
-                      const VerticalSpacerBox(size: SpacerSize.medium),
-                      OrderCard(
-                        orderNumber: '#0002',
-                        sellerName: 'Legumes Mix',
-                        itemsTotal: 21.65,
-                        shippingHandling: 13.00,
-                        date: '08/10/2022',
-                        status: 'Entregue',
-                        onTap: () {},
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(
+                        color: kDetailColor,
                       ),
-                      const VerticalSpacerBox(size: SpacerSize.medium),
-                      OrderCard(
-                        orderNumber: '#0003',
-                        sellerName: 'Verduras Mix',
-                        itemsTotal: 33.55,
-                        shippingHandling: 15.00,
-                        date: '09/10/2022',
-                        status: 'Cancelado',
-                        onTap: () {},
-                      ),
-                      const VerticalSpacerBox(size: SpacerSize.medium),
-                    ])))))));
+                    ),
+            ),
+          );
+        },
+      ),
+    );
   }
+}
+
+String formatDate(DateTime? date) {
+  if (date == null) return 'Date N/A';
+  return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
 }

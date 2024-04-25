@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ecommerceassim/components/buttons/category_menu.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
@@ -146,14 +145,14 @@ class Bancas extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.storefront, color: kButtom, size: 80),
+            const Icon(Icons.storefront, color: kDetailColor, size: 80),
             const SizedBox(height: 20),
             const Text(
               'Nenhuma banca foi encontrada.',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: kButtom,
+                color: kDetailColor,
               ),
             ),
             const SizedBox(height: 10),
@@ -184,19 +183,21 @@ class Bancas extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.error_outline, color: kButtom, size: 35),
+                Icon(Icons.error_outline, color: kDetailColor, size: 35),
                 SizedBox(width: 8),
                 Text('Oops!',
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: kButtom)),
+                        color: kDetailColor)),
               ],
             ),
           ),
           const Text('Nenhuma banca foi encontrada.',
               style: TextStyle(
-                  fontSize: 22, fontWeight: FontWeight.bold, color: kButtom)),
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: kDetailColor)),
           const SizedBox(height: 10),
           Text(message,
               textAlign: TextAlign.center,

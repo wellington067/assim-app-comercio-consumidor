@@ -41,14 +41,75 @@ mixin ValidationMixin {
   }
 
   isValidPhone(value) {
-    List<String> validDDDCodes = ['11', '12', '13', '14', '15', '16', '17', '18', '19',
-                                 '21', '22', '24', '27', '28', '31', '32', '33', '34',
-                                 '35', '37', '38', '41', '42', '43', '44', '45', '46',
-                                 '47', '48', '49', '51', '53', '54', '55', '61', '62',
-                                 '63', '64', '65', '66', '67', '68', '69', '71', '73',
-                                 '74', '75', '77', '79', '81', '82', '83', '84', '85',
-                                 '86', '87', '88', '89', '91', '92', '93', '94', '95',
-                                 '96', '97', '98', '99'];
+    List<String> validDDDCodes = [
+      '11',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '21',
+      '22',
+      '24',
+      '27',
+      '28',
+      '31',
+      '32',
+      '33',
+      '34',
+      '35',
+      '37',
+      '38',
+      '41',
+      '42',
+      '43',
+      '44',
+      '45',
+      '46',
+      '47',
+      '48',
+      '49',
+      '51',
+      '53',
+      '54',
+      '55',
+      '61',
+      '62',
+      '63',
+      '64',
+      '65',
+      '66',
+      '67',
+      '68',
+      '69',
+      '71',
+      '73',
+      '74',
+      '75',
+      '77',
+      '79',
+      '81',
+      '82',
+      '83',
+      '84',
+      '85',
+      '86',
+      '87',
+      '88',
+      '89',
+      '91',
+      '92',
+      '93',
+      '94',
+      '95',
+      '96',
+      '97',
+      '98',
+      '99'
+    ];
     if (value.isEmpty) {
       return 'Informe um número de telefone.';
     } else if (value.length != 15) {
@@ -69,27 +130,25 @@ mixin ValidationMixin {
   }
 
   isValidCidade(dynamic value) {
-  if (value == null || (value is int && value == 0)) {
-    return 'Selecione uma opção.';
+    if (value == null || (value is int && value == 0)) {
+      return 'Selecione uma opção.';
+    }
+    return null;
   }
-  return null;
-}
- 
 
   isValidBairro(dynamic value) {
-  if (value == null || (value is int && value == 0)) {
-    return 'Selecione uma opção.';
+    if (value == null || (value is int && value == 0)) {
+      return 'Selecione uma opção.';
+    }
+    return null;
   }
-  return null;
-}
- 
- 
+
   isValidRua(value) {
     if (value.isEmpty) {
       return 'Informe o nome da rua.';
     } else if (RegExp(r'\d').hasMatch(value)) {
       return 'O nome da rua não pode conter números.';
-  }
+    }
     return null;
   }
 
@@ -103,18 +162,18 @@ mixin ValidationMixin {
   isValidNumero(value) {
     if (value.isEmpty) {
       return 'Informe o número.';
-    } else if(value.length > 4) {
+    } else if (value.length > 4) {
       return 'O número deve ter no maximo 4 caracteres';
-    }else if(RegExp(r'[a-zA-Z]').hasMatch(value)){
+    } else if (RegExp(r'[a-zA-Z]').hasMatch(value)) {
       return 'O número não deve conter letras';
     }
     return null;
   }
 
   isValidComplemento(value) {
-    if (value.isEmpty) {
+/*     if (value.isEmpty) {
       return 'Informe um complemento.';
-    }
+    } */
     return null;
   }
 }

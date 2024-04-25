@@ -129,7 +129,6 @@ class _AdressEditScreenState extends State<AdressEditScreen>
     });
   }
 
-
   void setErrorMessage(String value) {
     setState(() {
       errorMessage = value;
@@ -210,7 +209,7 @@ class _AdressEditScreenState extends State<AdressEditScreen>
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor: kBackgroundColor,
+                              fillColor: Colors.grey[300],
                               contentPadding:
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
@@ -258,12 +257,13 @@ class _AdressEditScreenState extends State<AdressEditScreen>
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor: kBackgroundColor,
+                              fillColor: Colors.grey[300],
                               contentPadding:
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
-                             validator: (value) => isValidBairro(value),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (value) => isValidBairro(value),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                         ],
                       ),
@@ -283,8 +283,7 @@ class _AdressEditScreenState extends State<AdressEditScreen>
                             label: 'Rua',
                             enabled: _isEditing,
                             keyboardType: TextInputType.text,
-                             validateForm: (value) => isValidRua(value),
-                        
+                            validateForm: (value) => isValidRua(value),
                           ),
                         ],
                       ),
@@ -330,11 +329,10 @@ class _AdressEditScreenState extends State<AdressEditScreen>
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor: kBackgroundColor,
+                              fillColor: Colors.grey[300],
                               contentPadding:
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
-                            
                           ),
                         ],
                       ),

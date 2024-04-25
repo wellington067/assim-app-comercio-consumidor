@@ -1,9 +1,13 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:ui';
+
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import '../../../components/forms/custom_text_form_field.dart';
 import '../../../components/utils/vertical_spacer_box.dart';
 import '../../../shared/constants/app_enums.dart';
@@ -32,7 +36,7 @@ class InfoSecondScreen extends StatelessWidget with ValidationMixin {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: kBackgroundColor,
+            fillColor: Colors.grey[300],
             contentPadding: EdgeInsets.symmetric(vertical: formFieldHeight / 7),
             errorBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12.0)),
@@ -49,7 +53,8 @@ class InfoSecondScreen extends StatelessWidget with ValidationMixin {
             ),
           ),
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
-          hint: const Text('Cidade'),
+          hint: const Text('Cidade',
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
           value: controller.selectedCidade,
           items: controller.cidades.map((cidade) {
             return DropdownMenuItem<CidadeModel>(
@@ -88,11 +93,12 @@ class InfoSecondScreen extends StatelessWidget with ValidationMixin {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: kBackgroundColor,
+            fillColor: Colors.grey[300],
             contentPadding: EdgeInsets.symmetric(vertical: formFieldHeight / 4),
           ),
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16),
-          hint: const Text('Bairro'),
+          hint: const Text('Bairro',
+              style: TextStyle(fontWeight: FontWeight.w500)),
           value: controller.selectedBairro,
           items: controller.bairros.map((bairro) {
             return DropdownMenuItem<BairroModel>(
