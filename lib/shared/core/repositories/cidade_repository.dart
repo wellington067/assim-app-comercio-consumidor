@@ -5,7 +5,6 @@ import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 
 import '../../constants/app_text_constants.dart';
-import '../models/feira_model.dart';
 
 class CidadeRepository {
   late String userToken;

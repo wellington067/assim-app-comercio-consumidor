@@ -116,7 +116,7 @@ class OrderCard extends StatelessWidget {
                           );
                         },
                         icon: const Icon(
-                          Icons.delete,
+                          Icons.arrow_forward_ios_outlined,
                           color: kTextButtonColor,
                         ),
                       ),

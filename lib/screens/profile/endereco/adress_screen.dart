@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerceassim/components/forms/address_form_field.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';

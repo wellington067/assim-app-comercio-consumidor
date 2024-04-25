@@ -3,7 +3,6 @@ import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_text_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ecommerceassim/components/forms/custom_text_form_field.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/shared/core/controllers/sign_in_controller.dart';

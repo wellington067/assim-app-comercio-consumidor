@@ -1,21 +1,20 @@
 class PedidoModel {
-  final int id;
-  final String status;
-  final String tipoEntrega;
-  final double subtotal;
-  final double taxaEntrega;
-  final double total;
-  final DateTime? dataPedido;
-  final DateTime? dataConfirmacao;
-  final DateTime? dataCancelamento;
-  final DateTime? dataPagamento;
-  final DateTime? dataEnvio;
-  final DateTime? dataEntrega;
-  final int formaPagamentoId;
-  final int consumidorId;
-  final int bancaId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  int id;
+  String status;
+  String tipoEntrega;
+  double subtotal;
+  double taxaEntrega;
+  double total;
+  DateTime? dataPedido;
+  DateTime? dataConfirmacao;
+  DateTime? dataCancelamento;
+  DateTime? dataPagamento;
+  DateTime? dataEnvio;
+  DateTime? dataEntrega;
+  int formaPagamentoId;
+  int consumidorId;
+  int bancaId;
+  String? bancaNome;
 
   PedidoModel({
     required this.id,
@@ -33,8 +32,7 @@ class PedidoModel {
     required this.formaPagamentoId,
     required this.consumidorId,
     required this.bancaId,
-    required this.createdAt,
-    required this.updatedAt,
+    this.bancaNome,
   });
 
   factory PedidoModel.fromJson(Map<String, dynamic> json) {
@@ -42,9 +40,9 @@ class PedidoModel {
       id: json['id'],
       status: json['status'],
       tipoEntrega: json['tipo_entrega'],
-      subtotal: double.parse(json['subtotal']),
-      taxaEntrega: double.parse(json['taxa_entrega']),
-      total: double.parse(json['total']),
+      subtotal: double.parse(json['subtotal'].toString()),
+      taxaEntrega: double.parse(json['taxa_entrega'].toString()),
+      total: double.parse(json['total'].toString()),
       dataPedido: json['data_pedido'] != null
           ? DateTime.parse(json['data_pedido'])
           : null,
@@ -66,28 +64,7 @@ class PedidoModel {
       formaPagamentoId: json['forma_pagamento_id'],
       consumidorId: json['consumidor_id'],
       bancaId: json['banca_id'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      bancaNome: json['banca_nome'],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'status': status,
-        'tipo_entrega': tipoEntrega,
-        'subtotal': subtotal,
-        'taxa_entrega': taxaEntrega,
-        'total': total,
-        'data_pedido': dataPedido?.toIso8601String(),
-        'data_confirmacao': dataConfirmacao?.toIso8601String(),
-        'data_cancelamento': dataCancelamento?.toIso8601String(),
-        'data_pagamento': dataPagamento?.toIso8601String(),
-        'data_envio': dataEnvio?.toIso8601String(),
-        'data_entrega': dataEntrega?.toIso8601String(),
-        'forma_pagamento_id': formaPagamentoId,
-        'consumidor_id': consumidorId,
-        'banca_id': bancaId,
-        'created_at': createdAt.toIso8601String(),
-        'updated_at': updatedAt.toIso8601String(),
-      };
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unnecessary_null_comparison
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
@@ -8,7 +10,7 @@ import '../../shared/core/models/table_products_model.dart';
 import '../../shared/core/user_storage.dart';
 import 'card_cart.dart';
 
-class CartController extends GetxController{
+class CartController extends GetxController {
   UserStorage userStorage = UserStorage();
   int _counter = 0;
   int get counter => _counter;
@@ -19,24 +21,23 @@ class CartController extends GetxController{
 
   //ProductsController productsController = ProductsController();
 
-
-  List<CardCart> populateCardCart(List<CartModel> listCart){
+  List<CardCart> populateCardCart(List<CartModel> listCart) {
     List<CardCart> list = [];
 
-      if (listCart.isNotEmpty) {
-        for (int i = 0; i < listCart.length; i++) {
-          print(listCart[i]);
-          CardCart card = CardCart(listCart[i], CartController());
-          list.add(card);
-          print(list);
-        }
-      } else {
-        log('CARD VAZIO');
-        list = [];
-        print(listCart);
+    if (listCart.isNotEmpty) {
+      for (int i = 0; i < listCart.length; i++) {
+        print(listCart[i]);
+        CardCart card = CardCart(listCart[i], CartController());
+        list.add(card);
         print(list);
-        return list;
       }
+    } else {
+      log('CARD VAZIO');
+      list = [];
+      print(listCart);
+      print(list);
+      return list;
+    }
 
     // Verifica se a lista está vazia antes de tentar acessá-la
     if (list.isNotEmpty) {
@@ -90,5 +91,4 @@ class CartController extends GetxController{
     super.onInit();
     update();
   }
-
 }

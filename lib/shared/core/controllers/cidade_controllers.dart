@@ -1,9 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
-import 'package:ecommerceassim/shared/core/controllers/bairro_controller.dart';
 import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
-import 'package:ecommerceassim/shared/core/models/feira_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/cidade_repository.dart';
-import 'package:ecommerceassim/shared/core/repositories/feira_repository.dart';
 import 'package:flutter/material.dart';
 
 class CidadeController with ChangeNotifier {

@@ -9,7 +9,9 @@ import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 
 class FeirasScreen extends StatelessWidget {
-  const FeirasScreen({Key? key});
+  const FeirasScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
