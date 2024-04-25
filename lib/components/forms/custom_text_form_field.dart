@@ -16,7 +16,8 @@ class CustomTextFormField extends StatefulWidget {
       this.isBordered,
       this.decoration,
       this.enabled,
-      this.validateForm, this.maxLength});
+      this.validateForm,
+      this.maxLength});
 
   final Function? validateForm;
   final String? label;
@@ -73,9 +74,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             : null,
         decoration: (widget.decoration ?? const InputDecoration()).copyWith(
           filled: true,
-          fillColor: Colors.grey[300],
-          disabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(12.0),
+          fillColor: kButtomBackgroundColor,
+          disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.0),
               borderSide: const BorderSide(color: Color.fromARGB(0, 0, 0, 0))),
           focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
@@ -90,11 +91,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           prefixIcon: widget.icon == null ? null : Icon(widget.icon),
           errorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(12.0)),
-              borderSide: BorderSide(color: kErrorColor )),
+              borderSide: BorderSide(color: kErrorColor)),
           border: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.black),
             borderRadius: BorderRadius.circular(12.0),
-            
           ),
           errorStyle: const TextStyle(
             color: kErrorColor,

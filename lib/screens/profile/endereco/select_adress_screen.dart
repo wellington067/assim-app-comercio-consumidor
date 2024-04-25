@@ -3,6 +3,7 @@
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
+import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _SelectAddressState extends State<SelectAddress> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProfileController>().fetchUserAddresses();
     });
   }
@@ -50,8 +51,11 @@ class _SelectAddressState extends State<SelectAddress> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    int selectedIndex = 3;
+
     return Scaffold(
       appBar: const CustomAppBar(),
+      bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
       backgroundColor: Colors.white,
       body: Container(
         color: kOnSurfaceColor,

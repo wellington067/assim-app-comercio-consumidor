@@ -36,7 +36,7 @@ class InfoSecondScreen extends StatelessWidget with ValidationMixin {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: Colors.grey[300],
+            fillColor: kButtomBackgroundColor,
             contentPadding: EdgeInsets.symmetric(vertical: formFieldHeight / 7),
             errorBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12.0)),
@@ -93,7 +93,7 @@ class InfoSecondScreen extends StatelessWidget with ValidationMixin {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: Colors.grey[300],
+            fillColor: kButtomBackgroundColor,
             contentPadding: EdgeInsets.symmetric(vertical: formFieldHeight / 4),
           ),
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16),

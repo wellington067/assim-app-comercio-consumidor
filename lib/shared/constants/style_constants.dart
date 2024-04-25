@@ -12,6 +12,7 @@ final kDescriptionFontFamily = GoogleFonts.firaSans().fontFamily;
 //**LIGHT COLORS */
 const Color kPrimaryColor = Color(0xFFFECA01);
 // const Color kBackgroundColor = Colors.white;
+const Color kButtomBackgroundColor = Color.fromRGBO(224, 224, 224, 1);
 const Color kBackgroundColor = Color.fromARGB(255, 225, 225, 225);
 const Color kOnBackgroundColorText = Color.fromRGBO(238, 238, 238, 1);
 const Color kSecondaryColor = Color(0xFF435969);

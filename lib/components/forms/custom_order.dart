@@ -35,20 +35,41 @@ class OrderCard extends StatelessWidget {
 
   Map<String, dynamic> _getStatusAttributes(String status) {
     switch (status) {
-      case 'Em andamento':
+      case 'pagamento pendente':
         return {
           'color': kAlertColor,
           'icon': Icons.hourglass_bottom,
+          'description': "Pagamento Pendento"
         };
-      case 'Entregue':
+      case 'entregue':
         return {
           'color': kDetailColor,
           'icon': Icons.check_circle,
+          'description': 'Entregue'
         };
-      case 'Cancelado':
+      case 'pedido realizado':
+        return {
+          'color': kSuccessColor,
+          'icon': Icons.check_circle,
+          'description': 'Pedido realizado'
+        };
+      case 'cancelado':
         return {
           'color': kErrorColor,
           'icon': Icons.cancel,
+          'description': 'Cancelado'
+        };
+      case 'pedido recusado':
+        return {
+          'color': kErrorColor,
+          'icon': Icons.cancel,
+          'description': 'Pedido Recusado'
+        };
+      case 'comprovante anexado':
+        return {
+          'color': kAlertColor,
+          'icon': Icons.hourglass_bottom,
+          'description': "Comprovante Anexado"
         };
       default:
         return {
