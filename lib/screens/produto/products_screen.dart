@@ -97,7 +97,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                                   children: [
                                     Icon(
                                       Icons.error_outline,
-                                      color: kButtom,
+                                      color: kDetailColor,
                                       size: 35,
                                     ),
                                     SizedBox(width: 8),
@@ -106,7 +106,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                                       style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,
-                                        color: kButtom,
+                                        color: kDetailColor,
                                       ),
                                     ),
                                   ],
@@ -117,7 +117,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
-                                  color: kButtom,
+                                  color: kDetailColor,
                                 ),
                               ),
                               const SizedBox(height: 10),

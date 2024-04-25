@@ -1,6 +1,4 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
-import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 
 mixin ValidationMixin {
   final RegExp nameRegExp = RegExp(r'^[a-zA-ZÀ-ÿ ]+$');
