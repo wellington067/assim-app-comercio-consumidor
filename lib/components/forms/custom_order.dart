@@ -58,6 +58,13 @@ class OrderCard extends StatelessWidget {
           'icon': Icons.cancel,
           'description': 'Cancelado'
         };
+      case 'pagamento expirado':
+        return {
+          'color': kErrorColor,
+          'icon': Icons.cancel,
+          'description': 'Pagamento Expirado'
+        };
+
       case 'pedido recusado':
         return {
           'color': kErrorColor,
