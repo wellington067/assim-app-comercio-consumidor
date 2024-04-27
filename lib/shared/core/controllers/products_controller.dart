@@ -7,9 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../shared/core/models/cart_model.dart';
-import '../../shared/core/models/produto_model.dart';
-import '../../shared/core/repositories/produto_repository.dart';
+import '../models/cart_model.dart';
+import '../models/produto_model.dart';
+import '../repositories/produto_repository.dart';
 
 class ProductsController extends GetxController {
   List<CartModel> listCart = [];

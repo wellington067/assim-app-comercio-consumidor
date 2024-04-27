@@ -8,6 +8,7 @@ class ProdutoModel {
   String custo;
   bool disponivel;
   int bancaId;
+  String categoria;
   int produtoTabeladoId;
   DateTime createdAt;
   DateTime updatedAt;
@@ -18,6 +19,7 @@ class ProdutoModel {
     required this.descricao,
     required this.titulo,
     required this.tipoUnidade,
+    required this.categoria,
     required this.estoque,
     required this.preco,
     required this.custo,
@@ -39,6 +41,7 @@ class ProdutoModel {
       preco: json['preco'],
       custo: json['custo'],
       disponivel: json['disponivel'],
+      categoria: json['categoria'],
       bancaId: json['banca_id'],
       produtoTabeladoId: json['produto_tabelado_id'],
       createdAt: DateTime.parse(json['created_at']),
@@ -55,6 +58,7 @@ class ProdutoModel {
     data['descricao'] = descricao;
     data['titulo'] = titulo;
     data['tipo_medida'] = tipoUnidade;
+    data['categoria'] = categoria;
     data['estoque'] = estoque.toString();
     data['preco'] = preco;
     data['custo'] = custo;
