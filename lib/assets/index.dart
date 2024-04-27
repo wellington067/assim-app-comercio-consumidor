@@ -7,6 +7,12 @@ class Assets {
   //**IMAGES */
   static const String logo = 'lib/assets/images/logo_lmts.png';
   static const String vegetais = 'lib/assets/images/Carrot.png';
+  static const String beneficiados = 'lib/assets/images/beneficiados.png';
+  static const String mel = 'lib/assets/images/mel.png';
+  static const String polpa = 'lib/assets/images/polpa.png';
+  static const String raizes = 'lib/assets/images/raizes.png';
+  static const String medicinal = 'lib/assets/images/medicinal.png';
+  static const String graos = 'lib/assets/images/grao.png';
   static const String frutas = 'lib/assets/images/Bitten Apple.png';
   static const String folhosos = 'lib/assets/images/Spinach.png';
   static const String carnes = 'lib/assets/images/Meat.png';
