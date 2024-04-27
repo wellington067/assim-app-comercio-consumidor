@@ -17,7 +17,7 @@ class CategoryMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Screens.menu);
+        Navigator.pushNamed(context, Screens.home);
       },
       child: Container(
         width: 64,

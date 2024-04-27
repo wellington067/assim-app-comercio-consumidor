@@ -39,7 +39,7 @@ class OrderCard extends StatelessWidget {
         return {
           'color': kAlertColor,
           'icon': Icons.hourglass_bottom,
-          'description': "Pagamento Pendento"
+          'description': "Pagamento Pendente"
         };
       case 'entregue':
         return {
@@ -51,7 +51,7 @@ class OrderCard extends StatelessWidget {
         return {
           'color': kSuccessColor,
           'icon': Icons.check_circle,
-          'description': 'Pedido realizado'
+          'description': 'Pedido Realizado'
         };
       case 'cancelado':
         return {
@@ -75,6 +75,7 @@ class OrderCard extends StatelessWidget {
         return {
           'color': Colors.grey,
           'icon': Icons.help_outline,
+          'description': "Indisponível"
         };
     }
   }
@@ -131,10 +132,10 @@ class OrderCard extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                         onPressed: () {
-                          showDialog(
+                          /*  showDialog(
                             context: context,
                             builder: (context) => const DeletedOrderDialog(),
-                          );
+                          ); */
                         },
                         icon: const Icon(
                           Icons.arrow_forward_ios_outlined,
@@ -234,7 +235,7 @@ class OrderCard extends StatelessWidget {
                           spacing: 4,
                           children: [
                             Text(
-                              status,
+                              statusAttributes['description'],
                               style: const TextStyle(
                                   fontSize: 17, color: Colors.white),
                             ),

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
-import 'package:ecommerceassim/screens/produto/products_controller.dart';
+import 'package:ecommerceassim/shared/core/controllers/products_controller.dart';
 import 'package:ecommerceassim/screens/produto/components/build_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';

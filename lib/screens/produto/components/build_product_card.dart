@@ -7,7 +7,7 @@ import 'package:ecommerceassim/shared/core/models/table_products_model.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/core/models/cart_model.dart';
 import '../../cesta/cart_provider.dart';
-import '../products_controller.dart';
+import '../../../shared/core/controllers/products_controller.dart';
 
 class BuildProductCard extends StatefulWidget {
   ProdutoModel produto;
