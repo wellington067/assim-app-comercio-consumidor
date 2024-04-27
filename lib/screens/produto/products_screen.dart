@@ -42,8 +42,15 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
       return '${hora}H';
     }
 
+*/
+
+    String formatarHorario(String horario) {
+      List<String> partes = horario.split(':');
+      return '${partes[0]}:${partes[1]}';
+    }
+
     String horarioAberturaFormatado = formatarHorario(horarioAbertura);
-    String horarioFechamentoFormatado = formatarHorario(horarioFechamento); */
+    String horarioFechamentoFormatado = formatarHorario(horarioFechamento);
 
     int selectedIndex = 1;
 
@@ -74,7 +81,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                           ),
                         ),
                         Text(
-                          'Aberto das $horarioAbertura até $horarioFechamento',
+                          'Aberto das $horarioAberturaFormatado até $horarioFechamentoFormatado',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
