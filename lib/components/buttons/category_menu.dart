@@ -53,6 +53,8 @@ class CategoryMenu extends StatelessWidget {
             if (categoryName == "Polpa de Frutas" ||
                 categoryName == "Produtos Beneficiados")
               const Padding(padding: EdgeInsets.only(top: 4.0)),
+            if (categoryName == "Mel")
+              const Padding(padding: EdgeInsets.only(top: 5.0)),
             Text(
               categoryName,
               textAlign: TextAlign.center,

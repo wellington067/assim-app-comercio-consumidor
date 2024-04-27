@@ -22,7 +22,6 @@ class Bancas extends StatelessWidget {
     final String feiraNome = arguments['nome'];
     final dynamic horariosFuncionamentoDynamic = arguments['horarios'];
 
-    // Converter dynamic para Map<String, List<String>> de forma mais genérica
     final Map<String, List<String>> horariosFuncionamento = {};
     if (horariosFuncionamentoDynamic != null &&
         horariosFuncionamentoDynamic is Map<dynamic, dynamic>) {
@@ -34,21 +33,41 @@ class Bancas extends StatelessWidget {
       });
     }
 
-    print(
-        horariosFuncionamento); // Verificar se os horários foram convertidos corretamente
+    String capitalize(String text) {
+      if (text.isEmpty) return text;
+      return text
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join(' ');
+    }
 
-    // Função para extrair os horários de abertura e fechamento para cada dia
+    String formatOpeningHours(Map<String, List<String>> hours) {
+      final List<String> formattedHours = [];
+      hours.forEach((day, times) {
+        final openingTime = times[0];
+        final closingTime = times[1];
+        final capitalizedDay = capitalize(day);
+        formattedHours.add('$capitalizedDay das $openingTime às $closingTime');
+      });
+
+      return 'Dias de funcionamento:\n\n${formattedHours.join('\n')}';
+    }
+
+    print(horariosFuncionamento);
+
+/*
+ 
     String extractOpenCloseTime(List<String> times) {
       if (times.length == 1) {
         return times[
-            0]; // Se houver apenas um horário, retorna o próprio horário
+            0]; 
       } else {
         return '${times[0]} ás ${times[1]}';
       }
     }
 
-    // Função para formatar os horários de funcionamento para exibição na interface
-    String formatOpeningHours(Map<String, List<String>> hours) {
+
+       String formatOpeningHours(Map<String, List<String>> hours) {
       final formattedHours = hours.entries.map((entry) {
         if (entry.value.length == 1) {
           return '${entry.key} das ${extractOpenCloseTime(entry.value)}';
@@ -63,7 +82,7 @@ class Bancas extends StatelessWidget {
       } else {
         return formattedHours.join(', ');
       }
-    }
+    } */
 
     final String cidadeNome = arguments['cidadeNome'] ?? "";
 
@@ -95,7 +114,7 @@ class Bancas extends StatelessWidget {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(22.0, 15.0, 30.0, 0.0),
+                padding: const EdgeInsets.fromLTRB(0.0, 15.0, 80.0, 0.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -107,7 +126,7 @@ class Bancas extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Dias de funcionamento entre ${formatOpeningHours(horariosFuncionamento)}.',
+                      formatOpeningHours(horariosFuncionamento),
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
