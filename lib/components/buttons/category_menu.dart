@@ -20,7 +20,7 @@ class CategoryMenu extends StatelessWidget {
         Navigator.pushNamed(context, Screens.home);
       },
       child: Container(
-        width: 64,
+        width: 75,
         height: 70,
         decoration: BoxDecoration(
           color: kDetailColor,
@@ -43,10 +43,17 @@ class CategoryMenu extends StatelessWidget {
               child: Image.asset(
                 assetPath,
                 fit: BoxFit.cover,
-                height: 25,
+                height: 30,
                 color: Colors.white,
               ),
             ),
+            if (categoryName != "Plantas/Ervas Medicinais" &&
+                categoryName != "Polpa de Frutas" &&
+                categoryName != "Produtos Beneficiados")
+              const Padding(padding: EdgeInsets.only(top: 12.0)),
+            if (categoryName == "Polpa de Frutas" ||
+                categoryName == "Produtos Beneficiados")
+              const Padding(padding: EdgeInsets.only(top: 4.0)),
             Text(
               categoryName,
               textAlign: TextAlign.center,
@@ -68,29 +75,35 @@ class CategoryMenuList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> categories = [
-      {"categoryName": "Vegetais", "assetPath": Assets.vegetais},
+      {"categoryName": "Mel", "assetPath": Assets.mel},
+      {"categoryName": "Legumes", "assetPath": Assets.vegetais},
+      {"categoryName": "Polpa de Frutas", "assetPath": Assets.polpa},
+      {"categoryName": "Grãos", "assetPath": Assets.graos},
+      {"categoryName": "Verduras", "assetPath": Assets.folhosos},
+      {"categoryName": "Raízes", "assetPath": Assets.raizes},
       {"categoryName": "Frutas", "assetPath": Assets.frutas},
-      {"categoryName": "Folhosos", "assetPath": Assets.folhosos},
-      {"categoryName": "Carnes", "assetPath": Assets.carnes},
-      {"categoryName": "Leite e Ovos", "assetPath": Assets.leiteOvos},
+      {
+        "categoryName": "Produtos Beneficiados",
+        "assetPath": Assets.beneficiados
+      },
+      {
+        "categoryName": "Plantas/Ervas Medicinais",
+        "assetPath": Assets.medicinal
+      },
     ];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22.0),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: (64 / 70),
-        ),
+    return SizedBox(
+      height: 95,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          return CategoryMenu(
-            categoryName: categories[index]["categoryName"]!,
-            assetPath: categories[index]["assetPath"]!,
+          return Padding(
+            padding: EdgeInsets.only(left: index == 0 ? 22.0 : 0, right: 10.0),
+            child: CategoryMenu(
+              categoryName: categories[index]["categoryName"]!,
+              assetPath: categories[index]["assetPath"]!,
+            ),
           );
         },
       ),
