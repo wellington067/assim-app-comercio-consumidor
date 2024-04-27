@@ -98,6 +98,7 @@ class FeirasScreen extends StatelessWidget {
                                     'nome': feira.nome,
                                     'bairro': feira.bairroId,
                                     'horarios': feira.horariosFuncionamento,
+                                    'cidadeNome': cidadeNome,
                                   });
                             },
                             borderRadius: BorderRadius.circular(15.0),

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
@@ -10,13 +12,60 @@ import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 
 class Bancas extends StatelessWidget {
-  const Bancas({super.key});
+  const Bancas({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final int feiraId = arguments['id'];
+    final int feiraId = arguments['id'] as int;
+    final String feiraNome = arguments['nome'];
+    final dynamic horariosFuncionamentoDynamic = arguments['horarios'];
+
+    // Converter dynamic para Map<String, List<String>> de forma mais genérica
+    final Map<String, List<String>> horariosFuncionamento = {};
+    if (horariosFuncionamentoDynamic != null &&
+        horariosFuncionamentoDynamic is Map<dynamic, dynamic>) {
+      horariosFuncionamentoDynamic.forEach((key, value) {
+        if (value is List<dynamic>) {
+          horariosFuncionamento[key.toString()] =
+              value.map((e) => e.toString()).toList();
+        }
+      });
+    }
+
+    print(
+        horariosFuncionamento); // Verificar se os horários foram convertidos corretamente
+
+    // Função para extrair os horários de abertura e fechamento para cada dia
+    String extractOpenCloseTime(List<String> times) {
+      if (times.length == 1) {
+        return times[
+            0]; // Se houver apenas um horário, retorna o próprio horário
+      } else {
+        return '${times[0]} ás ${times[1]}';
+      }
+    }
+
+    // Função para formatar os horários de funcionamento para exibição na interface
+    String formatOpeningHours(Map<String, List<String>> hours) {
+      final formattedHours = hours.entries.map((entry) {
+        if (entry.value.length == 1) {
+          return '${entry.key} das ${extractOpenCloseTime(entry.value)}';
+        } else {
+          return '${entry.key} das ${extractOpenCloseTime(entry.value[0].split('-'))} ás ${extractOpenCloseTime(entry.value[1].split('-'))}';
+        }
+      }).toList();
+
+      if (formattedHours.length > 1) {
+        final lastFormattedHour = formattedHours.removeLast();
+        return '${formattedHours.join(', ')}, e $lastFormattedHour';
+      } else {
+        return formattedHours.join(', ');
+      }
+    }
+
+    final String cidadeNome = arguments['cidadeNome'] ?? "";
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,7 +94,35 @@ class Bancas extends StatelessWidget {
 
           return Column(
             children: [
-              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(22.0, 15.0, 30.0, 0.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$cidadeNome - $feiraNome',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Dias de funcionamento entre ${formatOpeningHours(horariosFuncionamento)}.',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              const CustomSearchField(
+                fillColor: kOnBackgroundColorText,
+                iconColor: kDetailColor,
+                hintText: 'Buscar por bancas',
+                padding: EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 10.0),
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22.0),
                 child: Align(
@@ -58,12 +135,6 @@ class Bancas extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              const CustomSearchField(
-                fillColor: kOnBackgroundColorText,
-                iconColor: kDetailColor,
-                hintText: 'Buscar por bancas',
-                padding: EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 10.0),
               ),
               const VerticalSpacer(size: 5),
               Expanded(
@@ -97,6 +168,8 @@ class Bancas extends StatelessWidget {
                               arguments: {
                                 'id': banca.id,
                                 'nome': banca.nome,
+                                'horario_abertura': banca.horarioAbertura,
+                                'horario_fechamento': banca.horarioFechamento,
                               },
                             );
                           },
