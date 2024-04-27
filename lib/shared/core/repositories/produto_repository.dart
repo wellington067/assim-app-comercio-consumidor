@@ -21,13 +21,19 @@ class ProdutoRepository {
       if (response.statusCode == 200) {
         List<dynamic> produtosJson = response.data['produtos'] ?? [];
         if (produtosJson.isEmpty) {
-          // Se a lista de produtos está vazia, lançar uma exceção com uma mensagem específica
           throw Exception('Nenhum produto cadastrado para esta banca.');
         }
-        final List<ProdutoModel> produtos = produtosJson
+        // Filtro para apenas produtos disponiveis
+        final List<ProdutoModel> produtosDisponiveis = produtosJson
+            .where((produtoJson) => produtoJson['disponivel'] == true)
             .map((produtoJson) => ProdutoModel.fromJson(produtoJson))
             .toList();
-        return produtos;
+
+        if (produtosDisponiveis.isEmpty) {
+          throw Exception('Nenhum produto disponível para esta banca.');
+        }
+
+        return produtosDisponiveis;
       } else {
         throw Exception('Não foi possível carregar os produtos da banca.');
       }
