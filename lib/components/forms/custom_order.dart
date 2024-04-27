@@ -49,7 +49,7 @@ class OrderCard extends StatelessWidget {
       case 'pedido realizado':
         return {
           'color': kSuccessColor,
-          'icon': Icons.check_circle,
+          'icon': Icons.check_box_rounded,
           'description': 'Pedido Realizado'
         };
       case 'cancelado':
@@ -120,6 +120,16 @@ class OrderCard extends StatelessWidget {
                   offset: const Offset(0, 0),
                 ),
               ],
+              border: Border(
+                left: BorderSide(
+                  color: kTextButtonColor.withOpacity(0.5),
+                  width: 1,
+                ),
+                right: BorderSide(
+                  color: kTextButtonColor.withOpacity(0.5),
+                  width: 1,
+                ),
+              ),
             ),
             child: Wrap(
               children: [
@@ -155,7 +165,8 @@ class OrderCard extends StatelessWidget {
                   color: kTextButtonColor,
                   height: 20,
                   thickness: 1,
-                  indent: 5,
+/*                   indent: 5,
+ */
                 ),
                 const VerticalSpacerBox(size: SpacerSize.small),
                 Padding(
