@@ -33,6 +33,17 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int bancaId = arguments['id'];
     final String bancaNome = arguments['nome'];
+    final String horarioAbertura = arguments['horario_abertura'];
+    final String horarioFechamento = arguments['horario_fechamento'];
+
+    // Função para formatar as horas
+/*     String formatarHorario(String horario) {
+      String hora = horario.split(':')[0];
+      return '${hora}H';
+    }
+
+    String horarioAberturaFormatado = formatarHorario(horarioAbertura);
+    String horarioFechamentoFormatado = formatarHorario(horarioFechamento); */
 
     int selectedIndex = 1;
 
@@ -51,20 +62,32 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 24.0),
-                    child: Text(
-                      bancaNome,
-                      style: const TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          bancaNome,
+                          style: const TextStyle(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Aberto das $horarioAbertura até $horarioFechamento',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 const CustomSearchField(
                   fillColor: kOnBackgroundColorText,
                   iconColor: kDetailColor,
-                  hintText: 'Buscar',
+                  hintText: 'Buscar por produtos',
                   padding: EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 12.0),
                 ),
                 const CategoryMenuList(),
