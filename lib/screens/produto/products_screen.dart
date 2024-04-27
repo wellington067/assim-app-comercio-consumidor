@@ -74,9 +74,14 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(kDetailColor),
+                        child: Column(
+                          children: [
+                            VerticalSpacer(size: 180),
+                            CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(kDetailColor),
+                            ),
+                          ],
                         ),
                       );
                     } else if (snapshot.hasError ||

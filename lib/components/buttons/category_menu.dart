@@ -1,24 +1,23 @@
 import 'package:ecommerceassim/assets/index.dart';
-import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
 class CategoryMenu extends StatelessWidget {
   final String categoryName;
   final String assetPath;
+  final VoidCallback onTap;
 
   const CategoryMenu({
     super.key,
     required this.categoryName,
     required this.assetPath,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Screens.home);
-      },
+      onTap: onTap,
       child: Container(
         width: 75,
         height: 70,
@@ -43,7 +42,7 @@ class CategoryMenu extends StatelessWidget {
               child: Image.asset(
                 assetPath,
                 fit: BoxFit.cover,
-                height: 30,
+                height: categoryName == "Mel" ? 25 : 30,
                 color: Colors.white,
               ),
             ),
@@ -92,6 +91,15 @@ class CategoryMenuList extends StatelessWidget {
       },
     ];
 
+    void handleCategoryTap(String categoryName) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Produtos da categoria de $categoryName'),
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    }
+
     return SizedBox(
       height: 95,
       child: ListView.builder(
@@ -103,6 +111,8 @@ class CategoryMenuList extends StatelessWidget {
             child: CategoryMenu(
               categoryName: categories[index]["categoryName"]!,
               assetPath: categories[index]["assetPath"]!,
+              onTap: () =>
+                  handleCategoryTap(categories[index]["categoryName"]!),
             ),
           );
         },
