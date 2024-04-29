@@ -54,7 +54,7 @@ class _SelectAddressState extends State<SelectAddress> {
 
     return Scaffold(
       appBar: const CustomAppBar(),
-      bottomNavigationBar: BottomNavigation(),
+      bottomNavigationBar: BottomNavigation(paginaSelecionada: 3),
       backgroundColor: Colors.white,
       body: Container(
         color: kOnSurfaceColor,
