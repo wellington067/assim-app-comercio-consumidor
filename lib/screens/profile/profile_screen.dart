@@ -15,7 +15,9 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const CustomAppBar(),
-      bottomNavigationBar: BottomNavigation(),
+      bottomNavigationBar: BottomNavigation(
+        paginaSelecionada: 3,
+      ),
       body: Material(
         color: Colors.white,
         child: Column(
