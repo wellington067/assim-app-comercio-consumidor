@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_print
 
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
@@ -91,7 +91,7 @@ class Bancas extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const CustomAppBar(),
-      bottomNavigationBar: BottomNavigation(selectedIndex: 0),
+      bottomNavigationBar: BottomNavigation(),
       body: FutureBuilder(
         future: Provider.of<BancaController>(context, listen: false)
             .loadBancas(feiraId),

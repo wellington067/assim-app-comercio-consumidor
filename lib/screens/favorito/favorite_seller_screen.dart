@@ -1,8 +1,8 @@
 import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,6 @@ class MenuSellerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
-    int _selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
@@ -42,7 +41,7 @@ class MenuSellerScreen extends StatelessWidget {
                 //IconButton
               ),
               bottomNavigationBar:
-                  BottomNavigation(selectedIndex: _selectedIndex),
+                  BottomNavigation(),
               body: SingleChildScrollView(
                 child: Container(
                   color: Colors.white,

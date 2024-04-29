@@ -1,15 +1,17 @@
 // ignore: file_names
+import 'package:ecommerceassim/shared/components/bottomNavigation/bottom_navigator_controller.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
-import '../../screens/screens_index.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class BottomNavigation extends StatelessWidget {
-  late int selectedIndex;
-  BottomNavigation({super.key, required this.selectedIndex});
+  int? paginaSelecionada = 0;
+   BottomNavigation({super.key, this.paginaSelecionada});
 
   @override
   Widget build(BuildContext context) {
+    var bottomNavigatorController = Provider.of<BottomNavigationController>(context);
     return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const [
@@ -49,21 +51,12 @@ class BottomNavigation extends StatelessWidget {
             ),
           ),
         ],
-        currentIndex: selectedIndex,
+        currentIndex: paginaSelecionada ?? 0,
         unselectedItemColor: kTextNavColor,
         selectedItemColor: kDetailColor,
         backgroundColor: kOnSurfaceColor,
         onTap: (index) {
-          selectedIndex = index;
-          if (selectedIndex == 0) {
-            Navigator.pushNamed(context, Screens.home);
-          } else if (selectedIndex == 1) {
-            Navigator.pushNamed(context, Screens.cart);
-          } else if (selectedIndex == 2) {
-            Navigator.pushNamed(context, Screens.purchases);
-          } else if (selectedIndex == 3) {
-            Navigator.pushNamed(context, Screens.profile);
-          }
+          bottomNavigatorController.mudarAba(index, context, paginaSelecionada);
         });
   }
 }

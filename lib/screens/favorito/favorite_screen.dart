@@ -1,9 +1,9 @@
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     //final whats = Uri.parse('https://api.whatsapp.com/send?phone=5581997128385');
-    int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
@@ -28,7 +27,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         builder: ((context, controller, child) => Scaffold(
               appBar: const CustomAppBar(),
               bottomNavigationBar:
-                  BottomNavigation(selectedIndex: selectedIndex),
+                  BottomNavigation(),
               body: Container(
                 color: kOnSurfaceColor,
                 width: size.width,

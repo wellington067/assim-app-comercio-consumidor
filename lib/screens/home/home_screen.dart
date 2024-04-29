@@ -1,7 +1,7 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/cidade/cidade_screen.dart';
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
@@ -24,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: ((context, controller, child) => Scaffold(
               appBar: const CustomAppBar(),
               bottomNavigationBar:
-                  BottomNavigation(selectedIndex: selectedIndex),
+                  BottomNavigation(paginaSelecionada: 0,),
               body: Container(
                 color: kOnSurfaceColor,
                 width: size.width,

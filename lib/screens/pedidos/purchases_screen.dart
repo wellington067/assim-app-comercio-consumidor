@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/core/repositories/pedidos_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,6 @@ import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/controllers/pedidos_controller.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/components/forms/custom_order.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import '../../shared/constants/app_enums.dart';
@@ -37,7 +37,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
               backgroundColor: Colors.white,
               appBar: const CustomAppBar(),
               bottomNavigationBar:
-                  BottomNavigation(selectedIndex: selectedIndex),
+                  BottomNavigation(paginaSelecionada: 2,),
               body: const Center(
                 child: CircularProgressIndicator(
                   color: kDetailColor,
@@ -48,7 +48,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
 
           return Scaffold(
             appBar: const CustomAppBar(),
-            bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
+            bottomNavigationBar: BottomNavigation(paginaSelecionada: 2,),
             body: Container(
               color: kOnSurfaceColor,
               width: MediaQuery.of(context).size.width,

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/core/controllers/products_controller.dart';
 import 'package:ecommerceassim/screens/produto/components/build_product_card.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/components/buttons/category_menu.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -52,13 +52,12 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
     String horarioAberturaFormatado = formatarHorario(horarioAbertura);
     String horarioFechamentoFormatado = formatarHorario(horarioFechamento);
 
-    int selectedIndex = 1;
 
     return GetBuilder<ProductsController>(
       init: ProductsController(),
       builder: (controller) => Scaffold(
         appBar: const CustomAppBar(),
-        bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
+        bottomNavigationBar: BottomNavigation(),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(

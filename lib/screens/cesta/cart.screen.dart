@@ -3,7 +3,7 @@ import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/cesta/card_cart.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
@@ -33,13 +33,12 @@ class _CartScreenState extends State<CartScreen> {
     final cartListProvider = Provider.of<CartProvider>(context);
     //late int melancia = 0;
     //late int limao = 0;
-    late int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CartController>(
       init: CartController(),
       builder: (controller) => Scaffold(
         appBar: const CustomAppBar(),
-        bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
+        bottomNavigationBar: BottomNavigation(paginaSelecionada: 1,),
         body: SingleChildScrollView(
           child: Container(
             color: kOnSurfaceColor,
