@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
