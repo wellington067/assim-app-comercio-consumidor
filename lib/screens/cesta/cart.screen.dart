@@ -19,7 +19,7 @@ import 'cart_provider.dart';
 class CartScreen extends StatefulWidget {
   final ProdutoModel? selectedProduct;
 
-  CartScreen({super.key, this.selectedProduct});
+  const CartScreen({super.key, this.selectedProduct});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -33,59 +33,61 @@ class _CartScreenState extends State<CartScreen> {
     final cartListProvider = Provider.of<CartProvider>(context);
     //late int melancia = 0;
     //late int limao = 0;
+    late int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CartController>(
       init: CartController(),
       builder: (controller) => Scaffold(
         appBar: const CustomAppBar(),
-        bottomNavigationBar: BottomNavigation(paginaSelecionada: 1,),
-        body: SingleChildScrollView(
-          child: Container(
-            color: kOnSurfaceColor,
-            width: size.width,
-            height: size.height,
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      'Subtotal',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const HorizontalSpacerBox(size: SpacerSize.small),
-                    Text(
-                        NumberFormat.simpleCurrency(
-                    locale: 'pt-BR', decimalDigits: 2)
+        bottomNavigationBar: BottomNavigation(paginaSelecionada: selectedIndex),
+        body: Container(
+          color: kOnSurfaceColor,
+          width: size.width,
+          height: size.height,
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Text(
+                    'Subtotal',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const HorizontalSpacerBox(size: SpacerSize.small),
+                  Text(
+                    NumberFormat.simpleCurrency(
+                            locale: 'pt-BR', decimalDigits: 2)
                         .format(cartListProvider.total),
-                      style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const VerticalSpacerBox(size: SpacerSize.medium),
-                PrimaryButton(
-                  text: 'Fechar Pedido (${cartListProvider.itens} itens)',
-                  onPressed: () {
-                    Navigator.pushNamed(context, Screens.finalizePurchase);
-                  },
-                  color: kDetailColor,
-                ),
-                const VerticalSpacerBox(size: SpacerSize.large),
-                Expanded(
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return CardCart(cartListProvider.retriveCardItem(index), controller);
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(height: size.height * 0.03, color: Colors.transparent,);
-                      },
-                      itemCount: cartListProvider.listCart.length),
-                ),
-              ],
-            ),
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const VerticalSpacerBox(size: SpacerSize.medium),
+              PrimaryButton(
+                text: 'Fechar Pedido (${cartListProvider.itens} itens)',
+                onPressed: () {
+                  Navigator.pushNamed(context, Screens.finalizePurchase);
+                },
+                color: kDetailColor,
+              ),
+              const VerticalSpacerBox(size: SpacerSize.large),
+              Expanded(
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return CardCart(
+                          cartListProvider.retriveCardItem(index), controller);
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        height: size.height * 0.03,
+                        color: Colors.transparent,
+                      );
+                    },
+                    itemCount: cartListProvider.listCart.length),
+              ),
+            ],
           ),
         ),
       ),

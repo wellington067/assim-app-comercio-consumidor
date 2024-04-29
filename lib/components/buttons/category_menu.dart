@@ -1,4 +1,5 @@
 import 'package:ecommerceassim/assets/index.dart';
+import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
@@ -55,6 +56,8 @@ class CategoryMenu extends StatelessWidget {
               const Padding(padding: EdgeInsets.only(top: 4.0)),
             if (categoryName == "Mel")
               const Padding(padding: EdgeInsets.only(top: 5.0)),
+            if (categoryName == "Plantas/Ervas Medicinais")
+              const VerticalSpacer(size: 5),
             Text(
               categoryName,
               textAlign: TextAlign.center,
