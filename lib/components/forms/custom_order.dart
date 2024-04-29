@@ -34,17 +34,43 @@ class OrderCard extends StatelessWidget {
 
   Map<String, dynamic> _getStatusAttributes(String status) {
     switch (status) {
+      // Em andamento
       case 'pagamento pendente':
         return {
           'color': kAlertColor,
           'icon': Icons.hourglass_bottom,
           'description': "Pagamento Pendente"
         };
-      case 'entregue':
+      case 'aguardando retirada':
+        return {
+          'color': kAlertColor,
+          'icon': Icons.hourglass_bottom,
+          'description': "Aguardando Retirada"
+        };
+      case 'aguardando confirmacao':
+        return {
+          'color': kAlertColor,
+          'icon': Icons.hourglass_bottom,
+          'description': "Aguardando Confirmação"
+        };
+      case 'aguardando envio':
+        return {
+          'color': kAlertColor,
+          'icon': Icons.hourglass_bottom,
+          'description': "Aguardando Envio"
+        };
+      // Finalizado
+      case 'pedido entregue':
         return {
           'color': kDetailColor,
           'icon': Icons.check_circle,
-          'description': 'Entregue'
+          'description': 'Pedido Entregue'
+        };
+      case 'pedido enviado':
+        return {
+          'color': kSuccessColor,
+          'icon': Icons.check_circle,
+          'description': 'Pedido Enviado'
         };
       case 'pedido realizado':
         return {
@@ -52,11 +78,24 @@ class OrderCard extends StatelessWidget {
           'icon': Icons.check_box_rounded,
           'description': 'Pedido Realizado'
         };
-      case 'cancelado':
+      case 'comprovante anexado':
+        return {
+          'color': kSuccessColor,
+          'icon': Icons.check_box_rounded,
+          'description': 'Comprovante Anexado'
+        };
+      // Cancelado
+      case 'pedido cancelado':
         return {
           'color': kErrorColor,
           'icon': Icons.cancel,
-          'description': 'Cancelado'
+          'description': 'Pedido Cancelado'
+        };
+      case 'pedido recusado':
+        return {
+          'color': kErrorColor,
+          'icon': Icons.cancel,
+          'description': 'Pedido Recusado'
         };
       case 'pagamento expirado':
         return {
@@ -65,18 +104,13 @@ class OrderCard extends StatelessWidget {
           'description': 'Pagamento Expirado'
         };
 
-      case 'pedido recusado':
+      case 'comprovante recusado':
         return {
           'color': kErrorColor,
           'icon': Icons.cancel,
-          'description': 'Pedido Recusado'
+          'description': 'Comprovante Recusado'
         };
-      case 'comprovante anexado':
-        return {
-          'color': kAlertColor,
-          'icon': Icons.hourglass_bottom,
-          'description': "Comprovante Anexado"
-        };
+
       default:
         return {
           'color': Colors.grey,

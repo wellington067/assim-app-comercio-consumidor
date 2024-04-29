@@ -50,7 +50,9 @@ class Bancas extends StatelessWidget {
         formattedHours.add('$capitalizedDay das $openingTime às $closingTime');
       });
 
-      return 'Dias de funcionamento:\n\n${formattedHours.join('\n')}';
+/*       return 'Dias de funcionamento:\n\n${formattedHours.join('\n')}';
+ */
+      return formattedHours.join('\n');
     }
 
     print(horariosFuncionamento);
@@ -112,9 +114,10 @@ class Bancas extends StatelessWidget {
           }
 
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 15.0, 80.0, 0.0),
+                padding: const EdgeInsets.fromLTRB(21.0, 15.0, 21.0, 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -125,6 +128,7 @@ class Bancas extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const SizedBox(height: 8),
                     Text(
                       formatOpeningHours(horariosFuncionamento),
                       style: const TextStyle(
@@ -135,15 +139,15 @@ class Bancas extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               const CustomSearchField(
                 fillColor: kOnBackgroundColorText,
                 iconColor: kDetailColor,
                 hintText: 'Buscar por bancas',
-                padding: EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 10.0),
+                padding: EdgeInsets.fromLTRB(21.0, 0.0, 21.0, 10.0),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22.0),
+                padding: EdgeInsets.fromLTRB(21.0, 12.0, 21.0, 10.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
