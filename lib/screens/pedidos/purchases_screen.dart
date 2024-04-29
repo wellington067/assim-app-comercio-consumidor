@@ -34,11 +34,14 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
         builder: (context, controller, child) {
           if (controller.status == PedidosStatus.loading) {
             return Scaffold(
+              backgroundColor: Colors.white,
               appBar: const CustomAppBar(),
               bottomNavigationBar:
                   BottomNavigation(selectedIndex: selectedIndex),
               body: const Center(
-                child: CircularProgressIndicator(color: kDetailColor),
+                child: CircularProgressIndicator(
+                  color: kDetailColor,
+                ),
               ),
             );
           }

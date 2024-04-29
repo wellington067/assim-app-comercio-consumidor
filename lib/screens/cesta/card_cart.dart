@@ -63,27 +63,28 @@ class _CardCartState extends State<CardCart> {
               Row(
                 children: [
                   const HorizontalSpacerBox(size: SpacerSize.large),
-                  Container(
-                      width: size.width * 0.3,
-                      height: size.height * 0.1,
-                      decoration: base64Image != null
-                          ? BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                alignment: Alignment.center,
-                                image: MemoryImage(
-                                    base64Decode(base64Image.split(',').last)),
+                  SizedBox(
+                    width: size.width * 0.3,
+                    height: size.height * 0.1,
+                    child: Expanded(
+                      child: Center(
+                        child: base64Image != null
+                            ? Image.memory(
+                                base64Decode(base64Image.split(',').last))
+                            : const Icon(
+                                Icons.shopping_bag,
+                                size: 80,
+                                color: kDetailColor,
                               ),
-                            )
-                          : const BoxDecoration(
-                              color: kErrorColor,
-                            )),
+                      ),
+                    ),
+                  ),
                   const HorizontalSpacerBox(size: SpacerSize.small),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      VerticalSpacerBox(size: SpacerSize.large),
+                      const VerticalSpacerBox(size: SpacerSize.large),
                       Container(
                         width: size.width * 0.42,
                         alignment: AlignmentDirectional.topStart,
@@ -97,19 +98,19 @@ class _CardCartState extends State<CardCart> {
                           ),
                         ),
                       ),
-                      VerticalSpacerBox(size: SpacerSize.medium),
+                      const VerticalSpacerBox(size: SpacerSize.medium),
                       Row(
                         children: [
                           Text(
                             rightPrice.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.end,
                           ),
-                          HorizontalSpacerBox(size: SpacerSize.tiny),
+                          const HorizontalSpacerBox(size: SpacerSize.tiny),
                         ],
                       ),
-                      VerticalSpacerBox(size: SpacerSize.small),
+                      const VerticalSpacerBox(size: SpacerSize.small),
                     ],
                   ),
                 ],
@@ -147,7 +148,7 @@ class _CardCartState extends State<CardCart> {
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       setState(() {
-                        if(widget.model.amount < widget.model.stock){
+                        if (widget.model.amount < widget.model.stock) {
                           widget.model.amount++;
                           widget.controller?.incrementCounter();
                           cartListProvider.itens++;
