@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/constants/style_constants.dart';
@@ -52,7 +52,6 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
     final String produtoPreco = arguments?['preco'];
     final String? base64Image = arguments?['produtoImage'];
 
-    int selectedIndex = 1;
 
     String shortDescription = produtoDescricao.length > 100
         ? '${produtoDescricao.substring(0, 100)}...'
@@ -60,7 +59,7 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
 
     return Scaffold(
       appBar: const CustomAppBar(),
-      bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
+      bottomNavigationBar: BottomNavigation(),
       body: Material(
         color: Colors.white,
         child: Column(

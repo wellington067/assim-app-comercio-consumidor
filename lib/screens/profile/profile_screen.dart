@@ -1,10 +1,10 @@
+import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/forms/custom_ink.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
-import 'package:ecommerceassim/shared/components/BottomNavigation.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -12,11 +12,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserStorage userStorage = UserStorage();
-    int selectedIndex = 3;
 
     return Scaffold(
       appBar: const CustomAppBar(),
-      bottomNavigationBar: BottomNavigation(selectedIndex: selectedIndex),
+      bottomNavigationBar: BottomNavigation(),
       body: Material(
         color: Colors.white,
         child: Column(
