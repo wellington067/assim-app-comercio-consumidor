@@ -52,7 +52,6 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
     String horarioAberturaFormatado = formatarHorario(horarioAbertura);
     String horarioFechamentoFormatado = formatarHorario(horarioFechamento);
 
-
     return GetBuilder<ProductsController>(
       init: ProductsController(),
       builder: (controller) => Scaffold(
@@ -147,7 +146,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                                 ),
                               ),
                               const Text(
-                                'Nenhum Produto foi encontrado.',
+                                'Nenhum produto foi encontrado.',
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,

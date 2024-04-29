@@ -13,7 +13,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false, // caso remova, volta a seta da app bar
       title: const Text(
-        'APP-ASSIM',
+/*         'APP-ASSIM',
+
+ */
+        "ASSIM",
         style: TextStyle(
           color: kDetailColor,
           fontWeight: FontWeight.bold,
