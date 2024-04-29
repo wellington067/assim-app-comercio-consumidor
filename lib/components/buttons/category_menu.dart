@@ -42,7 +42,7 @@ class CategoryMenu extends StatelessWidget {
               child: Image.asset(
                 assetPath,
                 fit: BoxFit.cover,
-                height: categoryName == "Mel" ? 25 : 30,
+                height: categoryName == "Mel" ? 20 : 25,
                 color: Colors.white,
               ),
             ),
@@ -60,7 +60,7 @@ class CategoryMenu extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 11,
               ),
             ),
           ],
@@ -103,7 +103,7 @@ class CategoryMenuList extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 95,
+      height: 80,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
