@@ -36,8 +36,8 @@ class FeiraController with ChangeNotifier {
 
   Future<void> loadFeirasByCidadeId(int cidadeId) async {
     UserStorage userStorage = UserStorage();
-    Dio dio = Dio();
     String userToken = await userStorage.getUserToken();
+    Dio dio = Dio();
     try {
       var bairrosResponse = await dio.get(
         '$kBaseURL/bairros/cidade/$cidadeId',
@@ -75,16 +75,16 @@ class FeiraController with ChangeNotifier {
               .map((feira) => FeiraModel.fromJson(feira))
               .toList();
 
-          print(
+          /*  print(
               "Feiras antes da filtragem: ${feirasJson.map((feira) => feira.bairroId).toList()}");
-
+ */
           _feiras = feirasJson
               .where((feira) => bairroIds.contains(feira.bairroId))
               .toList();
 
-          print(
+          /*  print(
               "Feiras após a filtragem: ${_feiras.map((feira) => feira.bairroId).toList()}");
-
+ */
           notifyListeners();
         } else {
           print('Erro ao carregar feiras: ${feirasResponse.statusCode}');

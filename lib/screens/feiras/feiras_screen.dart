@@ -37,11 +37,13 @@ class FeirasScreen extends StatelessWidget {
               ),
             ),
           ),
-          const CustomSearchField(
+          CustomSearchField(
             fillColor: kOnBackgroundColorText,
             iconColor: kDetailColor,
             hintText: 'Buscar por feiras',
-            padding: EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 5.0),
+            padding: const EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 5.0),
+            onSearch: (String) {},
+            setLoading: (bool) {},
           ),
           Expanded(
             child: FutureBuilder(

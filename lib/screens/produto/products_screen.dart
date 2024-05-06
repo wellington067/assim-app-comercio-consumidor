@@ -89,11 +89,13 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                     ),
                   ),
                 ),
-                const CustomSearchField(
+                CustomSearchField(
                   fillColor: kOnBackgroundColorText,
                   iconColor: kDetailColor,
                   hintText: 'Buscar por produtos',
-                  padding: EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 12.0),
+                  padding: const EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 12.0),
+                  onSearch: (String) {},
+                  setLoading: (bool) {},
                 ),
                 const CategoryMenuList(),
                 const VerticalSpacerBox(size: SpacerSize.medium),

@@ -8,6 +8,8 @@ import 'package:ecommerceassim/shared/core/models/cidade_model.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
+import '../../components/buttons/debouncer.dart';
+
 class CidadeScreen extends StatefulWidget {
   const CidadeScreen({super.key});
 
@@ -17,6 +19,7 @@ class CidadeScreen extends StatefulWidget {
 
 class _CidadeScreenState extends State<CidadeScreen> {
   bool isLoading = true;
+  final Debouncer debouncer = Debouncer(milliseconds: 0);
 
   @override
   void initState() {
@@ -42,39 +45,43 @@ class _CidadeScreenState extends State<CidadeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Cidades',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 16),
+            child: Text('Cidades',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           ),
-          const CustomSearchField(
+          CustomSearchField(
             fillColor: kOnBackgroundColorText,
             iconColor: kDetailColor,
             hintText: 'Buscar por cidades',
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
+            onSearch: (text) {
+              final cidadeController =
+                  Provider.of<CidadeController>(context, listen: false);
+              if (text.isEmpty) {
+                cidadeController.loadCidades();
+              } else {
+                debouncer.call(() => cidadeController.searchCidades(text));
+              }
+            },
+            setLoading: (loading) {
+              setState(() {
+                isLoading = loading;
+              });
+            },
           ),
           Expanded(
             child: isLoading
                 ? const Center(
-                    child: CircularProgressIndicator(
-                    color: kDetailColor,
-                  )) // Mostra o loading
+                    child: CircularProgressIndicator(color: kDetailColor))
                 : Consumer<CidadeController>(
                     builder: (context, cidadeController, child) {
-                      List<CidadeModel> cidades = cidadeController.cidades;
-                      if (cidades.isEmpty) {
+                      if (cidadeController.hasError) {
                         return _buildEmptyListWidget();
                       }
                       return ListView.builder(
-                        itemCount: cidades.length,
-                        itemBuilder: (context, index) {
-                          CidadeModel cidade = cidades[index];
-                          return _buildCidadeItem(cidade);
-                        },
+                        itemCount: cidadeController.cidades.length,
+                        itemBuilder: (context, index) =>
+                            _buildCidadeItem(cidadeController.cidades[index]),
                       );
                     },
                   ),
@@ -142,18 +149,18 @@ class _CidadeScreenState extends State<CidadeScreen> {
   Widget _buildEmptyListWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 100.0),
+        padding: const EdgeInsets.only(top: 00.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.storefront, color: kButtom, size: 80),
+            const Icon(Icons.storefront, color: kDetailColor, size: 80),
             const SizedBox(height: 20),
             const Text(
               'Nenhuma cidade foi encontrada.',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: kButtom,
+                color: kDetailColor,
               ),
             ),
             const SizedBox(height: 10),
