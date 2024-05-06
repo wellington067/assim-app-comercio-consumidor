@@ -12,7 +12,7 @@ import 'package:ecommerceassim/shared/core/controllers/banca_controller.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 
 class Bancas extends StatelessWidget {
-  const Bancas({Key? key}) : super(key: key);
+  const Bancas({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +55,8 @@ class Bancas extends StatelessWidget {
       return formattedHours.join('\n');
     }
 
-    print(horariosFuncionamento);
-
+/*     print(horariosFuncionamento);
+ */
 /*
  
     String extractOpenCloseTime(List<String> times) {
@@ -140,11 +140,13 @@ class Bancas extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const CustomSearchField(
+              CustomSearchField(
                 fillColor: kOnBackgroundColorText,
                 iconColor: kDetailColor,
                 hintText: 'Buscar por bancas',
-                padding: EdgeInsets.fromLTRB(21.0, 0.0, 21.0, 10.0),
+                padding: const EdgeInsets.fromLTRB(21.0, 0.0, 21.0, 10.0),
+                onSearch: (String) {},
+                setLoading: (bool) {},
               ),
               const Padding(
                 padding: EdgeInsets.fromLTRB(21.0, 12.0, 21.0, 10.0),

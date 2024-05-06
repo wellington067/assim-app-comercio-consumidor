@@ -47,7 +47,7 @@ class OrderCard extends StatelessWidget {
           'icon': Icons.hourglass_bottom,
           'description': "Aguardando Retirada"
         };
-      case 'aguardando confirmacao':
+      case 'aguardando confirmação':
         return {
           'color': kAlertColor,
           'icon': Icons.hourglass_bottom,
@@ -265,7 +265,7 @@ class OrderCard extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
