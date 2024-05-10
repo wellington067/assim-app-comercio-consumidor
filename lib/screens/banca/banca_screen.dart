@@ -197,6 +197,7 @@ class Bancas extends StatelessWidget {
                                 'horario_fechamento': banca.horarioFechamento,
                               },
                             );
+                            /* print(banca.id); */
                           },
                           borderRadius: BorderRadius.circular(15.0),
                           child: Padding(

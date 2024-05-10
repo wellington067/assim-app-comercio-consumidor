@@ -36,8 +36,9 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
             return Scaffold(
               backgroundColor: Colors.white,
               appBar: const CustomAppBar(),
-              bottomNavigationBar:
-                  BottomNavigation(paginaSelecionada: 2,),
+              bottomNavigationBar: BottomNavigation(
+                paginaSelecionada: 2,
+              ),
               body: const Center(
                 child: CircularProgressIndicator(
                   color: kDetailColor,
@@ -48,7 +49,9 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
 
           return Scaffold(
             appBar: const CustomAppBar(),
-            bottomNavigationBar: BottomNavigation(paginaSelecionada: 2,),
+            bottomNavigationBar: BottomNavigation(
+              paginaSelecionada: 2,
+            ),
             body: Container(
               color: kOnSurfaceColor,
               width: MediaQuery.of(context).size.width,

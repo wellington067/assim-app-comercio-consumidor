@@ -1,3 +1,6 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:ecommerceassim/components/buttons/debouncer.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +11,15 @@ import 'package:ecommerceassim/shared/core/models/feira_model.dart';
 import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 
-class FeirasScreen extends StatelessWidget {
-  const FeirasScreen({
-    super.key,
-  });
+class FeirasScreen extends StatefulWidget {
+  const FeirasScreen({super.key});
+
+  @override
+  _FeirasScreenState createState() => _FeirasScreenState();
+}
+
+class _FeirasScreenState extends State<FeirasScreen> {
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ class FeirasScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int cidadeId = arguments['id'] as int;
     final String cidadeNome = arguments['nome'] as String;
-
+    final Debouncer debouncer = Debouncer(milliseconds: 0);
     return Scaffold(
       appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
@@ -42,8 +50,18 @@ class FeirasScreen extends StatelessWidget {
             iconColor: kDetailColor,
             hintText: 'Buscar por feiras',
             padding: const EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 5.0),
-            onSearch: (String) {},
-            setLoading: (bool) {},
+            onSearch: (text) {
+              final feiraController =
+                  Provider.of<FeiraController>(context, listen: false);
+              debouncer.call(() {
+                if (text.isEmpty) {
+                  feiraController.loadFeiras();
+                } else {
+                  feiraController.searchFeiras(text);
+                }
+              });
+            },
+            setLoading: (loading) {},
           ),
           Expanded(
             child: FutureBuilder(
@@ -176,7 +194,41 @@ class FeirasScreen extends StatelessWidget {
     );
   }
 
-  /* Widget _buildFeiraCard(BuildContext context, FeiraModel feira) {
+  Widget _buildErrorWidget(String errorMessage) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 120.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.error_outline, color: kDetailColor, size: 80),
+            const SizedBox(height: 20),
+            const Text(
+              'Erro ao buscar feiras',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: kDetailColor,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              errorMessage,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/* Widget _buildFeiraCard(BuildContext context, FeiraModel feira) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0),
       decoration: BoxDecoration(
@@ -231,4 +283,3 @@ class FeirasScreen extends StatelessWidget {
       ),
     );
   } */
-}

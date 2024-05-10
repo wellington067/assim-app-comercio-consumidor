@@ -62,7 +62,7 @@ class App extends StatelessWidget {
         Screens.menuSeller: (BuildContext context) => const MenuSellerScreen(),
         Screens.menuProducts: (BuildContext context) =>
             const MenuProductsScreen(),
-        Screens.cart: (BuildContext context) => CartScreen(),
+        Screens.cart: (BuildContext context) => const CartScreen(),
         Screens.feiras: (BuildContext context) => const FeirasScreen(),
         Screens.bancas: (BuildContext context) => const Bancas(),
         Screens.produtoDetalhe: (BuildContext context) =>

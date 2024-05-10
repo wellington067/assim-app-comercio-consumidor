@@ -81,7 +81,7 @@ class _CartScreenState extends State<CartScreen> {
                     },
                     separatorBuilder: (context, index) {
                       return Divider(
-                        height: size.height * 0.03,
+                        height: size.height * 0.015,
                         color: Colors.transparent,
                       );
                     },
