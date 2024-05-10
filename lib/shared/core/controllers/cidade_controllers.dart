@@ -14,6 +14,7 @@ class CidadeController with ChangeNotifier {
   bool _hasError = false;
   List<CidadeModel> get cidades => _cidades;
   bool get hasError => _hasError;
+
   Future<void> loadCidades() async {
     try {
       _cidades = await _cidadeRepository.getCidades();

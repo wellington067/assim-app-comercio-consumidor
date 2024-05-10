@@ -52,7 +52,7 @@ class PedidosRepository {
         }
       } else {
         throw Exception(
-            'Failed to load orders. Status code: ${response.statusCode}');
+            'Falha em carregar os pedidos. Status code: ${response.statusCode}');
       }
     } catch (error) {
       log('Error making the request: $error');
@@ -76,14 +76,14 @@ class PedidosRepository {
             List<Map<String, dynamic>>.from(response.data['bancas']);
         var banca = bancasData.firstWhere((b) => b['id'] == bancaId,
             orElse: () => <String, dynamic>{});
-        return banca.isNotEmpty ? banca['nome'] : 'Unknown Banca';
+        return banca.isNotEmpty ? banca['nome'] : 'Banca Desconhecida';
       } else {
-        log('Failed to load banca info. Status code: ${response.statusCode}');
-        return 'Unknown Banca';
+        log('Falha em carregar as bancas. Código do Status: ${response.statusCode}');
+        return 'Banca Desconhecida';
       }
     } catch (error) {
-      log('Error fetching banca name: $error');
-      return 'Unknown Banca';
+      log('Erro em buscar o nome da banca: $error');
+      return 'Banca Desconhecida';
     }
   }
 }

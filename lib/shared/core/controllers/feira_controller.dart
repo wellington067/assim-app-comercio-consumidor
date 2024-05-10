@@ -34,6 +34,46 @@ class FeiraController with ChangeNotifier {
     }
   }
 
+  Future<void> searchFeiras(String query) async {
+    UserStorage userStorage = UserStorage();
+    String userToken = await userStorage.getUserToken();
+
+    if (query.isEmpty) {
+      await loadFeiras();
+      return;
+    }
+
+    try {
+      var options = Options(headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        'Cache-Control': 'no-cache',
+        "Authorization": "Bearer $userToken",
+      });
+
+      var response =
+          await Dio().get('$kBaseURL/feiras/search?q=$query', options: options);
+
+      if (response.statusCode == 200) {
+        var json = response.data;
+        if (json['feiras'].isEmpty) {
+          _feiras = [];
+          print('Nenhuma feira encontrada para a busca: $query');
+        } else {
+          _feiras = List<FeiraModel>.from(
+              json['feiras'].map((x) => FeiraModel.fromJson(x)));
+        }
+      } else {
+        _feiras = [];
+        print('Erro ao buscar feiras: Status ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Erro na busca de feiras: $error');
+      _feiras = [];
+    }
+    notifyListeners();
+  }
+
   Future<void> loadFeirasByCidadeId(int cidadeId) async {
     UserStorage userStorage = UserStorage();
     String userToken = await userStorage.getUserToken();
