@@ -6,8 +6,6 @@ import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigati
 import 'package:ecommerceassim/shared/core/controllers/products_controller.dart';
 import 'package:ecommerceassim/screens/produto/components/build_product_card.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceassim/shared/core/models/produto_model.dart';
-import 'package:ecommerceassim/shared/core/repositories/produto_repository.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/components/buttons/category_menu.dart';
@@ -30,6 +28,19 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
   final Debouncer debouncer = Debouncer(milliseconds: 0);
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      final Map<String, dynamic> arguments =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      final int bancaId = arguments['id'];
+
+      final produtoController = Get.find<ProductsController>();
+      produtoController.initializeProducts(bancaId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final cartListProvider = Provider.of<CartProvider>(context);
     final Map<String, dynamic> arguments =
@@ -38,14 +49,6 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
     final String bancaNome = arguments['nome'];
     final String horarioAbertura = arguments['horario_abertura'];
     final String horarioFechamento = arguments['horario_fechamento'];
-
-    // Função para formatar as horas
-    /*     String formatarHorario(String horario) {
-        String hora = horario.split(':')[0];
-        return '${hora}H';
-      }
-
-  */
 
     String formatarHorario(String horario) {
       List<String> partes = horario.split(':');

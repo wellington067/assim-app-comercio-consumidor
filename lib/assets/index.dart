@@ -5,7 +5,8 @@ class Assets {
   ///the assets should be separated by sections
 
   //**IMAGES */
-  static const String logo = 'lib/assets/images/logo_lmts.png';
+  static const String lmtsLogo = 'lib/assets/images/logo_lmts.png';
+  static const String ufapeLogo = 'lib/assets/images/ufape-logo.png';
   static const String vegetais = 'lib/assets/images/Carrot.png';
   static const String beneficiados = 'lib/assets/images/beneficiados.png';
   static const String mel = 'lib/assets/images/mel.png';

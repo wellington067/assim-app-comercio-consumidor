@@ -112,9 +112,13 @@ class ProductsController extends GetxController {
 
   @override
   void onInit() async {
-    listTableProducts = await loadList();
     super.onInit();
+    listTableProducts = await loadList();
     update();
+  }
+
+  Future<void> initializeProducts(int bancaId) async {
+    await loadProdutos(bancaId);
   }
 
   List<ProdutoModel> get produtos => _produtos;

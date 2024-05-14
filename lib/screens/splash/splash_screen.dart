@@ -21,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    animController = AnimationController(
-        vsync: this, duration: const Duration(seconds: 2));
+    animController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     _controller = SplashScreenController(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setController();
@@ -31,20 +31,18 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-   void setController() async {
+  void setController() async {
     await animController.repeat();
   }
 
   void stopController() async {
     Future.delayed(const Duration(milliseconds: 200), () {
-     
       setState(() {
         opacity = 1;
       });
       animController.stop();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +55,10 @@ class _SplashScreenState extends State<SplashScreen>
             padding: const EdgeInsets.all(kDefaultPadding),
             margin: const EdgeInsets.only(bottom: 245),
             decoration: const BoxDecoration(
-                color: kDetailColor, borderRadius: BorderRadius.only(bottomRight: Radius.circular(40), bottomLeft: Radius.circular(40))),
+                color: kDetailColor,
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(40),
+                    bottomLeft: Radius.circular(40))),
             width: size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -84,17 +85,27 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   'Desenvolvido por:',
                   textAlign: TextAlign.center,
-                  style: kBody2.copyWith(fontFamily: 'Roboto'),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 const VerticalSpacerBox(size: SpacerSize.small),
-                Center(child: Image.asset(Assets.logo)),
-                Text(
-                  'LMTS - Laboratório Multidisciplinar de Tecnologias Sociais',
-                  textAlign: TextAlign.center,
-                  style: kBody2.copyWith(fontFamily: 'Roboto'),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.ufapeLogo,
+                        width: 100,
+                      ),
+                      const SizedBox(width: 20),
+                      Image.asset(
+                        Assets.lmtsLogo,
+                        width: 150,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
