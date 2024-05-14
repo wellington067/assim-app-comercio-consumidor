@@ -66,17 +66,15 @@ class _CardCartState extends State<CardCart> {
                   SizedBox(
                     width: size.width * 0.3,
                     height: size.height * 0.1,
-                    child: Expanded(
-                      child: Center(
-                        child: base64Image != null
-                            ? Image.memory(
-                                base64Decode(base64Image.split(',').last))
-                            : const Icon(
-                                Icons.shopping_bag,
-                                size: 80,
-                                color: kDetailColor,
-                              ),
-                      ),
+                    child: Center(
+                      child: base64Image != null
+                          ? Image.memory(
+                              base64Decode(base64Image.split(',').last))
+                          : const Icon(
+                              Icons.shopping_bag,
+                              size: 80,
+                              color: kDetailColor,
+                            ),
                     ),
                   ),
                   const HorizontalSpacerBox(size: SpacerSize.small),
@@ -157,27 +155,15 @@ class _CardCartState extends State<CardCart> {
                       });
                     },
                   ),
-                  const HorizontalSpacerBox(size: SpacerSize.large),
-                  ElevatedButton(
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: kTextButtonColor,
                     onPressed: () {
-                      // setState(() {
-                      //   widget.controller?.amount--;
-                      //   widget.controller?.decrementCounter();
-                      //   widget.controller?.total -= 5.50;
-                      // });
                       cartListProvider.removeCart(widget.model);
                     },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(kErrorColor),
-                    ),
-                    child: const Text(
-                      'Excluir',
-                      style: TextStyle(
-                        color: kOnSurfaceColor,
-                        fontSize: 15,
-                      ),
-                    ),
                   ),
+                  const HorizontalSpacerBox(size: SpacerSize.medium),
                 ],
               ),
               const VerticalSpacerBox(size: SpacerSize.tiny),
