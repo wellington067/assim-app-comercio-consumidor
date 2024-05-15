@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class BancaController with ChangeNotifier {
   List<BancaModel> _bancas = [];
-  final BancaRepository _bancaRepository = BancaRepository(Dio());
+  final BancaRepository _bancaRepository = BancaRepository();
 
   List<BancaModel> get bancas => _bancas;
 

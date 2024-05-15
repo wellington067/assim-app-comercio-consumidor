@@ -4,9 +4,9 @@ import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 
 class BancaRepository {
-  final Dio _dio;
+  final Dio _dio = Dio();
 
-  BancaRepository(this._dio);
+
 
   Future<List<BancaModel>> getBancas(int feiraId) async {
     final userToken = await UserStorage().getUserToken();
@@ -31,6 +31,30 @@ class BancaRepository {
     } on DioError catch (dioError) {
       // Handle Dio-specific errors here
       throw Exception('DioError caught: ${dioError.message}');
+    } catch (error) {
+      // Handle general errors here
+      throw Exception('An unexpected error occurred: $error');
+    }
+  }
+
+  Future<BancaModel> getBanca(int bancaId) async {
+    final userToken = await UserStorage().getUserToken();
+
+    try {
+      final response = await _dio.get(
+        '$kBaseURL/bancas/$bancaId',
+        options: Options(
+          headers: {"Authorization": "Bearer $userToken"},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final bancaJson = response.data['banca'];
+        return BancaModel.fromJson(bancaJson);
+      } else {
+        throw Exception(
+            'Failed to load banca with status code: ${response.statusCode}.');
+      }
     } catch (error) {
       // Handle general errors here
       throw Exception('An unexpected error occurred: $error');
