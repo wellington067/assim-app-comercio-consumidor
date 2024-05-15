@@ -16,6 +16,7 @@ import 'package:ecommerceassim/screens/profile/editar/perfil/profile_edit_screen
 import 'package:ecommerceassim/screens/profile/profile_screen.dart';
 import 'package:ecommerceassim/screens/profile/endereco/select_adress_screen.dart';
 import 'package:ecommerceassim/screens/signup/sign_up_screen.dart';
+import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/shared/core/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -71,7 +72,7 @@ class App extends StatelessWidget {
         Screens.perfilEditar: (BuildContext context) =>
             const ProfileEditScreen(),
         Screens.finalizePurchase: (BuildContext context) =>
-            const FinalizePurchaseScreen(),
+             FinalizePurchaseScreen([]),
       },
     );
   }

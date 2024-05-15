@@ -20,9 +20,6 @@ class FeiraRepository {
       var response = await _dio.get('$kBaseURL/feiras',
           options: Options(
             headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              'Cache-Control': 'no-cache',
               "Authorization": "Bearer $userToken"
             },
           ));

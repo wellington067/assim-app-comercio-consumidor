@@ -29,7 +29,7 @@ class ProductsController extends GetxController {
   ProductsController(this._dio);
 
   final ProdutoRepository produtoRepository = ProdutoRepository(Dio());
-  final BancaRepository bancaRepository = BancaRepository(Dio());
+  final BancaRepository bancaRepository = BancaRepository();
 
   CartModel createCart(BuildContext context, int amount, ProdutoModel produto) {
     final Map<String, dynamic> arguments =
