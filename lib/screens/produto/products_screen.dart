@@ -30,7 +30,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final Map<String, dynamic> arguments =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       final int bancaId = arguments['id'];
