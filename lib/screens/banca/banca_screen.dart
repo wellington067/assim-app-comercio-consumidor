@@ -23,10 +23,45 @@ class _BancasState extends State<Bancas> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int feiraId = arguments['id'] as int;
     final String feiraNome = arguments['nome'] as String;
     final String cidadeNome = arguments['cidadeNome'] ?? "";
+    final dynamic horariosFuncionamentoDynamic = arguments['horarios'];
+
+    final Map<String, List<String>> horariosFuncionamento = {};
+    if (horariosFuncionamentoDynamic != null &&
+        horariosFuncionamentoDynamic is Map<dynamic, dynamic>) {
+      horariosFuncionamentoDynamic.forEach((key, value) {
+        if (value is List<dynamic>) {
+          horariosFuncionamento[key.toString()] =
+              value.map((e) => e.toString()).toList();
+        }
+      });
+    }
+
+    String capitalize(String text) {
+      if (text.isEmpty) return text;
+      return text
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join(' ');
+    }
+
+    String formatOpeningHours(Map<String, List<String>> hours) {
+      final List<String> formattedHours = [];
+      hours.forEach((day, times) {
+        final openingTime = times[0];
+        final closingTime = times[1];
+        final capitalizedDay = capitalize(day);
+        formattedHours.add('$capitalizedDay das $openingTime às $closingTime');
+      });
+
+/*       return 'Dias de funcionamento:\n\n${formattedHours.join('\n')}';
+ */
+      return formattedHours.join('\n');
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -37,9 +72,23 @@ class _BancasState extends State<Bancas> {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(21.0, 15.0, 21.0, 10.0),
-            child: Text(
-              '$cidadeNome - $feiraNome',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$cidadeNome - $feiraNome',
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  formatOpeningHours(horariosFuncionamento),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
             ),
           ),
           CustomSearchField(
@@ -48,7 +97,8 @@ class _BancasState extends State<Bancas> {
             hintText: 'Buscar por bancas',
             padding: const EdgeInsets.fromLTRB(21.0, 21.0, 21.0, 5.0),
             onSearch: (text) {
-              final bancaController = Provider.of<BancaController>(context, listen: false);
+              final bancaController =
+                  Provider.of<BancaController>(context, listen: false);
               debouncer.call(() {
                 setState(() {
                   searchQuery = text;
@@ -77,7 +127,8 @@ class _BancasState extends State<Bancas> {
           ),
           Expanded(
             child: FutureBuilder(
-              future: Provider.of<BancaController>(context, listen: false).loadBancas(feiraId),
+              future: Provider.of<BancaController>(context, listen: false)
+                  .loadBancas(feiraId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -100,8 +151,11 @@ class _BancasState extends State<Bancas> {
                   }
                 }
 
-                final filteredBancas = bancas.where((banca) =>
-                    banca.nome.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+                final filteredBancas = bancas
+                    .where((banca) => banca.nome
+                        .toLowerCase()
+                        .contains(searchQuery.toLowerCase()))
+                    .toList();
 
                 if (filteredBancas.isEmpty) {
                   return _buildEmptyListWidget();
@@ -154,13 +208,15 @@ class _BancasState extends State<Bancas> {
               children: [
                 const CircleAvatar(
                   radius: 25.0,
-                  backgroundImage: AssetImage("lib/assets/images/banca-fruta.jpg"),
+                  backgroundImage:
+                      AssetImage("lib/assets/images/banca-fruta.jpg"),
                 ),
                 const SizedBox(width: 16.0),
                 Expanded(
                   child: Text(
                     banca.nome,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
