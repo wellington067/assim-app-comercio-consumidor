@@ -288,12 +288,12 @@ class OrderCard extends StatelessWidget {
                             Text(
                               statusAttributes['description'],
                               style: const TextStyle(
-                                  fontSize: 17, color: Colors.white),
+                                  fontSize: 14, color: Colors.white),
                             ),
                             Icon(
                               statusIcon,
                               color: Colors.white,
-                              size: 20,
+                              size: 18,
                             ),
                           ],
                         ),

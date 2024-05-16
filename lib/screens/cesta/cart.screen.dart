@@ -31,8 +31,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartListProvider = Provider.of<CartProvider>(context);
-    //late int melancia = 0;
-    //late int limao = 0;
     late int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CartController>(
@@ -58,35 +56,43 @@ class _CartScreenState extends State<CartScreen> {
                     NumberFormat.simpleCurrency(
                             locale: 'pt-BR', decimalDigits: 2)
                         .format(cartListProvider.total),
-                      style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const VerticalSpacerBox(size: SpacerSize.medium),
-                PrimaryButton(
-                  text: 'Fechar Pedido (${cartListProvider.itens} itens)',
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => FinalizePurchaseScreen(cartListProvider.listCart)));
-                  },
-                  color: kDetailColor,
-                ),
-                const VerticalSpacerBox(size: SpacerSize.large),
-                Expanded(
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return CardCart(cartListProvider.retriveCardItem(index), controller);
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(height: size.height * 0.03, color: Colors.transparent,);
-                      },
-                      itemCount: cartListProvider.listCart.length),
-                ),
-              ],
-            ),
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const VerticalSpacerBox(size: SpacerSize.medium),
+              PrimaryButton(
+                text: 'Fechar Pedido (${cartListProvider.itens} itens)',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FinalizePurchaseScreen(
+                              cartListProvider.listCart)));
+                },
+                color: kDetailColor,
+              ),
+              const VerticalSpacerBox(size: SpacerSize.large),
+              Expanded(
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return CardCart(
+                          cartListProvider.retriveCardItem(index), controller);
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        height: size.height * 0.03,
+                        color: Colors.transparent,
+                      );
+                    },
+                    itemCount: cartListProvider.listCart.length),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 }
