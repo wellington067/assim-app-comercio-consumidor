@@ -28,4 +28,5 @@ class Assets {
   static const String pix = 'lib/assets/images/pix.png';
   static const String feedback = 'lib/assets/images/feedback.jpg';
   static const String document = 'lib/assets/images/ufape-edu-br.pem';
+  static const String shoppingBag = 'lib/assets/images/shopping-bag.png';
 }
