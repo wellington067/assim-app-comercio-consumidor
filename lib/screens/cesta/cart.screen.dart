@@ -31,8 +31,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartListProvider = Provider.of<CartProvider>(context);
-    //late int melancia = 0;
-    //late int limao = 0;
     late int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
     return GetBuilder<CartController>(

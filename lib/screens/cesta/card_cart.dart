@@ -56,15 +56,9 @@ class _CardCartState extends State<CardCart> {
               offset: const Offset(0, 0),
             ),
           ],
-          border: Border(
-            left: BorderSide(
-              color: kTextButtonColor.withOpacity(0.5),
-              width: 1,
-            ),
-            right: BorderSide(
-              color: kTextButtonColor.withOpacity(0.5),
-              width: 1,
-            ),
+          border: Border.all(
+            color: kTextButtonColor.withOpacity(0.5),
+            width: 1,
           ),
         ),
         child: Center(
