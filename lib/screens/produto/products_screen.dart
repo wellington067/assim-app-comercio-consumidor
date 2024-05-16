@@ -32,7 +32,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final Map<String, dynamic> arguments =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       final int bancaId = arguments['id'];
@@ -111,7 +111,7 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
                       if (text.isEmpty) {
                         produtoController.loadProdutos(bancaId);
                       } else {
-                        produtoController.searchProdutos(bancaId, text);
+                        produtoController.searchProdutosLocalmente(text);
                       }
                     });
                   },
@@ -178,6 +178,8 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
   }
 }
 
+// mensagem de erro ao carregar produtos
+
 Widget _buildEmptyProductListWidget() {
   return const Center(
     child: Padding(
@@ -199,7 +201,7 @@ Widget _buildEmptyProductListWidget() {
           ),
           SizedBox(height: 10),
           Text(
-            'Por favor, verifique se o nome está correto ou tente novamente mais tarde.',
+            'Parece que não tem produtos nesta banca. Tente outra banca ou volte mais tarde.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
