@@ -1,6 +1,5 @@
 import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
-import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/purchase_controller.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 import '../../../components/buttons/primary_button.dart';
 
@@ -106,23 +104,22 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       horizontal: 8, vertical: 6),
                                   child: Row(
                                     children: [
-                                     const HorizontalSpacerBox(
+                                      const HorizontalSpacerBox(
                                           size: SpacerSize.large),
-                                    const Text(
+                                      const Text(
                                         'Vendido por:',
                                         style: TextStyle(fontSize: 17),
                                       ),
                                       Spacer(),
                                       controller.bancaModel == null
                                           ? const Text('Carregando...')
-                                          :
-                                      Text(
-                                        controller.bancaModel!.nome,
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: kButtom),
-                                      ),
+                                          : Text(
+                                              controller.bancaModel!.nome,
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: kButtom),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -140,7 +137,8 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       ),
                                       const Spacer(),
                                       Text(
-                                        controller.listCartModel!.length.toString(),
+                                        controller.listCartModel!.length
+                                            .toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -211,31 +209,31 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                       ),
                     ]),
                     const VerticalSpacerBox(size: SpacerSize.small),
-                     Row(
-                       crossAxisAlignment: CrossAxisAlignment.start,
-                       children: [
-                         Row(
-                           children: [
-                             Radio(
-                                 overlayColor:
-                                     MaterialStateProperty.all(kDetailColor),
-                                 value: 'Retirada',
-                                 groupValue: 'Retirada',
-                                 activeColor: kDetailColor,
-                                 focusColor: kDetailColor,
-                                 hoverColor: kDetailColor,
-                                 onChanged: (value) {
-                                   setState(() {
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                                overlayColor:
+                                    MaterialStateProperty.all(kDetailColor),
+                                value: 'Retirada',
+                                groupValue: 'Retirada',
+                                activeColor: kDetailColor,
+                                focusColor: kDetailColor,
+                                hoverColor: kDetailColor,
+                                onChanged: (value) {
+                                  setState(() {
                                     //  controller.setFormEnt(value.toString());
-                                   });
-                                 }),
-                             const Text(
-                               'Retirada',
-                               style: TextStyle(
-                                   fontSize: 20, color: kTextButtonColor),
-                             ),
-                           ],
-                         ),
+                                  });
+                                }),
+                            const Text(
+                              'Retirada',
+                              style: TextStyle(
+                                  fontSize: 20, color: kTextButtonColor),
+                            ),
+                          ],
+                        ),
                         //  const HorizontalSpacerBox(size: SpacerSize.small),
                         //  Row(
                         //    children: [
@@ -259,8 +257,8 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                         //      ),
                         //    ],
                         //  ),
-                       ],
-                     ),
+                      ],
+                    ),
                     // const VerticalSpacerBox(size: SpacerSize.small),
                     // const Row(children: [
                     //   Text(
@@ -355,33 +353,30 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                     const VerticalSpacerBox(size: SpacerSize.large),
                     PrimaryButton(
                       text: 'Confirmar pedido',
-                      onPressed: () async{
+                      onPressed: () async {
                         bool sucess = await controller.purchase();
-                        if(sucess){
-                          
-                        }
-                         showDialog(
-                             context: context,
-                             builder: (context) => RatingDialog(
-                                   starColor: Colors.amber,
-                                   title: const Text('Que tal nos avaliar?'),
-                                   message: const Text(
-                                       'Dê uma nota para o seu pedido'),
-                                   image: Image.asset(
-                                     Assets.feedback,
-                                     height: 250,
-                                   ),
-                                   submitButtonText: 'Enviar',
-                                   onCancelled: () =>
-                                       ScaffoldMessenger.of(context)
-                                           .showSnackBar(const SnackBar(
-                                               backgroundColor: kButtom2,
-                                               content: Text('Cancelado'))),
-                                   onSubmitted: (response) {
-                                      Navigator.pushNamed(context, Screens.home);
-                                      
-                                   },
-                                 ));
+                        if (sucess) {}
+                        showDialog(
+                            context: context,
+                            builder: (context) => RatingDialog(
+                                  starColor: Colors.amber,
+                                  title: const Text('Que tal nos avaliar?'),
+                                  message: const Text(
+                                      'Dê uma nota para o seu pedido'),
+                                  image: Image.asset(
+                                    Assets.feedback,
+                                    height: 250,
+                                  ),
+                                  submitButtonText: 'Enviar',
+                                  onCancelled: () =>
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              backgroundColor: kButtom2,
+                                              content: Text('Cancelado'))),
+                                  onSubmitted: (response) {
+                                    Navigator.pushNamed(context, Screens.home);
+                                  },
+                                ));
                       },
                       color: kButtom,
                     ),

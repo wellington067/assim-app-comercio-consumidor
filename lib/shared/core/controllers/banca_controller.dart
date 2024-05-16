@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
@@ -9,15 +11,15 @@ import '../../constants/app_text_constants.dart';
 
 class BancaController with ChangeNotifier {
   List<BancaModel> _bancas = [];
-  List<FeiraModel> _feiras = []; // Lista para armazenar as feiras carregadas
+  List<FeiraModel> _feiras = [];
   final BancaRepository _bancaRepository = BancaRepository();
 
   List<BancaModel> get bancas => _bancas;
   List<FeiraModel> get feiras => _feiras;
 
   Future<void> loadBancas(int feiraId) async {
-    UserStorage userStorage = UserStorage();
-    String userToken = await userStorage.getUserToken();
+    /* UserStorage userStorage = UserStorage();
+    String userToken = await userStorage.getUserToken(); */
     try {
       _bancas = await _bancaRepository.getBancas(feiraId);
       notifyListeners();
