@@ -74,13 +74,17 @@ class CategoryMenu extends StatelessWidget {
     );
   }
 }
+
 class CategoryMenuList extends StatelessWidget {
   const CategoryMenuList({super.key});
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> categories = [
-      {"categoryName": "Todos", "assetPath":  Assets.shoppingBag}, // Botão para exibir todos os produtos
+      {
+        "categoryName": "Todos",
+        "assetPath": Assets.shoppingBag
+      }, // Botão para exibir todos os produtos
       {"categoryName": "Mel", "assetPath": Assets.mel},
       {"categoryName": "Legumes", "assetPath": Assets.vegetais},
       {"categoryName": "Polpa de Frutas", "assetPath": Assets.polpa},
@@ -88,8 +92,14 @@ class CategoryMenuList extends StatelessWidget {
       {"categoryName": "Verduras", "assetPath": Assets.folhosos},
       {"categoryName": "Raízes", "assetPath": Assets.raizes},
       {"categoryName": "Frutas", "assetPath": Assets.frutas},
-      {"categoryName": "Produtos Beneficiados", "assetPath": Assets.beneficiados},
-      {"categoryName": "Plantas/Ervas Medicinais", "assetPath": Assets.medicinal}
+      {
+        "categoryName": "Produtos Beneficiados",
+        "assetPath": Assets.beneficiados
+      },
+      {
+        "categoryName": "Plantas/Ervas Medicinais",
+        "assetPath": Assets.medicinal
+      }
     ];
 
     void handleCategoryTap(int index) {

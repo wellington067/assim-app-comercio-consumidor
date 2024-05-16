@@ -18,7 +18,7 @@ class ProductsController extends GetxController {
   ProdutoModel? produto;
 
   List<ProdutoModel> _produtos = [];
-  List<ProdutoModel> _filteredProdutos = [];
+  List<ProdutoModel> filteredProdutos = [];
   final _hasError = false;
 
   RxBool isLoading = false.obs;
@@ -54,7 +54,7 @@ class ProductsController extends GetxController {
       isLoading(true);
       produtos1 = await produtoRepository.getProdutos(bancaId);
       _produtos = produtos1;
-      _filteredProdutos = _produtos;
+      filteredProdutos = _produtos;
       update();
     } catch (error) {
       print('Erro ao carregar os produtos: $error');
@@ -65,9 +65,9 @@ class ProductsController extends GetxController {
 
   void searchProdutosLocalmente(String query) {
     if (query.isEmpty) {
-      _filteredProdutos = _produtos;
+      filteredProdutos = _produtos;
     } else {
-      _filteredProdutos = _produtos
+      filteredProdutos = _produtos
           .where((produto) =>
               produto.titulo.toLowerCase().contains(query.toLowerCase()))
           .toList();
@@ -89,15 +89,15 @@ class ProductsController extends GetxController {
     ];
 
     if (categoryIndex == -1) {
-      _filteredProdutos = _produtos;
+      filteredProdutos = _produtos;
     } else if (categoryIndex >= 0 && categoryIndex < categories.length) {
       String categoryName = categories[categoryIndex];
-      _filteredProdutos = _produtos
+      filteredProdutos = _produtos
           .where((produto) =>
               produto.categoria.toLowerCase() == categoryName.toLowerCase())
           .toList();
     } else {
-      _filteredProdutos = _produtos;
+      filteredProdutos = _produtos;
     }
     update();
   }
@@ -113,7 +113,7 @@ class ProductsController extends GetxController {
     await loadProdutos(bancaId);
   }
 
-  List<ProdutoModel> get produtos => _filteredProdutos;
+  List<ProdutoModel> get produtos => filteredProdutos;
 
   bool get hasError => _hasError;
 }
