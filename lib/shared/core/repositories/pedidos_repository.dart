@@ -45,6 +45,9 @@ class PedidosRepository {
             orders.add(order);
           }
 
+          // Ordenar os pedidos pela data
+          orders.sort((a, b) => a.dataPedido!.compareTo(b.dataPedido!));
+
           return orders;
         } else {
           log('No compras data available.');

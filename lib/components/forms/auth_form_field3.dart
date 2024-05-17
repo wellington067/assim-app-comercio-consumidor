@@ -9,13 +9,13 @@ class AuthFormField3 extends StatefulWidget {
   final Color backgroundColor;
 
   const AuthFormField3({
-    Key? key,
+    super.key,
     required this.label,
     required this.isPassword,
     required this.inputType,
     required this.onChanged,
     this.backgroundColor = kOnBackgroundColorText,
-  }) : super(key: key);
+  });
 
   @override
   State<AuthFormField3> createState() => _AuthFormField3State();

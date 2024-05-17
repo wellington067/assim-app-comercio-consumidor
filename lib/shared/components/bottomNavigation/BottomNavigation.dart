@@ -1,4 +1,5 @@
-// ignore: file_names
+// ignore_for_file: file_names
+
 import 'package:ecommerceassim/shared/components/bottomNavigation/bottom_navigator_controller.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,12 @@ import 'package:provider/provider.dart';
 // ignore: must_be_immutable
 class BottomNavigation extends StatelessWidget {
   int? paginaSelecionada = 0;
-   BottomNavigation({super.key, this.paginaSelecionada});
+  BottomNavigation({super.key, this.paginaSelecionada});
 
   @override
   Widget build(BuildContext context) {
-    var bottomNavigatorController = Provider.of<BottomNavigationController>(context);
+    var bottomNavigatorController =
+        Provider.of<BottomNavigationController>(context);
     return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const [

@@ -3,8 +3,8 @@ import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
 class SecondaryButton extends StatelessWidget {
-  const SecondaryButton({Key? key, required this.text, required this.onPressed})
-      : super(key: key);
+  const SecondaryButton(
+      {super.key, required this.text, required this.onPressed});
   final String text;
   final Function onPressed;
   @override

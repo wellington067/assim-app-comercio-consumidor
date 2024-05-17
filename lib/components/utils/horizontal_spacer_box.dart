@@ -3,7 +3,7 @@ import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 
 class HorizontalSpacerBox extends StatelessWidget {
-  const HorizontalSpacerBox({Key? key, required this.size}) : super(key: key);
+  const HorizontalSpacerBox({super.key, required this.size});
   final SpacerSize size;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HorizontalSpacerBox extends StatelessWidget {
         return const SizedBox(
           width: kSmallSize,
         );
-      case SpacerSize.medium: 
+      case SpacerSize.medium:
         return const SizedBox(
           width: kMediumSize,
         );
@@ -28,9 +28,10 @@ class HorizontalSpacerBox extends StatelessWidget {
         return const SizedBox(
           width: kHugeSize,
         );
-      default: return const SizedBox(
-        width: kSmallSize,
-      );
+      default:
+        return const SizedBox(
+          width: kSmallSize,
+        );
     }
   }
 }
