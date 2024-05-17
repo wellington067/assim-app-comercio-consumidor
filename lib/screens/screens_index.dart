@@ -25,4 +25,5 @@ class Screens {
   static const String produtoDetalhe = '/produto/products_details_screen';
   static const String perfilEditar = '/profile/profile_edit_screen';
   static const String cidades = '/cidade/cidade_screen';
+  static const String pagamento = '/pedidos/payment_screen';
 }

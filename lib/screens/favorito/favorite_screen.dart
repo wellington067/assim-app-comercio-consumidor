@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({Key? key}) : super(key: key);
+  const FavoriteScreen({super.key});
 
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();
@@ -26,8 +26,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       builder: (context, child) => Consumer<HomeScreenController>(
         builder: ((context, controller, child) => Scaffold(
               appBar: const CustomAppBar(),
-              bottomNavigationBar:
-                  BottomNavigation(),
+              bottomNavigationBar: BottomNavigation(),
               body: Container(
                 color: kOnSurfaceColor,
                 width: size.width,

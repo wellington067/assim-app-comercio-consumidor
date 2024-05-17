@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'package:ecommerceassim/shared/core/repositories/first_repository.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:flutter/cupertino.dart';

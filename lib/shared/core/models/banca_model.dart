@@ -40,16 +40,16 @@ class BancaModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = this.id;
-    data['nome'] = this.nome;
-    data['descricao'] = this.descricao;
-    data['horario_abertura'] = this.horarioAbertura;
-    data['horario_fechamento'] = this.horarioFechamento;
-    data['entrega'] = this.entrega;
-    data['preco_minimo'] = this.precoMinimo.toString();
-    data['feira_id'] = this.feiraId;
-    data['agricultor_id'] = this.agricultorId;
-    data['pix'] = this.pix;
+    data['id'] = id;
+    data['nome'] = nome;
+    data['descricao'] = descricao;
+    data['horario_abertura'] = horarioAbertura;
+    data['horario_fechamento'] = horarioFechamento;
+    data['entrega'] = entrega;
+    data['preco_minimo'] = precoMinimo.toString();
+    data['feira_id'] = feiraId;
+    data['agricultor_id'] = agricultorId;
+    data['pix'] = pix;
     return data;
   }
 }

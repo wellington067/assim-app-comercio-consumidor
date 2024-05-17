@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../components/utils/horizontal_spacer_box.dart';
 
 class MenuSellerScreen extends StatelessWidget {
-  const MenuSellerScreen({Key? key}) : super(key: key);
+  const MenuSellerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,7 @@ class MenuSellerScreen extends StatelessWidget {
                 ],
                 //IconButton
               ),
-              bottomNavigationBar:
-                  BottomNavigation(),
+              bottomNavigationBar: BottomNavigation(),
               body: SingleChildScrollView(
                 child: Container(
                   color: Colors.white,

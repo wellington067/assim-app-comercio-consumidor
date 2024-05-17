@@ -7,35 +7,32 @@ class AuthFormField extends StatefulWidget {
   final TextInputType inputType;
   final Function(String)? onChanged;
   final Color backgroundColor;
-  final TextEditingController?
-      controller; 
-  final String? initialValue; 
+  final TextEditingController? controller;
+  final String? initialValue;
 
   const AuthFormField({
-    Key? key,
+    super.key,
     required this.label,
     required this.isPassword,
     required this.inputType,
     this.onChanged,
     this.backgroundColor = kOnBackgroundColorText,
-    this.controller, 
+    this.controller,
     this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   State<AuthFormField> createState() => _AuthFormFieldState();
 }
 
 class _AuthFormFieldState extends State<AuthFormField> {
-  late TextEditingController _controller; 
+  late TextEditingController _controller;
   bool showPassword = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(
-        text: widget
-            .initialValue);
+    _controller = TextEditingController(text: widget.initialValue);
   }
 
   @override
@@ -44,7 +41,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
     return SizedBox(
       height: size.height * 0.06,
       child: TextFormField(
-        controller: _controller, 
+        controller: _controller,
         onChanged: widget.onChanged,
         style: const TextStyle(color: kSecondaryColor),
         obscureText: widget.isPassword ? showPassword : false,
@@ -71,13 +68,12 @@ class _AuthFormFieldState extends State<AuthFormField> {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none, 
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
-              color:
-                  kDetailColor, 
+              color: kDetailColor,
               width: 1.5,
             ),
           ),

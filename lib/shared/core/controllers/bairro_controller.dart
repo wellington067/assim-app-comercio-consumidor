@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/models/bairro_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/bairro_repository.dart';

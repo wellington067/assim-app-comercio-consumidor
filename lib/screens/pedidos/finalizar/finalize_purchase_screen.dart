@@ -110,7 +110,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                         'Vendido por:',
                                         style: TextStyle(fontSize: 17),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       controller.bancaModel == null
                                           ? const Text('Carregando...')
                                           : Text(

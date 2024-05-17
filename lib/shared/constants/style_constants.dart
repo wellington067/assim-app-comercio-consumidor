@@ -1,7 +1,3 @@
-///This file should contain all the constants style used in the app
-///like texts, fonts, colors, etc.
-///you should use the standard naming convention for constants like the following:
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

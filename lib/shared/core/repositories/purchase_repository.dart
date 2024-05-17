@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, camel_case_types
+
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 
@@ -6,10 +8,9 @@ class purchaseRepository {
 
   Future<bool> purchase(
       List<List> products, int storeId, String userToken) async {
-
-        print(products);
-        print(storeId);
-        print(userToken);
+    print(products);
+    print(storeId);
+    print(userToken);
     try {
       final response = await dio.post(
         '$kBaseURL/transacoes',

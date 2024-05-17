@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/banca_repository.dart';
@@ -47,14 +45,34 @@ class PurchaseController extends GetxController {
     }
   }
 
-  double get totalValue => listCartModel!.fold(
-      0, (total, cart) => total + cart.amount! * double.parse(cart.price!));
+  double get totalValue => listCartModel?.isNotEmpty == true
+      ? listCartModel!.fold(
+          0, (total, cart) => total + cart.amount * double.parse(cart.price!))
+      : 0;
+
+  void removeZeroQuantityItems() {
+    listCartModel?.removeWhere((item) => item.amount <= 0);
+    update();
+  }
+
+  void updateCartItemQuantity(int productId, int quantity) {
+    final cartItem =
+        listCartModel?.firstWhereOrNull((item) => item.productId == productId);
+    if (cartItem != null) {
+      cartItem.amount = quantity;
+      if (cartItem.amount <= 0) {
+        listCartModel?.remove(cartItem);
+      }
+      update();
+    }
+  }
 
   @override
   void onInit() async {
     await loadBanca();
     userName = await userStorage.getUserName();
     userToken = await userStorage.getUserToken();
+    removeZeroQuantityItems(); // Ensure no zero quantity items at the start
     update();
     super.onInit();
   }

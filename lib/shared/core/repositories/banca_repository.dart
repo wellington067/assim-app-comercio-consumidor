@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
@@ -5,8 +7,6 @@ import 'package:ecommerceassim/shared/core/user_storage.dart';
 
 class BancaRepository {
   final Dio _dio = Dio();
-
-
 
   Future<List<BancaModel>> getBancas(int feiraId) async {
     final userToken = await UserStorage().getUserToken();
@@ -29,10 +29,8 @@ class BancaRepository {
             'Failed to load bancas with status code: ${response.statusCode}.');
       }
     } on DioError catch (dioError) {
-      // Handle Dio-specific errors here
       throw Exception('DioError caught: ${dioError.message}');
     } catch (error) {
-      // Handle general errors here
       throw Exception('An unexpected error occurred: $error');
     }
   }
