@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/models/pagamento_model.dart';

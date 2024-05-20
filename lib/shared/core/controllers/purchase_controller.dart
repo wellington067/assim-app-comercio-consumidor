@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/banca_repository.dart';
