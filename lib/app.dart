@@ -17,7 +17,9 @@ import 'package:ecommerceassim/screens/profile/editar/perfil/profile_edit_screen
 import 'package:ecommerceassim/screens/profile/profile_screen.dart';
 import 'package:ecommerceassim/screens/profile/endereco/select_adress_screen.dart';
 import 'package:ecommerceassim/screens/signup/sign_up_screen.dart';
+import 'package:ecommerceassim/shared/core/controllers/pagamento_controller.dart';
 import 'package:ecommerceassim/shared/core/navigator.dart';
+import 'package:ecommerceassim/shared/core/repositories/pagamento_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -81,7 +83,10 @@ class App extends StatelessWidget {
               const ProdutoDetalheScreen(),
           Screens.perfilEditar: (BuildContext context) =>
               const ProfileEditScreen(),
-          Screens.pagamento: (BuildContext context) => const PaymentScreen(),
+          Screens.pagamento: (BuildContext context) => ChangeNotifierProvider(
+                create: (_) => PagamentoController(PagamentoRepository()),
+                child: const PaymentScreen(),
+              ),
           Screens.finalizePurchase: (BuildContext context) =>
               FinalizePurchaseScreen(const []),
         },

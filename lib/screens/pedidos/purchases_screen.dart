@@ -35,9 +35,10 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
         .read<PedidoController>()
         .orders
         .firstWhere((order) => order.id == orderId);
-    if (order.status == 'pagamento pendente') {
+    if (order.status == 'pagamento pendente' ||
+        order.status == 'comprovante anexado') {
       Navigator.pushNamed(context, Screens.pagamento,
-          arguments: {"orderId": orderId});
+          arguments: {"orderId": orderId, "status": order.status});
     }
   }
 
