@@ -37,6 +37,7 @@ class PaymentScreen extends StatelessWidget {
               if (status == 'comprovante anexado') {
                 return Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ElevatedButton(
