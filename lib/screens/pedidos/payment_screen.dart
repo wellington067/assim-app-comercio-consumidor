@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:ecommerceassim/screens/pedidos/file_view.dart';
+import 'package:ecommerceassim/screens/pedidos/components/file_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
