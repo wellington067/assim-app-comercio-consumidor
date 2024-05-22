@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
-
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
@@ -138,8 +137,12 @@ class _SelectAddressState extends State<SelectAddress> {
                                               borderRadius:
                                                   BorderRadius.circular(15),
                                             ),
-                                            title:
-                                                const Text('Excluir endereço'),
+                                            title: const Text(
+                                              'Excluir endereço',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                             content: const Text(
                                               'Tem certeza de que deseja excluir este endereço?',
                                               textAlign: TextAlign.center,

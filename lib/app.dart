@@ -88,7 +88,7 @@ class App extends StatelessWidget {
                 child: const PaymentScreen(),
               ),
           Screens.finalizePurchase: (BuildContext context) =>
-              FinalizePurchaseScreen(const []),
+              const FinalizePurchaseScreen([]),
         },
       ),
     );

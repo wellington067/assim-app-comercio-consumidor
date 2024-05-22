@@ -1,11 +1,10 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:developer';
 
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/cesta/cart_controller.dart';
+import 'package:ecommerceassim/shared/components/dialogs/confirm_dialog.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
@@ -29,6 +28,7 @@ class CardCart extends StatefulWidget {
 class _CardCartState extends State<CardCart> {
   @override
   Widget build(BuildContext context) {
+    // ignore: avoid_print
     print(widget.controller?.listTableProducts.length);
     TableProductsModel? tableProductsModel = widget.controller
         ?.returnProdutoTabelado(widget.model.produtoTabeladoId!);
@@ -131,13 +131,24 @@ class _CardCartState extends State<CardCart> {
                   IconButton(
                     icon: const Icon(Icons.remove),
                     onPressed: () {
-                      if (widget.model.amount > 0) {
+                      if (widget.model.amount > 1) {
                         setState(() {
                           widget.model.amount--;
                           widget.controller?.decrementCounter();
                           cartListProvider.itens--;
                           cartListProvider.total -= doublePrice!;
                         });
+                      } else {
+                        confirmDialog(
+                          context,
+                          "Remover produto",
+                          "Tem certeza que deseja remover esse produto da cesta?",
+                          "Cancelar",
+                          "Remover",
+                          onConfirm: () {
+                            cartListProvider.removeCart(widget.model);
+                          },
+                        );
                       }
                     },
                   ),
@@ -166,7 +177,16 @@ class _CardCartState extends State<CardCart> {
                     icon: const Icon(Icons.delete),
                     color: kTextButtonColor,
                     onPressed: () {
-                      cartListProvider.removeCart(widget.model);
+                      confirmDialog(
+                        context,
+                        "Remover produto",
+                        "Tem certeza que deseja remover esse produto da cesta?",
+                        "Cancelar",
+                        "Remover",
+                        onConfirm: () {
+                          cartListProvider.removeCart(widget.model);
+                        },
+                      );
                     },
                   ),
                   const HorizontalSpacerBox(size: SpacerSize.medium),

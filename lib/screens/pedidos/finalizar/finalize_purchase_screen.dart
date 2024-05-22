@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/screens/cesta/cart_provider.dart';
 import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/purchase_controller.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
@@ -112,8 +113,11 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
             PrimaryButton(
               text: "OK",
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, Screens.home);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Screens.home,
+                  (Route<dynamic> route) => false,
+                );
               },
               color: kDetailColor,
             ),
@@ -155,6 +159,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartListProvider = Provider.of<CartProvider>(context);
     Size size = MediaQuery.of(context).size;
     final profileController =
         Provider.of<ProfileController>(context, listen: false);
@@ -542,6 +547,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                 return;
                               }
                               if (success) {
+                                cartListProvider.clearCart();
                                 print("ENDEREÇO: $selectedAddressId");
                                 print("Tipo de entrega: $_deliveryMethod");
                                 print("Forma de pagamento: $_paymentMethodId");

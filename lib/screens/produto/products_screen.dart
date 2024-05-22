@@ -3,6 +3,7 @@ import 'package:ecommerceassim/components/buttons/custom_search_field.dart';
 import 'package:ecommerceassim/components/buttons/debouncer.dart';
 import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/dialogs/confirm_dialog.dart';
 import 'package:ecommerceassim/shared/core/controllers/products_controller.dart';
 import 'package:ecommerceassim/screens/produto/components/build_product_card.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
@@ -60,121 +61,142 @@ class _MenuProductsScreenState extends State<MenuProductsScreen> {
     String horarioAberturaFormatado = formatarHorario(horarioAbertura);
     String horarioFechamentoFormatado = formatarHorario(horarioFechamento);
 
-    return GetBuilder<ProductsController>(
-      init: ProductsController(Dio()),
-      builder: (controller) => Scaffold(
-        appBar: const CustomAppBar(),
-        bottomNavigationBar: BottomNavigation(),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          bancaNome,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+    // ignore: deprecated_member_use
+    return WillPopScope(
+        onWillPop: () async {
+          if (cartListProvider.itens != 0) {
+            final shouldLeave = await confirmDialog(
+                context,
+                "Sair da banca",
+                "Se você sair da banca, os produtos que você adicionou à cesta serão removidos.",
+                "Cancelar",
+                "Sair", onConfirm: () {
+              cartListProvider.clearCart();
+              Navigator.of(context).pop(true);
+            });
+            return shouldLeave;
+          } else {
+            return true;
+          }
+        },
+        child: GetBuilder<ProductsController>(
+          init: ProductsController(Dio()),
+          builder: (controller) => Scaffold(
+            appBar: const CustomAppBar(),
+            bottomNavigationBar: BottomNavigation(),
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 0),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              bancaNome,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Aberto das $horarioAberturaFormatado até $horarioFechamentoFormatado',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Aberto das $horarioAberturaFormatado até $horarioFechamentoFormatado',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                CustomSearchField(
-                  fillColor: kOnBackgroundColorText,
-                  iconColor: kDetailColor,
-                  hintText: 'Buscar por produtos',
-                  padding: const EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 12.0),
-                  onSearch: (text) {
-                    final produtoController = Get.find<ProductsController>();
-                    debouncer.call(() {
-                      setState(() {
-                        searchQuery = text;
-                      });
-                      if (text.isEmpty) {
-                        produtoController.loadProdutos(bancaId);
-                      } else {
-                        produtoController.searchProdutosLocalmente(text);
-                      }
-                    });
-                  },
-                  setLoading: (loading) {
-                    setState(() {
-                      isLoading = loading;
-                    });
-                  },
-                ),
-                const CategoryMenuList(),
-                const VerticalSpacerBox(size: SpacerSize.medium),
-                Obx(() {
-                  if (controller.isLoading.value) {
-                    return const Center(
-                      child: Column(
-                        children: [
-                          VerticalSpacer(size: 180),
-                          CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(kDetailColor),
-                          ),
-                        ],
                       ),
-                    );
-                  } else {
-                    List<ProdutoModel> produtos = controller.produtos;
-                    if (produtos.isEmpty) {
-                      if (searchQuery.isEmpty) {
-                        return _buildEmptyProductListWidget();
+                    ),
+                    CustomSearchField(
+                      fillColor: kOnBackgroundColorText,
+                      iconColor: kDetailColor,
+                      hintText: 'Buscar por produtos',
+                      padding:
+                          const EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 12.0),
+                      onSearch: (text) {
+                        final produtoController =
+                            Get.find<ProductsController>();
+                        debouncer.call(() {
+                          setState(() {
+                            searchQuery = text;
+                          });
+                          if (text.isEmpty) {
+                            produtoController.loadProdutos(bancaId);
+                          } else {
+                            produtoController.searchProdutosLocalmente(text);
+                          }
+                        });
+                      },
+                      setLoading: (loading) {
+                        setState(() {
+                          isLoading = loading;
+                        });
+                      },
+                    ),
+                    const CategoryMenuList(),
+                    const VerticalSpacerBox(size: SpacerSize.medium),
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const Center(
+                          child: Column(
+                            children: [
+                              VerticalSpacer(size: 180),
+                              CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(kDetailColor),
+                              ),
+                            ],
+                          ),
+                        );
                       } else {
-                        return _buildErrorWidget();
-                      }
-                    } else {
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 0.6,
-                        ),
-                        itemCount: produtos.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return BuildProductCard(
-                            produtos[index],
-                            controller,
-                            cartListProvider,
+                        List<ProdutoModel> produtos = controller.produtos;
+                        if (produtos.isEmpty) {
+                          if (searchQuery.isEmpty) {
+                            return _buildEmptyProductListWidget();
+                          } else {
+                            return _buildErrorWidget();
+                          }
+                        } else {
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 24.0),
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 0.6,
+                            ),
+                            itemCount: produtos.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return BuildProductCard(
+                                produtos[index],
+                                controller,
+                                cartListProvider,
+                              );
+                            },
                           );
-                        },
-                      );
-                    }
-                  }
-                }),
-                const VerticalSpacerBox(size: SpacerSize.small),
-              ],
+                        }
+                      }
+                    }),
+                    const VerticalSpacerBox(size: SpacerSize.small),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/cesta/card_cart.dart';
 import 'package:ecommerceassim/screens/pedidos/finalizar/finalize_purchase_screen.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/dialogs/notice_dialog.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
@@ -65,11 +66,15 @@ class _CartScreenState extends State<CartScreen> {
               PrimaryButton(
                 text: 'Fechar Pedido (${cartListProvider.itens} itens)',
                 onPressed: () {
+                  if(cartListProvider.itens != 0){
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => FinalizePurchaseScreen(
                               cartListProvider.listCart)));
+                  }else{
+                    alertDialog(context, 'Aviso', 'Sua cesta está vazia. Para fechar um pedido, adicione produtos a ela primeiro.');
+                  }
                 },
                 color: kDetailColor,
               ),

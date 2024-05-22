@@ -40,4 +40,11 @@ class CartProvider extends ChangeNotifier {
     itens = itens - cartModel.amount;
     notifyListeners();
   }
+
+  void clearCart() {
+    _listCart.clear();
+    total = 0.00;
+    itens = 0;
+    notifyListeners();
+  }
 }
