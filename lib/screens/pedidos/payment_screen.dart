@@ -1,7 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously
 
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:ecommerceassim/screens/pedidos/components/file_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
