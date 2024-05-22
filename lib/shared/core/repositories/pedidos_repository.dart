@@ -30,7 +30,7 @@ class PedidosRepository {
           ));
 
       if (response.statusCode == 200) {
-        log('Response data: ${response.data}');
+        /*  log('Response data: ${response.data}'); */
 
         if (response.data['compras'] != null) {
           final jsonData = Map<String, dynamic>.from(response.data);

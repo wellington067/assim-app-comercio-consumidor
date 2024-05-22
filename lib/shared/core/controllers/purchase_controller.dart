@@ -1,5 +1,6 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, deprecated_member_use
 
+import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/banca_repository.dart';
@@ -11,10 +12,12 @@ class PurchaseController extends GetxController {
   BancaModel? bancaModel;
   List<CartModel>? listCartModel;
   int? enderecoId;
+  int? formaPagamento;
   bool? isDelivery;
   UserStorage userStorage = UserStorage();
   String userName = '';
   String userToken = '';
+  String tipoEntrega = '';
   final BancaRepository _bancaRepository = BancaRepository();
   final purchaseRepository _purchaseRepository = purchaseRepository();
 
@@ -29,7 +32,8 @@ class PurchaseController extends GetxController {
     }
   }
 
-  Future<bool> purchase() async {
+  Future<bool> purchase(
+      int enderecoId, String tipoEntrega, int formaPagamento) async {
     List<List> listCartModelSplited = [];
     for (var cart in listCartModel!) {
       List listItem = [];
@@ -38,12 +42,19 @@ class PurchaseController extends GetxController {
       listCartModelSplited.add(listItem);
     }
     try {
-      final response = await _purchaseRepository.purchase(
-          listCartModelSplited, bancaModel!.id, userToken);
+      final response = await _purchaseRepository.purchase(listCartModelSplited,
+          bancaModel!.id, userToken, enderecoId, tipoEntrega, formaPagamento);
       return response;
+    } on DioError catch (dioError) {
+      if (dioError.response?.statusCode == 400) {
+        final errorMessage =
+            dioError.response?.data['error'] ?? 'Erro desconhecido';
+        throw Exception(errorMessage);
+      } else {
+        throw Exception('Erro ao realizar a compra: ${dioError.message}');
+      }
     } catch (error) {
-      print('Erro ao realizar a compra: $error');
-      return false;
+      rethrow;
     }
   }
 
