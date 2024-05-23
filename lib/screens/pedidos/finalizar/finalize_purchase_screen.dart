@@ -277,7 +277,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       TextStyle(fontWeight: FontWeight.normal),
                                 ),
                               ),
-                              DropdownMenuItem<int>(
+                              /* DropdownMenuItem<int>(
                                 value: 3,
                                 child: Text(
                                   'Crédito',
@@ -300,7 +300,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   style:
                                       TextStyle(fontWeight: FontWeight.normal),
                                 ),
-                              ),
+                              ), */
                             ],
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
