@@ -35,10 +35,15 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
         .read<PedidoController>()
         .orders
         .firstWhere((order) => order.id == orderId);
+
     if (order.status == 'pagamento pendente' ||
         order.status == 'comprovante anexado') {
       Navigator.pushNamed(context, Screens.pagamento,
           arguments: {"orderId": orderId, "status": order.status});
+    } else if (order.status == 'aguardando retirada' ||
+        order.status == 'pedido enviado') {
+      Navigator.pushNamed(context, Screens.marcarEnviado,
+          arguments: {"orderId": orderId});
     }
   }
 

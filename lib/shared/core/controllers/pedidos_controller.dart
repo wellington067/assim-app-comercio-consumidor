@@ -19,6 +19,14 @@ class PedidoController with ChangeNotifier {
     loadOrders();
   }
 
+  void updateOrderStatus(int orderId, String status) {
+    final index = orders.indexWhere((order) => order.id == orderId);
+    if (index != -1) {
+      orders[index].status = status;
+      notifyListeners();
+    }
+  }
+
   Future<void> loadOrders() async {
     status = PedidosStatus.loading;
     notifyListeners();
