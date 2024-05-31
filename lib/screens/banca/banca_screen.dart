@@ -178,7 +178,8 @@ class _BancasState extends State<Bancas> {
   }
 
   Widget _buildBancaItem(BuildContext context, BancaModel banca) {
-    final bool isOpen = isCurrentlyOpen(banca.horarioAbertura, banca.horarioFechamento);
+    final bool isOpen =
+        isCurrentlyOpen(banca.horarioAbertura, banca.horarioFechamento);
     return Opacity(
       opacity: isOpen ? 1.0 : 0.5,
       child: Container(
@@ -201,14 +202,14 @@ class _BancasState extends State<Bancas> {
           child: InkWell(
             onTap: () {
               if (!isOpen) {
-                
-              }else{
-              Navigator.pushNamed(context, Screens.menuProducts, arguments: {
-                'id': banca.id,
-                'nome': banca.nome,
-                'horario_abertura': banca.horarioAbertura,
-                'horario_fechamento': banca.horarioFechamento,
-              });
+              } else {
+                Navigator.pushNamed(context, Screens.menuProducts, arguments: {
+                  'id': banca.id,
+                  'nome': banca.nome,
+                  'horario_abertura': banca.horarioAbertura,
+                  'horario_fechamento': banca.horarioFechamento,
+                });
+                print(banca.id);
               }
             },
             child: Padding(
@@ -222,23 +223,22 @@ class _BancasState extends State<Bancas> {
                   ),
                   const SizedBox(width: 16.0),
                   Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        banca.nome,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      if (!isOpen)
-                        const Text(
-                          'Banca fechada',
-                          style: TextStyle(
-                              fontSize: 16, color: Colors.red),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          banca.nome,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                    ],
+                        if (!isOpen)
+                          const Text(
+                            'Banca fechada',
+                            style: TextStyle(fontSize: 16, color: Colors.red),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
                 ],
               ),
             ),
@@ -323,7 +323,9 @@ bool isCurrentlyOpen(String openingTime, String closingTime) {
   final openingMinute = int.parse(openingTime.split(':')[1]);
   final closingHour = int.parse(closingTime.split(':')[0]);
   final closingMinute = int.parse(closingTime.split(':')[1]);
-  final openingDateTime = DateTime(now.year, now.month, now.day, openingHour, openingMinute);
-  final closingDateTime = DateTime(now.year, now.month, now.day, closingHour, closingMinute);
+  final openingDateTime =
+      DateTime(now.year, now.month, now.day, openingHour, openingMinute);
+  final closingDateTime =
+      DateTime(now.year, now.month, now.day, closingHour, closingMinute);
   return now.isAfter(openingDateTime) && now.isBefore(closingDateTime);
 }
