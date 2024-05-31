@@ -481,7 +481,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   if (_deliveryMethod == 'retirada')
                                     const Row(
                                       children: [
-                                        Text(
+                                        /*  Text(
                                           'Frete:',
                                           style: TextStyle(fontSize: 17),
                                         ),
@@ -492,11 +492,11 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: kTextButtonColor),
-                                        ),
+                                        ), */
                                       ],
                                     ),
-                                  const VerticalSpacerBox(
-                                      size: SpacerSize.small),
+                                  /*             const VerticalSpacerBox(
+                                      size: SpacerSize.small), */
                                   Row(
                                     children: [
                                       const Text(
