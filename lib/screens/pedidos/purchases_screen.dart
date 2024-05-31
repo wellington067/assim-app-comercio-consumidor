@@ -86,7 +86,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                             orderNumber: '#${index + 1}',
                             sellerName: order.bancaNome ?? 'Banca Desconhecida',
                             itemsTotal: order.subtotal,
-                            shippingHandling: order.taxaEntrega,
+                            /*  shippingHandling: order.taxaEntrega, */
                             date: formatDate(order.dataPedido),
                             status: order.status,
                             onTap: () => _onOrderTapped(order.id),
