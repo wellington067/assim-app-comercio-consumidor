@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/components/spacer/verticalSpacer.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
@@ -8,7 +9,7 @@ class OrderCard extends StatelessWidget {
   final String orderNumber;
   final String sellerName;
   final double itemsTotal;
-  final double shippingHandling;
+/*   final double shippingHandling; */
   final String date;
   final String status;
   final VoidCallback onTap;
@@ -18,7 +19,7 @@ class OrderCard extends StatelessWidget {
     required this.orderNumber,
     required this.sellerName,
     required this.itemsTotal,
-    required this.shippingHandling,
+    /*  required this.shippingHandling, */
     required this.date,
     required this.status,
     required this.onTap,
@@ -29,8 +30,10 @@ class OrderCard extends StatelessWidget {
   }
 
   String get formattedItemsTotal => formatPrice(itemsTotal);
-  String get formattedShippingHandling => formatPrice(shippingHandling);
-  String get formattedOrderTotal => formatPrice(itemsTotal + shippingHandling);
+/*   String get formattedShippingHandling => formatPrice(shippingHandling);
+ */
+  String get formattedOrderTotal =>
+      formatPrice(itemsTotal /*  + shippingHandling */);
 
   Map<String, dynamic> _getStatusAttributes(String status) {
     switch (status) {
@@ -222,12 +225,11 @@ class OrderCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                   child: Row(
                     children: [
-                      const HorizontalSpacerBox(size: SpacerSize.large),
+                      /*  const HorizontalSpacerBox(size: SpacerSize.large),
                       const Text(
                         'Frete',
                         style: TextStyle(fontSize: 17),
@@ -237,7 +239,7 @@ class OrderCard extends StatelessWidget {
                         formattedShippingHandling,
                         style: const TextStyle(
                             fontSize: 21, color: kTextButtonColor),
-                      ),
+                      ), */
                     ],
                   ),
                 ),
@@ -263,6 +265,7 @@ class OrderCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                const VerticalSpacer(size: 60),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
