@@ -219,7 +219,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     fontSize: 20, color: kTextButtonColor),
                               ),
                               const HorizontalSpacerBox(size: SpacerSize.small),
-                              Radio(
+                              /* Radio(
                                   overlayColor:
                                       MaterialStateProperty.all(kDetailColor),
                                   value: 'entrega',
@@ -238,7 +238,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                 'Entrega',
                                 style: TextStyle(
                                     fontSize: 20, color: kTextButtonColor),
-                              ),
+                              ), */
                               const HorizontalSpacerBox(size: SpacerSize.small),
                             ],
                           ),
@@ -461,7 +461,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   ),
                                   const VerticalSpacerBox(
                                       size: SpacerSize.small),
-                                  if (_deliveryMethod == 'entrega')
+                                  /*  if (_deliveryMethod == 'entrega')
                                     const Row(
                                       children: [
                                         Text(
@@ -477,7 +477,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                               color: kTextButtonColor),
                                         ),
                                       ],
-                                    ),
+                                    ), */
                                   if (_deliveryMethod == 'retirada')
                                     const Row(
                                       children: [
