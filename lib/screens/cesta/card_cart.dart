@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
 import 'package:ecommerceassim/screens/cesta/cart_controller.dart';
@@ -18,7 +17,6 @@ import 'cart_provider.dart';
 class CardCart extends StatefulWidget {
   CartModel model;
   CartController? controller;
-
   CardCart(this.model, this.controller, {super.key});
 
   @override

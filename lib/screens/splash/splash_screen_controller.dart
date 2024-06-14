@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/constants/app_text_constants.dart';
 import 'package:ecommerceassim/shared/core/models/table_products_model.dart';
@@ -17,7 +16,7 @@ class SplashScreenController {
   bool isFirstTime = false;
   SplashScreenController(this.context);
   final Logger _logger =
-      Logger('Splash screen logger'); //a logger is always good to have
+      Logger('Splash screen logger');
   final userStorage = UserStorage();
 
   void initApplication(Function onComplete) async {
