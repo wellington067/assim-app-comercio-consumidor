@@ -1,17 +1,17 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:convert';
-
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
+import 'package:ecommerceassim/screens/cesta/cart_provider.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/dialogs/notice_dialog.dart';
+import 'package:ecommerceassim/shared/core/models/produto_model.dart';
 import 'package:flutter/material.dart';
-
 import '../../../shared/constants/style_constants.dart';
 
 class ProdutoDetalheScreen extends StatefulWidget {
   const ProdutoDetalheScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProdutoDetalheScreenState createState() => _ProdutoDetalheScreenState();
 }
 
@@ -43,15 +43,25 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    final int produtoEstoque = arguments?['estoque'];
-    final String produtoTitulo = arguments?['titulo'];
-    final String produtoDescricao = arguments?['descricao'];
-    final String produtoTipo = arguments?['tipoUnidade'];
-    final String produtoPreco = arguments?['preco'];
-    final String? base64Image = arguments?['produtoImage'];
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+    if (arguments == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Erro ao carregar os detalhes do produto.'),
+        ),
+      );
+    }
+
+    final ProdutoModel produto = arguments['produto'];
+    final String? base64Image = arguments['base64Image'];
+    final CartProvider cartProvider = arguments['cartProvider'];
+    final Function(int) addToCart = arguments['addToCart'];
+    final int produtoEstoque = produto.estoque;
+    final String produtoTitulo = produto.titulo;
+    final String produtoDescricao = produto.descricao;
+    final String produtoTipo = produto.tipoUnidade;
+    final String produtoPreco = produto.preco;
 
     String shortDescription = produtoDescricao.length > 100
         ? '${produtoDescricao.substring(0, 100)}...'
@@ -79,11 +89,13 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                       const SizedBox(height: 15),
                       Text(produtoTitulo,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24)),
-                      Text(
-                          'R\$ ${double.parse(produtoPreco).toStringAsFixed(2).replaceAll('.', ',')}',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24)),
+                      Text('R\$ ${double.parse(produtoPreco).toStringAsFixed(2).replaceAll('.', ',')}',
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                              ),
                       Text(produtoTipo,
                           style: const TextStyle(
                               fontSize: 16, color: kDetailColor)),
@@ -134,7 +146,11 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
                           _buildQuantityButton(Icons.add,
-                              () => incrementQuantity(produtoEstoque)),
+                              (){ if(quantity < produto.estoque - cartProvider.getProductQuantity(produto.id)){
+                                    incrementQuantity(produtoEstoque);
+                                  }
+                                }
+                            ),
                         ],
                       ),
                     ],
@@ -154,8 +170,22 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                   ),
                   minimumSize: const Size(double.infinity, 50),
                 ),
+                 
                 onPressed: () {
-                  // função de adicionar ao carrinho
+                  if( quantity <= produto.estoque - cartProvider.getProductQuantity(produto.id)){
+                  addToCart(quantity);
+                  setState(() {
+                    quantity = 1;
+                  });
+                  // ignore: avoid_print
+                  print('Produto adicionado a cesta');
+                  }else {
+                    setState(() {
+                      quantity = 1;
+                    });
+                    alertDialog(context, 'Produto Esgotado', 'A quantidade disponível do produto já foi adicionada à cesta ou não está mais em estoque.');
+                    print('produto nao adicionado a cesta porque nao tem mais o produto no estoque');
+                  }
                 },
                 child: const Text('Adicionar ao carrinho',
                     style: TextStyle(fontSize: 18)),

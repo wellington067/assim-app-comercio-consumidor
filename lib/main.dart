@@ -20,10 +20,10 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'shared/core/controllers/sign_in_controller.dart';
 
 Future<void> main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   ByteData data = await PlatformAssetBundle().load(Assets.document);
-  SecurityContext.defaultContext
-      .setTrustedCertificatesBytes(data.buffer.asUint8List());
+  SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
   tz.initializeTimeZones();
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {});
@@ -44,8 +44,7 @@ Future<void> main() async {
         ),
         ChangeNotifierProxyProvider2<BairroController, BancaController,
             FeiraController>(
-          create: (context) =>
-              FeiraController(context.read<BairroController>()),
+              create: (context) => FeiraController(context.read<BairroController>()),
           update: (_, bairroController, bancaController, feiraController) {
             feiraController ??= FeiraController(bairroController);
             return feiraController;

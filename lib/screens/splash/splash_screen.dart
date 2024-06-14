@@ -21,8 +21,10 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    animController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    animController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2)
+    );
     _controller = SplashScreenController(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setController();

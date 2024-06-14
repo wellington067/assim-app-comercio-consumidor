@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
-
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/shared/core/models/produto_model.dart';
@@ -33,8 +31,7 @@ class ProductsController extends GetxController {
   final BancaRepository bancaRepository = BancaRepository();
 
   CartModel createCart(BuildContext context, int amount, ProdutoModel produto) {
-    final Map<String, dynamic> arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final Map<String, dynamic> arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int bancaId = arguments['id'];
 
     CartModel cart = CartModel(produto.id, bancaId, produto.titulo,

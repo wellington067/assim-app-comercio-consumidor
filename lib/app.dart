@@ -46,8 +46,15 @@ class App extends StatelessWidget {
       ],
       child: GetMaterialApp(
         debugShowMaterialGrid: false,
-        localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
-        supportedLocales: const [Locale('en'), Locale('pt', 'BR')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('pt', 'BR')
+        ],
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
         navigatorKey: navigatorKey,
@@ -70,29 +77,22 @@ class App extends StatelessWidget {
           Screens.favorite: (BuildContext context) => const FavoriteScreen(),
           Screens.purchases: (BuildContext context) => const PurchasesScreen(),
           Screens.adress: (BuildContext context) => const AddressScreen(),
-          Screens.addressEdit: (BuildContext context) =>
-              const AdressEditScreen(),
+          Screens.addressEdit: (BuildContext context) => const AdressEditScreen(),
           Screens.selectAdress: (BuildContext context) => const SelectAddress(),
-          Screens.menuSeller: (BuildContext context) =>
-              const MenuSellerScreen(),
-          Screens.menuProducts: (BuildContext context) =>
-              const MenuProductsScreen(),
+          Screens.menuSeller: (BuildContext context) => const MenuSellerScreen(),
+          Screens.menuProducts: (BuildContext context) => const MenuProductsScreen(),
           Screens.cart: (BuildContext context) => const CartScreen(),
           Screens.feiras: (BuildContext context) => const FeirasScreen(),
           Screens.bancas: (BuildContext context) => const Bancas(),
-          Screens.produtoDetalhe: (BuildContext context) =>
-              const ProdutoDetalheScreen(),
-          Screens.perfilEditar: (BuildContext context) =>
-              const ProfileEditScreen(),
+          Screens.produtoDetalhe: (BuildContext context) => const ProdutoDetalheScreen(),
+          Screens.perfilEditar: (BuildContext context) => const ProfileEditScreen(),
           Screens.pagamento: (BuildContext context) => ChangeNotifierProvider(
                 create: (_) => PagamentoController(PagamentoRepository()),
                 child: const PaymentScreen(),
               ),
-          Screens.finalizePurchase: (BuildContext context) =>
-              const FinalizePurchaseScreen([]),
+          Screens.finalizePurchase: (BuildContext context) => const FinalizePurchaseScreen([]),
           Screens.marcarEnviado: (BuildContext context) {
-            final args =
-                ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+            final args = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
             return MarkAsDeliveredScreen(orderId: args['orderId']!);
           },
         },
