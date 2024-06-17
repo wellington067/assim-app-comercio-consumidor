@@ -49,8 +49,8 @@ class _CartScreenState extends State<CartScreen> {
               Row(
                 children: [
                   const Text(
-                    'Subtotal',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    'Total:',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   const HorizontalSpacerBox(size: SpacerSize.small),
                   Text(
@@ -66,14 +66,15 @@ class _CartScreenState extends State<CartScreen> {
               PrimaryButton(
                 text: 'Fechar Pedido (${cartListProvider.itens} itens)',
                 onPressed: () {
-                  if(cartListProvider.itens != 0){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FinalizePurchaseScreen(
-                              cartListProvider.listCart)));
-                  }else{
-                    alertDialog(context, 'Aviso', 'Sua cesta está vazia. Para fechar um pedido, adicione produtos a ela primeiro.');
+                  if (cartListProvider.itens != 0) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FinalizePurchaseScreen(
+                                cartListProvider.listCart)));
+                  } else {
+                    alertDialog(context, 'Aviso',
+                        'Sua cesta está vazia. Para fechar um pedido, adicione produtos a ela primeiro.');
                   }
                 },
                 color: kDetailColor,

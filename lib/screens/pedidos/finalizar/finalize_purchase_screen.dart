@@ -443,10 +443,10 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   ),
                                   const VerticalSpacerBox(
                                       size: SpacerSize.tiny),
-                                  Row(
+                                  /*  Row(
                                     children: [
                                       const Text(
-                                        'Subtotal:',
+                                        'Total:',
                                         style: TextStyle(fontSize: 17),
                                       ),
                                       const Spacer(),
@@ -458,7 +458,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                             color: kTextButtonColor),
                                       ),
                                     ],
-                                  ),
+                                  ), */
                                   const VerticalSpacerBox(
                                       size: SpacerSize.small),
                                   /*  if (_deliveryMethod == 'entrega')
