@@ -177,7 +177,8 @@ class _FeirasScreenState extends State<FeirasScreen> {
   Widget _buildEmptyListWidget(String cidadeNome) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 120.0),
+        padding: const EdgeInsets.only(
+            bottom: 120.0, left: 21.0, right: 21.0), // Ajuste os valores aqui
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -185,7 +186,7 @@ class _FeirasScreenState extends State<FeirasScreen> {
             const SizedBox(height: 20),
             Text(
               'Nenhuma feira encontrada em $cidadeNome.',
-              textAlign: TextAlign.center, // Centraliza o texto horizontalmente
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -193,12 +194,15 @@ class _FeirasScreenState extends State<FeirasScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              'Não há feiras cadastradas para esta cidade ou elas estão indisponíveis no momento.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8),
+              child: Text(
+                'Não há feiras cadastradas para esta cidade ou elas estão indisponíveis no momento.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
               ),
             ),
           ],

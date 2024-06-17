@@ -251,12 +251,12 @@ class _BancasState extends State<Bancas> {
   Widget _buildEmptyListWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 0.0),
+        padding: const EdgeInsets.only(
+            top: 120.0, left: 21.0, right: 21.0), // Ajuste os valores aqui
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.storefront, color: kDetailColor, size: 80),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text(
               'Nenhuma banca foi encontrada.',
               textAlign: TextAlign.center,
@@ -284,7 +284,8 @@ class _BancasState extends State<Bancas> {
   Widget _buildErrorWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0.0),
+        padding: const EdgeInsets.symmetric(
+            vertical: 0.0, horizontal: 12.0), // Ajuste os valores aqui
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,

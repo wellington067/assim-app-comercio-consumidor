@@ -23,7 +23,7 @@ class SignUpController extends GetxController {
   bool? signupSuccess;
   RegExp numReg = RegExp(r".*[0-9].*");
   RegExp letterReg = RegExp(r".*[A-Z].*");
-  String displayText = 'Digite sua Senha';
+  String displayText = '';
   String? errorMessage;
   String specificErrorMessage = '';
   var status = SignUpStatus.idle;
@@ -123,7 +123,7 @@ class SignUpController extends GetxController {
     password = password.trim();
     if (password.isEmpty) {
       strength = 0;
-      displayText = 'Digite sua Senha';
+      displayText = '';
     } else if (password.length <= 6) {
       strength = 1 / 4;
       displayText = 'Senha muito fraca';
