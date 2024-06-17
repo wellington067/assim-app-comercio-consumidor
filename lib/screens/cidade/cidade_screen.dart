@@ -149,7 +149,7 @@ class _CidadeScreenState extends State<CidadeScreen> {
   Widget _buildEmptyListWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 00.0, left: 8, right: 8),
+        padding: const EdgeInsets.only(top: 00.0, left: 21, right: 21),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
