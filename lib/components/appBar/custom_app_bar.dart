@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: const IconThemeData(color: kDetailColor),
       backgroundColor: kOnSurfaceColor,
       elevation: 0,
-      actions: <Widget>[
+      /* actions: <Widget>[
         IconButton(
           icon: const Icon(
             Icons.exit_to_app,
@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
           },
         ),
-      ],
+      ], */
     );
   }
 
