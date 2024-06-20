@@ -98,7 +98,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
           errorStyle: const TextStyle(
             color: kErrorColor,
-            backgroundColor: Colors.white,
           ),
           labelText: widget.label,
           hintText: widget.hintText,

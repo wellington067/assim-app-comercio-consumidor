@@ -145,6 +145,7 @@ class _AdressEditScreenState extends State<AdressEditScreen>
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const CustomAppBar(),
+      backgroundColor: Colors.white,
       body: Container(
         color: kOnSurfaceColor,
         width: size.width,
