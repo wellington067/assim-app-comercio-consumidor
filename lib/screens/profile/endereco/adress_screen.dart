@@ -104,6 +104,7 @@ class _AddressScreenState extends State<AddressScreen> with ValidationMixin {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const CustomAppBar(),
+      backgroundColor: Colors.white,
       body: Container(
         color: kOnSurfaceColor,
         width: size.width,

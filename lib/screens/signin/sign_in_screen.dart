@@ -1,3 +1,4 @@
+import 'package:ecommerceassim/shared/components/dialogs/confirm_dialog.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/validation/validate_mixin.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../shared/constants/app_enums.dart';
 class SignInScreen extends StatelessWidget with ValidationMixin {
   SignInScreen({super.key});
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -59,7 +61,9 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
                       alignment: Alignment.centerRight,
                       child: CustomTextButton(
                         title: 'Esqueceu a senha?',
-                        onPressed: () {},
+                        onPressed: () async {
+                          showForgotPasswordDialog(context, controller);
+                        },
                       ),
                     ),
                     const VerticalSpacerBox(size: SpacerSize.medium),
@@ -70,7 +74,7 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
                     else
                       ElevatedButton(
                         onPressed: () {
-                          if (formkey.currentState!.validate() == true) {
+                          if (formkey.currentState!.validate()) {
                             controller.signIn(context);
                           }
                         },
@@ -116,6 +120,87 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
           ),
         ),
       ),
+    );
+  }
+
+  void showForgotPasswordDialog(
+      BuildContext context, SignInController controller) {
+    final TextEditingController emailController = TextEditingController();
+    final GlobalKey<FormState> dialogFormKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: Text(
+              'Esqueceu a senha?',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          backgroundColor: Colors.white,
+          content: Form(
+            key: dialogFormKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomTextFormField(
+                  hintText: 'Informe o e-mail:',
+                  icon: Icons.email,
+                  controller: emailController,
+                  validateForm: (value) => isValidEmail(value),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              style: TextButton.styleFrom(
+                foregroundColor: kDetailColor,
+              ),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (dialogFormKey.currentState!.validate()) {
+                  try {
+                    await controller
+                        .sendResetPasswordEmail(emailController.text);
+                    Navigator.of(context).pop();
+                    confirmDialog(
+                      context,
+                      'Email Enviado',
+                      'Um email de redefinição de senha foi enviado para o seu endereço de email.',
+                      'Cancelar',
+                      'Ok',
+                    );
+                  } catch (e) {
+                    Navigator.of(context).pop();
+                    confirmDialog(
+                      context,
+                      'Erro',
+                      e.toString().replaceAll('Exception: ', ''),
+                      'Cancelar',
+                      'Ok',
+                    );
+                  }
+                } else {
+                  controller
+                      .setErrorMessage('Por favor, forneça um email válido.');
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kDetailColor,
+                foregroundColor: kOnSurfaceColor,
+              ),
+              child: const Text('Enviar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
