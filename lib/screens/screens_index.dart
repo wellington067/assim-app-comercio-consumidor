@@ -27,4 +27,6 @@ class Screens {
   static const String cidades = '/cidade/cidade_screen';
   static const String pagamento = '/pedidos/payment_screen';
   static const String marcarEnviado = '/pedidos/finalizar/mark_delivery_screen';
+  static const String recuperarSenha =
+      '/forgot-password/forgot_password_screen';
 }

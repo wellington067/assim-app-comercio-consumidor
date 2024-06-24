@@ -3,6 +3,7 @@
 import 'package:ecommerceassim/components/buttons/primary_button.dart';
 import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/dialogs/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/components/forms/custom_ink.dart';
@@ -109,13 +110,21 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
               child: PrimaryButton(
                 text: 'Sair da conta',
-                onPressed: () async {
-                  await userStorage.clearUserCredentials();
-
-                  Navigator.pushAndRemoveUntil(
+                onPressed: () {
+                  confirmDialog(
                     context,
-                    MaterialPageRoute(builder: (context) => SignInScreen()),
-                    (Route<dynamic> route) => false,
+                    'Confirmação',
+                    'Você tem certeza que deseja sair da conta?',
+                    'Cancelar',
+                    'Confirmar',
+                    onConfirm: () async {
+                      await userStorage.clearUserCredentials();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
                   );
                 },
                 color: kDetailColor,
