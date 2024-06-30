@@ -50,6 +50,7 @@ class MarkAsDeliveredScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
+      backgroundColor: Colors.white,
       body: Center(
         child: ElevatedButton(
           onPressed: () => _markAsDelivered(context, orderId),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
-import 'package:ecommerceassim/shared/core/user_storage.dart';
-import 'package:ecommerceassim/screens/signin/sign_in_screen.dart';
 
+/* import 'package:ecommerceassim/shared/core/user_storage.dart';
+ */
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool automaticallyImplyLeading;
 
@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserStorage userStorage = UserStorage();
+/*     final UserStorage userStorage = UserStorage(); */
 
     return AppBar(
       automaticallyImplyLeading: automaticallyImplyLeading,

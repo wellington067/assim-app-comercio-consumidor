@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +19,8 @@ class _ExitAlertState extends State<ExitAlert> {
           context: context,
           builder: (context) => AlertDialog(
             // Alert Dialog irá ser a caixa de aviso caso o usuário queira sair
-            title: Text('Confirmação de Saída'),
-            content: Text(
+            title: const Text('Confirmação de Saída'),
+            content: const Text(
                 'Tem certeza que quer sair do aplicativo?'), // Conteúdo da caixa de diálogo
             actions: <Widget>[
               TextButton(
@@ -28,7 +30,7 @@ class _ExitAlertState extends State<ExitAlert> {
                 ),
                 onPressed: () => Navigator.of(context).pop(
                     false), //caso o usuário pressionar "Não" retorna um valor falso para o sistema e cancelará a operação
-                child: Text(
+                child: const Text(
                   'Não',
                   style: TextStyle(
                     color: Colors.white, // cor do texto do botão
@@ -41,7 +43,7 @@ class _ExitAlertState extends State<ExitAlert> {
                 ),
                 onPressed: () => Navigator.of(context).pop(
                     true), //caso o usuário pressionar "Sim" retorna um valor verdadeiro para o sistema e sairá do app
-                child: Text(
+                child: const Text(
                   'Sim',
                   style: TextStyle(
                     color: Colors.white, // Cor do texto do botão

@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/shared/components/dialogs/confirm_dialog.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
