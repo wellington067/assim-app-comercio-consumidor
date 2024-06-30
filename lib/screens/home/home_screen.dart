@@ -1,6 +1,7 @@
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/cidade/cidade_screen.dart';
 import 'package:ecommerceassim/shared/components/bottomNavigation/BottomNavigation.dart';
+import 'package:ecommerceassim/shared/components/dialogs/dialog_confirmation_exit.dart';
 import 'package:ecommerceassim/shared/core/controllers/home_screen_controller.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return ChangeNotifierProvider(
       create: (_) => HomeScreenController(),
       builder: (context, child) => Consumer<HomeScreenController>(
-        builder: ((context, controller, child) => Scaffold(
-              appBar: const CustomAppBar(),
-              bottomNavigationBar:
-                  BottomNavigation(paginaSelecionada: 0,),
-              body: Container(
-                color: kOnSurfaceColor,
-                width: size.width,
-                padding: const EdgeInsets.all(20),
-                child: const CidadeScreen(),
-              ),
-            )),
+        builder: (context, controller, child) => ExitAlert(
+          child: Scaffold(
+            appBar: const CustomAppBar(),
+            bottomNavigationBar: BottomNavigation(
+              paginaSelecionada: 0,
+            ),
+            body: Container(
+              color: kOnSurfaceColor,
+              width: size.width,
+              padding: const EdgeInsets.all(20),
+              child: const CidadeScreen(),
+            ),
+          ),
+        ),
       ),
     );
   }
