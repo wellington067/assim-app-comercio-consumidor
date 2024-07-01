@@ -1,5 +1,6 @@
-import 'package:ecommerceassim/assets/index.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
+import 'package:ecommerceassim/shared/components/bottomLogos/bottom_logos.dart';
+import 'package:ecommerceassim/shared/components/header_start_app/header_start_app.dart';
 import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/app_number_constants.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
@@ -69,11 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 600),
                   opacity: opacity,
-                  child: Text(
-                    'E-commerce ASSIM'.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: kTitle1.copyWith(color: kOnSurfaceColor),
-                  ),
+                  child:  HeaderStartApp(kOnSurfaceColor)
                 ),
                 const VerticalSpacerBox(size: SpacerSize.huge),
                 const CircularProgressIndicator(
@@ -82,36 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Text(
-                  'Desenvolvido por:',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const VerticalSpacerBox(size: SpacerSize.small),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        Assets.ufapeLogo,
-                        width: 100,
-                      ),
-                      const SizedBox(width: 20),
-                      Image.asset(
-                        Assets.lmtsLogo,
-                        width: 150,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
+          BottomLogos(150)
         ],
       ),
     );
