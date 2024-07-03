@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import necessário para SystemUiOverlayStyle
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 
-/* import 'package:ecommerceassim/shared/core/user_storage.dart';
- */
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool automaticallyImplyLeading;
 
-  const CustomAppBar({super.key, this.automaticallyImplyLeading = false});
+  const CustomAppBar({
+    Key? key,
+    this.automaticallyImplyLeading = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-/*     final UserStorage userStorage = UserStorage(); */
-
     return AppBar(
+      scrolledUnderElevation: 0,
       automaticallyImplyLeading: automaticallyImplyLeading,
       title: const Text(
-        "ASSIM",
+        "APP-ASSIM",
         style: TextStyle(
+          fontSize: 18,
           color: kDetailColor,
           fontWeight: FontWeight.bold,
         ),
@@ -25,23 +27,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: const IconThemeData(color: kDetailColor),
       backgroundColor: kOnSurfaceColor,
       elevation: 0,
-      /* actions: <Widget>[
-        IconButton(
-          icon: const Icon(
-            Icons.exit_to_app,
-            color: kDetailColor,
-          ),
-          onPressed: () async {
-            await userStorage.clearUserCredentials();
-
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => SignInScreen()),
-              (Route<dynamic> route) => false,
-            );
-          },
-        ),
-      ], */
     );
   }
 
