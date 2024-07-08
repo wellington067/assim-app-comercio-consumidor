@@ -30,6 +30,7 @@ class FirstScreen extends StatelessWidget {
     return GetBuilder<FirstController>(
       init: FirstController(),
       builder: (controller) => Scaffold(
+        backgroundColor: kDetailColor,
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(320),
             child: StyleBar(
@@ -37,7 +38,13 @@ class FirstScreen extends StatelessWidget {
               hasLeading: false,
             )),
         body: Container(
-          color: kOnSurfaceColor,
+          decoration: const BoxDecoration(
+            color: kOnSurfaceColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(35),
+              topRight: Radius.circular(35),
+            ),
+          ),
           width: size.width,
           padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
@@ -64,11 +71,13 @@ class FirstScreen extends StatelessWidget {
               ),
               const VerticalSpacerBox(size: SpacerSize.large),
               PrimaryButton(
+                borderColor: kTextFirst,
+                color: Colors.white,
+                textColor: kTextFirst,
                 text: 'Não sou ${firstThreeWords(controller.userName)}',
                 onPressed: () {
                   Navigator.pushNamed(context, Screens.signin);
                 },
-                color: kTextButtonColor,
               ),
               SizedBox(
                 width: size.width,
