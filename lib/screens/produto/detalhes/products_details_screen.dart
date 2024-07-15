@@ -43,7 +43,8 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
     if (arguments == null) {
       return const Scaffold(
@@ -86,111 +87,140 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                               base64Decode(base64Image.split(',').last))
                           : const Icon(Icons.shopping_bag,
                               size: 80, color: kDetailColor),
-                      const SizedBox(height: 15),
-                      Text(produtoTitulo,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24)),
-                      Text('R\$ ${double.parse(produtoPreco).toStringAsFixed(2).replaceAll('.', ',')}',
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                              ),
-                      Text(produtoTipo,
-                          style: const TextStyle(
-                              fontSize: 16, color: kDetailColor)),
-                      const SizedBox(height: 16),
-                      const Text('Descrição',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)),
-                      InkWell(
-                        onTap: toggleDescription,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              isDescriptionExpanded
-                                  ? produtoDescricao
-                                  : shortDescription,
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            if (produtoDescricao.length > 100)
-                              Text(
-                                isDescriptionExpanded
-                                    ? 'Ver menos'
-                                    : 'Ver mais',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: kDetailColor,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text('Quantidade',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          _buildQuantityButton(
-                              Icons.remove, () => decrementQuantity()),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 25.0),
-                            child: Text('$quantity',
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold)),
-                          ),
-                          _buildQuantityButton(Icons.add,
-                              (){ if(quantity < produto.estoque - cartProvider.getProductQuantity(produto.id)){
-                                    incrementQuantity(produtoEstoque);
-                                  }
-                                }
-                            ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: kDetailColor,
-                  side: const BorderSide(color: kDetailColor, width: 2.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  minimumSize: const Size(double.infinity, 50),
-                ),
-                 
-                onPressed: () {
-                  if( quantity <= produto.estoque - cartProvider.getProductQuantity(produto.id)){
-                  addToCart(quantity);
-                  setState(() {
-                    quantity = 1;
-                  });
-                  // ignore: avoid_print
-                  print('Produto adicionado a cesta');
-                  }else {
-                    setState(() {
-                      quantity = 1;
-                    });
-                    alertDialog(context, 'Produto Esgotado', 'A quantidade disponível do produto já foi adicionada à cesta ou não está mais em estoque.');
-                    print('produto nao adicionado a cesta porque nao tem mais o produto no estoque');
-                  }
-                },
-                child: const Text('Adicionar ao carrinho',
-                    style: TextStyle(fontSize: 18)),
+
+            Container(
+              decoration: const BoxDecoration(
+              color: Color.fromARGB(114, 245, 245, 245),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), 
+                  topRight: Radius.circular(30))
               ),
-            ),
+              height: 400,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: 15),
+                          Text(produtoTitulo,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 24)),
+                          Text(
+                            'R\$ ${double.parse(produtoPreco).toStringAsFixed(2).replaceAll('.', ',')}',
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Text(produtoTipo,
+                              style: const TextStyle(
+                                  fontSize: 16, color: kDetailColor)),
+                          const SizedBox(height: 16),
+                          const Text('Descrição',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18)),
+                          InkWell(
+                            onTap: toggleDescription,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  isDescriptionExpanded
+                                      ? produtoDescricao
+                                      : shortDescription,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                if (produtoDescricao.length > 100)
+                                  Text(
+                                    isDescriptionExpanded
+                                        ? 'Ver menos'
+                                        : 'Ver mais',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: kDetailColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text('Quantidade',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18)),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              _buildQuantityButton(
+                                  Icons.remove, () => decrementQuantity()),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25.0),
+                                child: Text('$quantity',
+                                    style: const TextStyle(
+                                        fontSize: 18, fontWeight: FontWeight.bold)),
+                              ),
+                              _buildQuantityButton(Icons.add, () {
+                                if (quantity <
+                                    produto.estoque -
+                                        cartProvider
+                                            .getProductQuantity(produto.id)) {
+                                  incrementQuantity(produtoEstoque);
+                                }
+                              }),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 40,),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: kDetailColor,
+                            side: const BorderSide(color: kDetailColor, width: 2.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            minimumSize: const Size(double.infinity, 50),
+                          ),
+                          onPressed: () {
+                            if (quantity <=
+                                produto.estoque -
+                                    cartProvider.getProductQuantity(produto.id)) {
+                              addToCart(quantity);
+                              setState(() {
+                                quantity = 1;
+                              });
+                              // ignore: avoid_print
+                              print('Produto adicionado a cesta');
+                            } else {
+                              setState(() {
+                                quantity = 1;
+                              });
+                              alertDialog(context, 'Produto Esgotado',
+                                  'A quantidade disponível do produto já foi adicionada à cesta ou não está mais em estoque.');
+                              print(
+                                  'produto nao adicionado a cesta porque nao tem mais o produto no estoque');
+                            }
+                          },
+                          child: const Text('Adicionar ao carrinho',
+                              style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
