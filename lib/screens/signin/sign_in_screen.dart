@@ -1,4 +1,3 @@
-import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/forgot-password/forgot_password_screen.dart';
 import 'package:ecommerceassim/screens/screens_index.dart';
 import 'package:ecommerceassim/shared/components/header_start_app/header_start_app.dart';
@@ -34,7 +33,7 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
                     padding: const EdgeInsets.only(top: 35),
                     // ignore: avoid_unnecessary_containers
                     child: Container(
-                      child:  HeaderStartApp(Colors.white),
+                      child:  const HeaderStartApp(Colors.white),
                     ),
                   ),
                 ),
@@ -42,6 +41,7 @@ class SignInScreen extends StatelessWidget with ValidationMixin {
               Expanded(
                 flex: 3,
                 child: Container(
+                  alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
