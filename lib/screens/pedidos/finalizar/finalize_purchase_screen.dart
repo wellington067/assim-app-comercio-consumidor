@@ -219,7 +219,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     fontSize: 20, color: kTextButtonColor),
                               ),
                               const HorizontalSpacerBox(size: SpacerSize.small),
-                              /* Radio(
+                              Radio(
                                   overlayColor:
                                       MaterialStateProperty.all(kDetailColor),
                                   value: 'entrega',
@@ -238,7 +238,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                 'Entrega',
                                 style: TextStyle(
                                     fontSize: 20, color: kTextButtonColor),
-                              ), */
+                              ),
                               const HorizontalSpacerBox(size: SpacerSize.small),
                             ],
                           ),
@@ -277,7 +277,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       TextStyle(fontWeight: FontWeight.normal),
                                 ),
                               ),
-                              /* DropdownMenuItem<int>(
+                              DropdownMenuItem<int>(
                                 value: 3,
                                 child: Text(
                                   'Crédito',
@@ -300,7 +300,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   style:
                                       TextStyle(fontWeight: FontWeight.normal),
                                 ),
-                              ), */
+                              ),
                             ],
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -443,7 +443,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   ),
                                   const VerticalSpacerBox(
                                       size: SpacerSize.tiny),
-                                  /*  Row(
+                                  Row(
                                     children: [
                                       const Text(
                                         'Total:',
@@ -458,10 +458,10 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                             color: kTextButtonColor),
                                       ),
                                     ],
-                                  ), */
+                                  ),
                                   const VerticalSpacerBox(
                                       size: SpacerSize.small),
-                                  /*  if (_deliveryMethod == 'entrega')
+                                  if (_deliveryMethod == 'entrega')
                                     const Row(
                                       children: [
                                         Text(
@@ -477,11 +477,11 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                               color: kTextButtonColor),
                                         ),
                                       ],
-                                    ), */
+                                    ),
                                   if (_deliveryMethod == 'retirada')
                                     const Row(
                                       children: [
-                                        /*  Text(
+                                        Text(
                                           'Frete:',
                                           style: TextStyle(fontSize: 17),
                                         ),
@@ -492,11 +492,11 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: kTextButtonColor),
-                                        ), */
+                                        ),
                                       ],
                                     ),
-                                  /*             const VerticalSpacerBox(
-                                      size: SpacerSize.small), */
+                                  const VerticalSpacerBox(
+                                      size: SpacerSize.small),
                                   Row(
                                     children: [
                                       const Text(
