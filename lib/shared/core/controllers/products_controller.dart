@@ -31,7 +31,8 @@ class ProductsController extends GetxController {
   final BancaRepository bancaRepository = BancaRepository();
 
   CartModel createCart(BuildContext context, int amount, ProdutoModel produto) {
-    final Map<String, dynamic> arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int bancaId = arguments['id'];
 
     CartModel cart = CartModel(produto.id, bancaId, produto.titulo,
@@ -99,6 +100,32 @@ class ProductsController extends GetxController {
       filteredProdutos = _produtos;
     }
     update();
+  }
+
+  List<int> getAvailableCategories() {
+    const List<String> categories = [
+      "Mel",
+      "Legumes",
+      "Polpa de Frutas",
+      "Grãos",
+      "Verduras",
+      "Raízes",
+      "Frutas",
+      "Produtos Beneficiados",
+      "Plantas/Ervas Medicinais"
+    ];
+
+    List<int> availableCategoryIndexes = [];
+
+    for (int i = 0; i < categories.length; i++) {
+      if (_produtos.any((produto) =>
+          produto.categoria.toLowerCase() == categories[i].toLowerCase())) {
+        availableCategoryIndexes
+            .add(i + 1); // Adiciona 1 porque o índice 0 é para "Todos"
+      }
+    }
+
+    return availableCategoryIndexes;
   }
 
   @override

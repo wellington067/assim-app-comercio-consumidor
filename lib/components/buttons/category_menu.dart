@@ -80,6 +80,9 @@ class CategoryMenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final produtoController = Get.find<ProductsController>();
+    final availableCategories = produtoController.getAvailableCategories();
+
     final List<Map<String, String>> categories = [
       {
         "categoryName": "Todos",
@@ -117,14 +120,15 @@ class CategoryMenuList extends StatelessWidget {
       height: 80,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
+        itemCount: availableCategories.length + 1, // +1 para incluir "Todos"
         itemBuilder: (context, index) {
+          final categoryIndex = index == 0 ? 0 : availableCategories[index - 1];
           return Padding(
             padding: EdgeInsets.only(left: index == 0 ? 22.0 : 0, right: 10.0),
             child: CategoryMenu(
-              categoryName: categories[index]["categoryName"]!,
-              assetPath: categories[index]["assetPath"]!,
-              onTap: () => handleCategoryTap(index),
+              categoryName: categories[categoryIndex]["categoryName"]!,
+              assetPath: categories[categoryIndex]["assetPath"]!,
+              onTap: () => handleCategoryTap(categoryIndex),
             ),
           );
         },
