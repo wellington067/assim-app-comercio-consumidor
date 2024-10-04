@@ -75,19 +75,37 @@ class CategoryMenu extends StatelessWidget {
   }
 }
 
-class CategoryMenuList extends StatelessWidget {
+class CategoryMenuList extends StatefulWidget {
   const CategoryMenuList({super.key});
 
   @override
+  _CategoryMenuListState createState() => _CategoryMenuListState();
+}
+
+class _CategoryMenuListState extends State<CategoryMenuList> {
+  late ProductsController produtoController;
+
+  @override
+  void initState() {
+    super.initState();
+    produtoController = Get.find<ProductsController>();
+    produtoController.addListener(() {
+      setState(() {}); // Recarrega a tela quando o estado muda
+    });
+  }
+
+  @override
+  void dispose() {
+    produtoController.removeListener(() {});
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final produtoController = Get.find<ProductsController>();
     final availableCategories = produtoController.getAvailableCategories();
 
     final List<Map<String, String>> categories = [
-      {
-        "categoryName": "Todos",
-        "assetPath": Assets.shoppingBag
-      }, // Botão para exibir todos os produtos
+      {"categoryName": "Todos", "assetPath": Assets.shoppingBag},
       {"categoryName": "Mel", "assetPath": Assets.mel},
       {"categoryName": "Legumes", "assetPath": Assets.vegetais},
       {"categoryName": "Polpa de Frutas", "assetPath": Assets.polpa},
@@ -106,7 +124,6 @@ class CategoryMenuList extends StatelessWidget {
     ];
 
     void handleCategoryTap(int index) {
-      final produtoController = Get.find<ProductsController>();
       if (index == 0) {
         // Exibir todos os produtos
         produtoController.filterProdutosByCategoryIndex(-1);
