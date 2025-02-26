@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
+import 'package:flutter/material.dart';
+
+import 'app_enums.dart';
+
 
 class AppTheme with ChangeNotifier {
   CurrentAppTheme _currentAppTheme = CurrentAppTheme.light;
