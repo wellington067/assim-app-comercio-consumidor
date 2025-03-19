@@ -3,12 +3,15 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerceassim/shared/core/models/banca_model.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
+import 'package:ecommerceassim/shared/core/models/pedidos_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/banca_repository.dart';
 import 'package:ecommerceassim/shared/core/repositories/purchase_repository.dart';
 import 'package:ecommerceassim/shared/core/user_storage.dart';
 import 'package:get/get.dart';
 
 class PurchaseController extends GetxController {
+  int idStore = 0;
+  List<BancaModel> bancas = [];
   BancaModel? bancaModel;
   List<CartModel>? listCartModel;
   int? enderecoId;
@@ -25,35 +28,70 @@ class PurchaseController extends GetxController {
 
   Future<void> loadBanca() async {
     try {
-      bancaModel = await _bancaRepository.getBanca(listCartModel![0].storeId!);
-      update();
+      if (listCartModel != null && listCartModel!.isNotEmpty && listCartModel![0].storeId != null) {
+        bancaModel = await _bancaRepository.getBanca(listCartModel![0].storeId!);
+        update();
+      } else {
+        print('Não foi possível carregar a banca: storeId não encontrado');
+      }
     } catch (error) {
       print('Erro ao carregar a banca: $error');
     }
   }
 
-  Future<bool> purchase(
-      int enderecoId, String tipoEntrega, int formaPagamento) async {
-    List<List> listCartModelSplited = [];
-    for (var cart in listCartModel!) {
-      List listItem = [];
-      listItem.add(cart.productId);
-      listItem.add(cart.amount);
-      listCartModelSplited.add(listItem);
+  Future<PedidoModel> purchase(
+    int enderecoId,
+    String tipoEntrega,
+    int formaPagamento,
+  ) async {
+    // Validações iniciais mais robustas
+    if (listCartModel == null || listCartModel!.isEmpty) {
+      throw Exception('Carrinho vazio ou inválido.');
     }
-    try {
-      final response = await _purchaseRepository.purchase(listCartModelSplited,
-          bancaModel!.id, userToken, enderecoId, tipoEntrega, formaPagamento);
-      return response;
-    } on DioError catch (dioError) {
-      if (dioError.response?.statusCode == 400) {
-        final errorMessage =
-            dioError.response?.data['error'] ?? 'Erro desconhecido';
-        throw Exception(errorMessage);
-      } else {
-        throw Exception('Erro ao realizar a compra: ${dioError.message}');
+
+    if (bancaModel == null || bancaModel?.id == null) {
+      throw Exception('Banca não carregada corretamente.');
+    }
+
+    List<List<dynamic>> listCartModelSplited = []; // Tipo explícito
+
+    // Prepara os dados dos produtos
+    for (var cart in listCartModel!) {
+      if (cart.productId == null) {
+        throw Exception('ID do produto não encontrado.');
       }
+
+      listCartModelSplited.add([cart.productId, cart.amount]);
+    }
+
+    try {
+      print('Iniciando transação com Banca ID: ${bancaModel!.id}');
+      
+      var response = await _purchaseRepository.purchase(
+        listCartModelSplited,
+        bancaModel!.id,
+        userToken,
+        enderecoId,
+        tipoEntrega,
+        formaPagamento,
+      );
+
+      // Validações adicionais 
+      if (response == null) {
+        throw Exception('Erro: Pedido retornado é nulo.');
+      }
+
+      if (response.id == null) {
+        throw Exception('ID do pedido não retornado pelo servidor.');
+      }
+
+      print('Pedido gerado com sucesso. ID: ${response.id}');
+      return response;
     } catch (error) {
+      print('Erro na compra: $error');
+      if (error is DioError) {
+        throw Exception('Erro na comunicação com o servidor: ${error.message}');
+      }
       rethrow;
     }
   }

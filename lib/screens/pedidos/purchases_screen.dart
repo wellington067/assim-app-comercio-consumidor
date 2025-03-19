@@ -96,7 +96,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                       ],
                     ),
                   )
-                : _buildEmptyListWidget(),
+                : _buildEmptyListWidget(context),
           ),
         );
       },
@@ -104,34 +104,80 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
   }
 }
 
-Widget _buildEmptyListWidget() {
+Widget _buildEmptyListWidget(BuildContext context) {
   return Center(
     child: Padding(
-      padding: const EdgeInsets.only(top: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(Icons.storefront, color: kDetailColor, size: 80),
-          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.shopping_bag, color: kDetailColor, size: 60),
+              const SizedBox(width: 10),
+              const Icon(Icons.arrow_forward, color: kDetailColor, size: 40),
+              const SizedBox(width: 10),
+              Icon(Icons.receipt_long, color: Colors.grey[400], size: 60),
+            ],
+          ),
+          const SizedBox(height: 24),
           const Text(
-            'Nenhum pedido encontrado.',
+            'Hora de experimentar!',
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: kDetailColor,
             ),
           ),
           const SizedBox(height: 10),
           Text(
-            'Você ainda não tem pedidos realizados ou estão indisponíveis no momento.',
+            'Você ainda não tem pedidos. Encontre produtos incríveis e comece a comprar!',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
             ),
           ),
+          const SizedBox(height: 16),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.green[50],
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.green),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.local_offer, color: Colors.green),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Aproveite as ofertas disponíveis em nosso catálogo!',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[800],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          /*ElevatedButton.icon(
+            icon: const Icon(Icons.store),
+            label: const Text('Ver catálogo'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kDetailColor,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            ),
+            onPressed: () {
+              // Navegação para a tela de catálogo
+            },
+          ),*/
         ],
       ),
     ),

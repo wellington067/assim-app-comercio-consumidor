@@ -46,10 +46,10 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.lmts.ecommerceassim"
+        applicationId "com.ufape.lmts.assimconsumidor"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 2
+        versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
@@ -64,7 +64,6 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
         }
     }

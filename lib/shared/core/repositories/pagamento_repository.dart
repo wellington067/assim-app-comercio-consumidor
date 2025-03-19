@@ -14,6 +14,7 @@ class PagamentoRepository {
   Future<void> uploadComprovante(PagamentoModel pagamento, int orderId) async {
     final userToken = await UserStorage().getUserToken();
 
+    // Endpoint corrigido para transacoes
     String url = '$kBaseURL/transacoes/$orderId/comprovante';
     FormData formData = FormData.fromMap({
       "comprovante": await MultipartFile.fromFile(pagamento.comprovante.path,
@@ -35,6 +36,7 @@ class PagamentoRepository {
         throw Exception('Falha ao enviar comprovante');
       }
     } catch (e) {
+      print('Erro no upload do comprovante: $e');
       throw Exception('Erro: $e');
     }
   }
@@ -104,7 +106,7 @@ class PagamentoRepository {
             throw Exception('Tipo de conteúdo não suportado: $contentType');
           }
         } else {
-          throw Exception('Cabeçalho de tipo de conteúdo não encontrado');
+          fileExtension = 'jpg'; // Padrão para imagens
         }
 
         final file =
