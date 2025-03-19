@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:ecommerceassim/components/appBar/custom_app_bar.dart';
 import 'package:ecommerceassim/screens/cesta/cart_provider.dart';
 import 'package:ecommerceassim/shared/core/controllers/profile_controller.dart';
 import 'package:ecommerceassim/shared/core/controllers/purchase_controller.dart';
 import 'package:ecommerceassim/shared/core/models/cart_model.dart';
 import 'package:ecommerceassim/shared/core/models/endereco_model.dart';
+import 'package:ecommerceassim/shared/core/models/pagamento_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceassim/components/utils/horizontal_spacer_box.dart';
 import 'package:ecommerceassim/components/utils/vertical_spacer_box.dart';
@@ -14,7 +17,11 @@ import 'package:ecommerceassim/shared/constants/app_enums.dart';
 import 'package:ecommerceassim/shared/constants/style_constants.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../components/buttons/primary_button.dart';
+import 'package:ecommerceassim/shared/core/controllers/pagamento_controller.dart';
+import 'package:ecommerceassim/shared/core/repositories/pagamento_repository.dart';
+import 'package:ecommerceassim/shared/core/models/pedidos_model.dart';
 
 class FinalizePurchaseScreen extends StatefulWidget {
   final List<CartModel> cartModel;
@@ -32,11 +39,15 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
   AddressModel? userAddress;
   bool isLoading = true;
   late int selectedAddressId;
+  String? pixCode;
+  XFile? _comprovanteImage;
+  bool _isPickerActive = false;
 
   @override
   void initState() {
     super.initState();
     _loadUserAddress();
+    _loadPixCode();
   }
 
   Future<void> _loadUserAddress() async {
@@ -50,6 +61,27 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
       }
       isLoading = false;
     });
+  }
+
+  Future<void> _loadPixCode() async {
+    try {
+      // Obtém o PagamentoController para usar depois
+      final controller = Get.find<PurchaseController>();
+      if (controller.bancaModel != null && controller.bancaModel!.pix != null) {
+        setState(() {
+          pixCode = controller.bancaModel!.pix;
+        });
+      } else {
+        setState(() {
+          pixCode = "Chave PIX não disponível";
+        });
+      }
+    } catch (e) {
+      print('Erro ao carregar chave PIX: $e');
+      setState(() {
+        pixCode = "Chave PIX não disponível";
+      });
+    }
   }
 
   void _chooseAddress(
@@ -93,6 +125,26 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
         selectedAddressId = selectedAddress.id;
         print("ENDEREÇO: $selectedAddressId");
       });
+    }
+  }
+
+  Future<void> _chooseComprovante() async {
+    if (_isPickerActive) return; // Evita múltiplas chamadas
+
+    try {
+      _isPickerActive = true;
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      
+      if (image != null) {
+        setState(() {
+          _comprovanteImage = image;
+        });
+      }
+    } catch (e) {
+      print('Erro ao selecionar imagem: $e');
+    } finally {
+      _isPickerActive = false;
     }
   }
 
@@ -163,6 +215,11 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
     Size size = MediaQuery.of(context).size;
     final profileController =
         Provider.of<ProfileController>(context, listen: false);
+    
+    // Preparando o controller de pagamento
+    PagamentoRepository pagamentoRepository = PagamentoRepository();
+    PagamentoController pagamentoController =
+        PagamentoController(pagamentoRepository);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -200,7 +257,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                             children: [
                               Radio(
                                   overlayColor:
-                                      MaterialStateProperty.all(kDetailColor),
+                                      WidgetStateProperty.all(kDetailColor),
                                   value: 'retirada',
                                   groupValue: _deliveryMethod,
                                   activeColor: kDetailColor,
@@ -209,8 +266,7 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   onChanged: (value) {
                                     setState(() {
                                       _deliveryMethod = value.toString();
-                                      print(
-                                          "Tipo de entrega: $_deliveryMethod");
+                                      print("Tipo de entrega: $_deliveryMethod");
                                     });
                                   }),
                               const Text(
@@ -219,26 +275,6 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                     fontSize: 20, color: kTextButtonColor),
                               ),
                               const HorizontalSpacerBox(size: SpacerSize.small),
-                              Radio(
-                                  overlayColor:
-                                      MaterialStateProperty.all(kDetailColor),
-                                  value: 'entrega',
-                                  groupValue: _deliveryMethod,
-                                  activeColor: kDetailColor,
-                                  focusColor: kDetailColor,
-                                  hoverColor: kDetailColor,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _deliveryMethod = value.toString();
-                                      print(
-                                          "Tipo de entrega: $_deliveryMethod");
-                                    });
-                                  }),
-                              const Text(
-                                'Entrega',
-                                style: TextStyle(
-                                    fontSize: 20, color: kTextButtonColor),
-                              ),
                               const HorizontalSpacerBox(size: SpacerSize.small),
                             ],
                           ),
@@ -277,30 +313,6 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                       TextStyle(fontWeight: FontWeight.normal),
                                 ),
                               ),
-                              DropdownMenuItem<int>(
-                                value: 3,
-                                child: Text(
-                                  'Crédito',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.normal),
-                                ),
-                              ),
-                              DropdownMenuItem<int>(
-                                value: 4,
-                                child: Text(
-                                  'Débito',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.normal),
-                                ),
-                              ),
-                              DropdownMenuItem<int>(
-                                value: 5,
-                                child: Text(
-                                  'Boleto',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.normal),
-                                ),
-                              ),
                             ],
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -313,91 +325,84 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   const EdgeInsets.fromLTRB(13, 13, 13, 13),
                             ),
                           ),
-                          const VerticalSpacerBox(size: SpacerSize.large),
-                          if (_deliveryMethod == 'entrega')
-                            InkWell(
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: kOnSurfaceColor,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(15)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: kTextButtonColor.withOpacity(0.5),
-                                      spreadRadius: 0,
-                                      blurRadius: 3,
-                                      offset: const Offset(0, 0),
+                          // Novo bloco para Pix
+                          if (_paymentMethodId == 2)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Chave PIX do Vendedor:",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                  ],
-                                  border: Border(
-                                    left: BorderSide(
-                                      color: kTextButtonColor.withOpacity(0.5),
-                                      width: 1,
-                                    ),
-                                    right: BorderSide(
-                                      color: kTextButtonColor.withOpacity(0.5),
-                                      width: 1,
+                                    child: SelectableText(
+                                      pixCode != null ? 'Chave Pix: $pixCode' : 'Pix não disponível',
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                   ),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
+                                  const SizedBox(height: 20),
+                                  const Text(
+                                    "Comprovante de PIX:",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
                                       children: [
-                                        const Text(
-                                          'Endereço de entrega',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            await _chooseComprovante();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: kDetailColor,
+                                          ),
+                                          child: const Text(
+                                            "Anexar Comprovante de PIX", 
+                                            style: TextStyle(color: Colors.white),
+                                          ),
                                         ),
-                                        const Spacer(),
-                                        IconButton(
-                                            onPressed: () => _chooseAddress(
-                                                context, profileController),
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                              color: kTextButtonColor,
-                                            )),
+                                        if (_comprovanteImage != null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 10.0),
+                                            child: Column(
+                                              children: [
+                                                const Text("Visualização do comprovante:"),
+                                                const SizedBox(height: 8),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(color: Colors.grey),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                  ),
+                                                  child: Image.file(
+                                                    File(_comprovanteImage!.path),
+                                                    height: 200,
+                                                    width: double.infinity,
+                                                    fit: BoxFit.contain,
+                                                    errorBuilder: (context, error, stackTrace) {
+                                                      print("Erro ao carregar imagem: $error");
+                                                      return const Text("Erro ao carregar a imagem");
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                       ],
                                     ),
-                                    const VerticalSpacerBox(
-                                        size: SpacerSize.tiny),
-                                    Text(
-                                      'Bairro: ${userAddress?.bairroNome ?? 'Bairro não disponível'}',
-                                      style: const TextStyle(fontSize: 13),
-                                    ),
-                                    const VerticalSpacerBox(
-                                        size: SpacerSize.tiny),
-                                    Text(
-                                      'Cidade: ${userAddress?.cidadeNome ?? 'Cidade não disponível'}',
-                                      style: const TextStyle(fontSize: 13),
-                                    ),
-                                    const VerticalSpacerBox(
-                                        size: SpacerSize.tiny),
-                                    Text(
-                                      'Rua: ${userAddress?.rua ?? 'Rua não disponível'}',
-                                      style: const TextStyle(fontSize: 13),
-                                    ),
-                                    const VerticalSpacerBox(
-                                        size: SpacerSize.tiny),
-                                    Text(
-                                      'Número: ${userAddress?.numero ?? 'Número não disponível'}',
-                                      style: const TextStyle(fontSize: 13),
-                                    ),
-                                    const VerticalSpacerBox(
-                                        size: SpacerSize.tiny),
-                                    if (userAddress?.complemento != null)
-                                      Text(
-                                        'Complemento: ${userAddress?.complemento}',
-                                        style: const TextStyle(fontSize: 13),
-                                      ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              onTap: () {},
                             ),
                           const VerticalSpacerBox(size: SpacerSize.medium),
                           InkWell(
@@ -443,80 +448,27 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                                   ),
                                   const VerticalSpacerBox(
                                       size: SpacerSize.tiny),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Total:',
-                                        style: TextStyle(fontSize: 17),
-                                      ),
-                                      const Spacer(),
-                                      Text(
-                                        'R\$ ${controller.totalValue.toStringAsFixed(2)}',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: kTextButtonColor),
-                                      ),
-                                    ],
-                                  ),
                                   const VerticalSpacerBox(
                                       size: SpacerSize.small),
-                                  if (_deliveryMethod == 'entrega')
-                                    const Row(
-                                      children: [
-                                        Text(
-                                          'Frete:',
-                                          style: TextStyle(fontSize: 17),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          'R\$ 5.00',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: kTextButtonColor),
-                                        ),
-                                      ],
-                                    ),
                                   if (_deliveryMethod == 'retirada')
-                                    const Row(
+                                    Row(
                                       children: [
-                                        Text(
-                                          'Frete:',
-                                          style: TextStyle(fontSize: 17),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          'R\$ 0.00',
+                                        const Text(
+                                          'Total:',
                                           style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          'R\$ ${controller.totalValue.toStringAsFixed(2)}',
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: kTextButtonColor),
                                         ),
                                       ],
                                     ),
-                                  const VerticalSpacerBox(
-                                      size: SpacerSize.small),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Total:',
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Spacer(),
-                                      Text(
-                                        _deliveryMethod == 'entrega'
-                                            ? 'R\$ ${(controller.totalValue + 5).toStringAsFixed(2)}'
-                                            : 'R\$ ${controller.totalValue.toStringAsFixed(2)}',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: kTextButtonColor),
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
                             ),
@@ -526,37 +478,45 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
                           PrimaryButton(
                             text: 'Confirmar pedido',
                             onPressed: () async {
-                              bool success;
                               try {
-                                success = await controller.purchase(
+                                // Validação para comprovante PIX
+                                if (_paymentMethodId == 2 && _comprovanteImage == null) {
+                                  throw Exception('Por favor, anexe o comprovante do PIX');
+                                }
+
+                                // Modifica o método purchase para retornar o PedidoModel
+                                var pedidoModel = await controller.purchase(
                                   selectedAddressId,
                                   _deliveryMethod,
                                   _paymentMethodId,
                                 );
-                              } catch (e) {
-                                String errorMessage = e.toString();
-                                if (errorMessage.startsWith('Exception: ')) {
-                                  errorMessage = errorMessage.replaceFirst(
-                                      'Exception: ', '');
-                                } else if (errorMessage
-                                    .contains('Exception: ')) {
-                                  errorMessage =
-                                      errorMessage.split('Exception: ')[1];
+
+                                print("ID DO PEDIDO PARA UPLOAD: ${pedidoModel.id}");
+
+                                // Processa o upload do comprovante se for pagamento PIX
+                                if (_paymentMethodId == 2 && _comprovanteImage != null) {
+                                  await uploadComprovanteFromXFile(
+                                    pagamentoRepository,
+                                    pedidoModel.id,
+                                    context,
+                                    _comprovanteImage!
+                                  );
                                 }
-                                showErrorDialog(context, errorMessage);
-                                return;
-                              }
-                              if (success) {
+                                
+                                // Limpa o carrinho e mostra a mensagem de sucesso
                                 cartListProvider.clearCart();
                                 print("ENDEREÇO: $selectedAddressId");
                                 print("Tipo de entrega: $_deliveryMethod");
                                 print("Forma de pagamento: $_paymentMethodId");
                                 print("Compra realizada com sucesso!");
                                 showSuccessDialog(context);
-                              } else {
-                                print("Falha na compra.");
-                                showErrorDialog(
-                                    context, 'Falha ao realizar a compra.');
+                              } catch (e) {
+                                // Trata erros
+                                String errorMessage = e.toString();
+                                if (errorMessage.startsWith('Exception: ')) {
+                                  errorMessage = errorMessage.substring(10);
+                                }
+                                showErrorDialog(context, errorMessage);
                               }
                             },
                             color: kDetailColor,
@@ -585,5 +545,38 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
               },
             ),
     );
+  }
+
+  // Método temporário para lidar com o upload do comprovante
+  Future<void> uploadComprovanteFromXFile(
+      PagamentoRepository repository,
+      int orderId, 
+      BuildContext context, 
+      XFile comprovanteImage) async {
+
+        print("INICIANDO UPLOAD PARA ID: $orderId");
+    try {
+      if (comprovanteImage == null) {
+        debugPrint('Nenhum comprovante selecionado');
+        return;
+      }
+
+      final file = File(comprovanteImage.path);
+      final pagamento = PagamentoModel(comprovante: file);
+
+      // Upload do comprovante usando o repository fornecido
+      await repository.uploadComprovante(pagamento, orderId);
+      
+      print("Upload do comprovante para o pedido: $orderId");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Comprovante enviado com sucesso!')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro no upload: ${e.toString()}')),
+      );
+      print('Erro ao fazer upload do comprovante: $e');
+      throw Exception('Erro no upload do comprovante.');
+    }
   }
 }

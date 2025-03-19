@@ -60,6 +60,10 @@ windows/flutter/generated_plugin_registrant.cc
 windows/flutter/generated_plugin_registrant.h
 .vscode/settings.json
 pubspec.lock
+# Keystore files
+**/android/key.properties
+**/android/app/assim-consumidor-key.jks
 
 # FVM Version Cache
 .fvm/
+/assim-consumidor-key.jks

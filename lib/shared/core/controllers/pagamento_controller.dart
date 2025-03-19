@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ecommerceassim/shared/core/models/pagamento_model.dart';
 import 'package:ecommerceassim/shared/core/repositories/pagamento_repository.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PagamentoController with ChangeNotifier {
   final PagamentoRepository _repository;
@@ -65,6 +66,7 @@ class PagamentoController with ChangeNotifier {
 
     try {
       await _repository.uploadComprovante(pagamento, orderId);
+      print("Upload do comprovante para o pedido: $orderId");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Comprovante enviado com sucesso!')),
       );
@@ -73,6 +75,33 @@ class PagamentoController with ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
       );
+      print('Erro ao fazer upload do comprovante: $e');
+      throw Exception('Erro no upload do comprovante.');
+    }
+  }
+
+  // Novo método para upload com XFile
+  Future<void> uploadComprovanteFromXFile(int orderId, BuildContext context, XFile comprovanteImage) async {
+    try {
+      if (comprovanteImage == null) {
+        debugPrint('Nenhum comprovante selecionado');
+        return;
+      }
+
+      final file = File(comprovanteImage.path);
+      final pagamento = PagamentoModel(comprovante: file);
+
+      await _repository.uploadComprovante(pagamento, orderId);
+      print("Upload do comprovante para o pedido: $orderId");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Comprovante enviado com sucesso!')),
+      );
+    } catch (e) {
+      print('Erro detalhado no upload do comprovante: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro no upload: ${e.toString()}')),
+      );
+      throw Exception('Erro no upload do comprovante.');
     }
   }
 
