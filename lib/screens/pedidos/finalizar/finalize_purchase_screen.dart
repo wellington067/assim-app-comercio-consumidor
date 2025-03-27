@@ -44,11 +44,19 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
   bool _isPickerActive = false;
 
   @override
-  void initState() {
-    super.initState();
-    _loadUserAddress();
-    _loadPixCode();
-  }
+void initState() {
+  super.initState();
+  _loadUserAddress();
+  
+  // Use Future.delayed para permitir que o widget seja construído primeiro
+  Future.delayed(Duration.zero, () {
+    if (Get.isRegistered<PurchaseController>()) {
+      _loadPixCode();
+    } else {
+      print('PurchaseController será inicializado no build');
+    }
+  });
+}
 
   Future<void> _loadUserAddress() async {
     final profileController =
@@ -64,25 +72,35 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
   }
 
   Future<void> _loadPixCode() async {
-    try {
-      // Obtém o PagamentoController para usar depois
-      final controller = Get.find<PurchaseController>();
-      if (controller.bancaModel != null && controller.bancaModel!.pix != null) {
-        setState(() {
-          pixCode = controller.bancaModel!.pix;
-        });
-      } else {
-        setState(() {
-          pixCode = "Chave PIX não disponível";
-        });
-      }
-    } catch (e) {
-      print('Erro ao carregar chave PIX: $e');
+  try {
+    // Verifica se o controller já existe
+    if (!Get.isRegistered<PurchaseController>()) {
+      print('PurchaseController ainda não está registrado, aguardando...');
+      // Não faz nada neste momento, pois o controller será inicializado no build
+      return;
+    }
+    
+    final controller = Get.find<PurchaseController>();
+    
+    // Se o bancaModel já foi carregado e tem PIX
+    if (controller.bancaModel != null && controller.bancaModel!.pix != null) {
+      setState(() {
+        pixCode = controller.bancaModel!.pix;
+        print('Chave PIX definida: $pixCode');
+      });
+    } else {
+      print('PIX não disponível no modelo atual');
       setState(() {
         pixCode = "Chave PIX não disponível";
       });
     }
+  } catch (e) {
+    print('Erro ao carregar chave PIX: $e');
+    setState(() {
+      pixCode = "Chave PIX não disponível";
+    });
   }
+}
 
   void _chooseAddress(
       BuildContext context, ProfileController controller) async {
@@ -149,35 +167,57 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
   }
 
   void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Pedido realizado!',
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          backgroundColor: Colors.white,
-          content:
-              const Icon(Icons.shopping_bag, size: 100, color: kDetailColor),
-          actions: <Widget>[
-            PrimaryButton(
-              text: "OK",
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Screens.home,
-                  (Route<dynamic> route) => false,
-                );
-              },
-              color: kDetailColor,
-            ),
-          ],
-        );
-      },
+  String title = 'Pedido realizado!';
+  Widget content;
+  
+  // Verifica se o método de pagamento é dinheiro (ID 1)
+  if (_paymentMethodId == 1) {
+    title = 'Pedido realizado com Dinheiro!';
+    content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.shopping_bag, size: 80, color: kDetailColor),
+        const SizedBox(height: 10),
+        const Text(
+          'Seu pedido com pagamento em dinheiro será aguardado por até 1 hora para retirada.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16),
+        ),
+      ],
     );
+  } else {
+    content = const Icon(Icons.shopping_bag, size: 100, color: kDetailColor);
   }
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.white,
+        content: content,
+        actions: <Widget>[
+          PrimaryButton(
+            text: "OK",
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Screens.home,
+                (Route<dynamic> route) => false,
+              );
+            },
+            color: kDetailColor,
+          ),
+        ],
+      );
+    },
+  );
+}
 
   void showErrorDialog(BuildContext context, String message) {
     showDialog(
@@ -233,6 +273,17 @@ class _FinalizePurchaseScreenState extends State<FinalizePurchaseScreen> {
               init: PurchaseController(listCartModel: widget.cartModel),
               builder: (controller) {
                 controller.listCartModel = widget.cartModel;
+                if (controller.bancaModel != null && controller.bancaModel!.pix != null) {
+                if (pixCode != controller.bancaModel!.pix) {
+                  // Execute em microtask para evitar setState durante o build
+                  Future.microtask(() {
+                    setState(() {
+                      pixCode = controller.bancaModel!.pix;
+                      print('PIX atualizado pelo builder: $pixCode');
+                    });
+                  });
+                }
+              }
                 return Scaffold(
                   backgroundColor: Colors.white,
                   appBar: const CustomAppBar(),

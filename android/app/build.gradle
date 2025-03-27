@@ -16,7 +16,7 @@ def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '3'
 }
-
+    
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.2.0'
@@ -71,4 +71,10 @@ android {
 
 flutter {
     source '../..'
+}
+
+dependencies {
+    // Adicione estas linhas no final do arquivo, antes do fechamento }
+    implementation 'androidx.core:core:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
 }

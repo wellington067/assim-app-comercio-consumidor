@@ -140,7 +140,7 @@ class _SelectAddressState extends State<SelectAddress> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Gerencie seus endereços de entrega',
+                      'Gerencie seus endereços',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black87,
