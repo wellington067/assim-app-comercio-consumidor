@@ -30,6 +30,8 @@ class PurchaseController extends GetxController {
     try {
       if (listCartModel != null && listCartModel!.isNotEmpty && listCartModel![0].storeId != null) {
         bancaModel = await _bancaRepository.getBanca(listCartModel![0].storeId!);
+        print('Banca carregada: ${bancaModel?.nome}');
+        print('Chave PIX: ${bancaModel?.pix}'); // Adicionar log para verificar se o pix foi carregado
         update();
       } else {
         print('Não foi possível carregar a banca: storeId não encontrado');
@@ -120,10 +122,22 @@ class PurchaseController extends GetxController {
 
   @override
   void onInit() async {
+    // Carrega a banca primeiro e aguarda
+    print('Iniciando carregamento da banca em onInit');
     await loadBanca();
+    
+    // Depois carrega o resto dos dados
     userName = await userStorage.getUserName();
     userToken = await userStorage.getUserToken();
-    removeZeroQuantityItems(); // Ensure no zero quantity items at the start
+    removeZeroQuantityItems();
+    
+    // Verificação adicional do PIX
+    if (bancaModel != null) {
+      print('Banca carregada em onInit. PIX: ${bancaModel!.pix}');
+    } else {
+      print('Banca não carregada em onInit');
+    }
+    
     update();
     super.onInit();
   }

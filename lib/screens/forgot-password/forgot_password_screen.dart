@@ -31,16 +31,6 @@ class ForgotPasswordScreen extends StatelessWidget with ValidationMixin {
     );
   }
 
-  Future<void> _showErrorMessage(BuildContext context, String message) async {
-    confirmDialog(
-      context,
-      'Erro',
-      message,
-      'Cancelar',
-      'Ok',
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -59,7 +49,7 @@ class ForgotPasswordScreen extends StatelessWidget with ValidationMixin {
                       padding: EdgeInsets.only(top: 35),
                       child: HeaderStartApp(kTextLight),
                     ),
-                    ),
+                  ),
                 ),
               ),
               Expanded(
@@ -96,30 +86,21 @@ class ForgotPasswordScreen extends StatelessWidget with ValidationMixin {
                           ),
                           const VerticalSpacerBox(size: SpacerSize.huge),
                           ElevatedButton(
-                            onPressed: () async {
-                              if (formKey.currentState!.validate()) {
-                                controller.status = ForgotPasswordStatus.loading;
-                                controller.notifyListeners();
-                                try {
-                                  await controller.sendResetPasswordEmail();
-                                  if (context.mounted) {
-                                    controller.status = ForgotPasswordStatus.done;
-                                    controller.notifyListeners();
-                                    _showSuccessMessage(context);
-                                  }
-                                } catch (e) {
-                                  if (context.mounted) {
-                                    controller.status = ForgotPasswordStatus.idle;
-                                    controller.notifyListeners();
-                                    _showErrorMessage(context,
-                                        e.toString().replaceAll('Exception: ', ''));
-                                  }
-                                }
-                              } else {
-                                controller.setErrorMessage(
-                                    'Por favor, forneça um email válido.');
-                              }
-                            },
+                            onPressed: controller.status == ForgotPasswordStatus.loading 
+                                ? null 
+                                : () async {
+                                    if (formKey.currentState!.validate()) {
+                                      try {
+                                        await controller.sendResetPasswordEmail();
+                                        
+                                        if (controller.status == ForgotPasswordStatus.done && context.mounted) {
+                                          _showSuccessMessage(context);
+                                        }
+                                      } catch (e) {
+                                        // O erro já está sendo tratado no controller
+                                      }
+                                    }
+                                  },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: kDetailColor,
                               shape: const RoundedRectangleBorder(
@@ -145,7 +126,10 @@ class ForgotPasswordScreen extends StatelessWidget with ValidationMixin {
                           if (controller.errorMessage != null)
                             Text(
                               controller.errorMessage!,
-                              style: kCaption1,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 14,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           CustomTextButton(
@@ -157,7 +141,7 @@ class ForgotPasswordScreen extends StatelessWidget with ValidationMixin {
                         ],
                       ),
                     ),
-                                ),
+                    ),
                   ),
                 ),
               ),

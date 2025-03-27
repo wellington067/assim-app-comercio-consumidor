@@ -51,8 +51,9 @@ class SignInRepository {
 
   Future<void> sendResetPasswordEmail(String email) async {
     try {
-      String? token = await userStorage.getUserToken();
-      print('Token used for sending reset password email: $token');
+      // Usamos o mesmo token fixo que é usado em checkEmailExists
+      String token = "401|SdE56cPwKTJSSAA5Rn4pc4LprbxYhrSiT28QPOLtdeaf5e31";
+      print('Token usado para enviar email de redefinição: $token');
 
       final response = await _dio.post(
         '$kBaseURL/forgot-password',
@@ -65,12 +66,14 @@ class SignInRepository {
         ),
       );
 
-      if (response.statusCode != 200) {
-        throw Exception('Failed to send reset password email');
+      print('Resposta da API: ${response.statusCode}');
+      
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        throw Exception('Falha ao enviar email de redefinição de senha');
       }
     } catch (error) {
-      print('Error sending reset password email: $error');
-      throw Exception('Failed to send reset password email');
+      print('Erro ao enviar email de redefinição de senha: $error');
+      throw Exception('Falha ao enviar email de redefinição de senha');
     }
   }
 
@@ -130,4 +133,7 @@ class SignInRepository {
     }
     return 0;
   }
+
+  
+
 }
